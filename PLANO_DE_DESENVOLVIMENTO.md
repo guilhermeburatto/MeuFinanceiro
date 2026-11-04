@@ -62,36 +62,38 @@
   - Criação de `backend/src/server.js` com middlewares e endpoint `GET /api/status`.
   - Configuração do script `npm run dev`.
   - Teste validado pelo estudante no navegador (`http://localhost:3000/api/status`).
-  - Commit semântico: `chore: inicializar backend com express e nodemon` e push sincronizado com o GitHub.
+* **Tarefa 1.2 (Concluída):**
+  - Instalação e fixação da versão estável do Prisma ORM (`6.19.3`) e `@prisma/client`.
+  - Configuração do arquivo `backend/.env` com a connection string do PostgreSQL.
+  - Modelagem do schema (`schema.prisma`) com enum `TipoMovimentacao`, tabelas `categorias` e `movimentacoes`, precisão monetária `Decimal(10,2)` e integridade referencial `onDelete: Restrict`.
+  - Execução bem-sucedida da migração inicial (`20261104140703_init_schema`), sincronizando e gerando fisicamente as tabelas no PostgreSQL via Docker.
+  - Criação do script de *seed* (`backend/prisma/seed.js`) populando 12 categorias essenciais (8 despesas e 4 receitas) com paleta de cores hexadecimais para interface e gráficos.
+  - Criação do utilitário singleton do PrismaClient em `backend/src/lib/prisma.js`.
 
 ---
 
 ## 5. Estado Atual do Sistema
 
-* **Container PostgreSQL:** Ativo no Docker (`meufinanceiro_postgres`), aceitando conexões em `localhost:5432`.
+* **Container PostgreSQL:** Ativo no Docker (`meufinanceiro_postgres`), aceitando conexões na porta `5432`.
+* **Banco de Dados:** Tabelas `categorias` e `movimentacoes` criadas via migração e populadas com 12 categorias base via seed.
+* **Prisma ORM:** Prisma Client 6.19.3 gerado e pronto para consumo pelo Express.
 * **Servidor Backend:** Estruturado e testado localmente na porta `3000`.
-* **Git/GitHub:** Repositório local e remoto perfeitamente sincronizados na branch `main`.
-* **Documentação de IA:** `DOCUMENTACAO_IA.md` atualizado com todas as iterações e prompts até a Tarefa 1.1.
+* **Documentação de IA:** `DOCUMENTACAO_IA.md` atualizado com todas as iterações e decisões técnicas até a Tarefa 1.2.
 
 ---
 
 ## 6. Próxima Tarefa Planejada
 
-### 🎯 Tarefa 1.2: Configuração do Prisma ORM e Modelagem do Banco de Dados
+### 🎯 Tarefa 2.1: Implementação da API REST de Categorias
 **O que será feito:**
-1. Instalar o `prisma` (dependência de desenvolvimento) e o `@prisma/client` na pasta `backend/`.
-2. Inicializar o Prisma configurado para PostgreSQL (`npx prisma init --datasource-provider postgresql`).
-3. Modelar as entidades no arquivo `backend/prisma/schema.prisma`:
-   * Enum `TipoMovimentacao`: `RECEITA` e `DESPESA`.
-   * Model `Categoria`: `id`, `nome`, `tipo`, `cor` (opcional), `criadoEm`, relação com `Movimentacao[]`.
-   * Model `Movimentacao`: `id`, `descricao`, `valor` (`Decimal(10,2)`), `data`, `tipo`, `categoriaId`, relação com `Categoria` com regra `onDelete: Restrict`.
-4. Executar a primeira migração com o comando:
-   ```powershell
-   npx prisma migrate dev --name init_schema
-   ```
-   *(Este comando criará fisicamente as tabelas dentro do container PostgreSQL que já está rodando no Docker).*
-5. Criar um script de *seed* (`backend/prisma/seed.js`) para pré-cadastrar automaticamente categorias essenciais (ex: Alimentação, Transporte, Moradia, Salário, etc.).
-6. Atualizar a documentação, registrar o commit semântico (`feat: modelar schema do banco com prisma e criar migracao inicial`) e enviar para o GitHub (`git push`).
+1. Criar as rotas de Categorias (`backend/src/routes/categoriaRoutes.js`):
+   - `GET /api/categorias`: listar todas as categorias (com suporte a filtro opcional por `tipo` no query param).
+   - `POST /api/categorias`: criar nova categoria personalizada com validações de campos obrigatórios (`nome`, `tipo`).
+   - `PUT /api/categorias/:id`: editar dados de uma categoria existente.
+   - `DELETE /api/categorias/:id`: excluir categoria (com tratamento de erro para bloqueio caso possua movimentações vinculadas).
+2. Criar o controlador (`backend/src/controllers/categoriaController.js`) com tratamento de exceções HTTP padronizado.
+3. Conectar o roteador ao `backend/src/server.js` sob o prefixo `/api/categorias`.
+4. Testar os endpoints e registrar os resultados no `DOCUMENTACAO_IA.md`.
 
 ---
 

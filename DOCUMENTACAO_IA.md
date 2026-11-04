@@ -154,3 +154,46 @@ tá, vamos fazer de novo esse passo, acho que deu problema
 * **ES Modules (`"type": "module"`):** Permite a sintaxe padrão `import/export`, padronizando a linguagem entre o backend Node.js e o frontend React (Vite).
 * **CORS ativado desde o início:** Evita problemas futuros de bloqueio de requisições cross-origin quando o frontend (porta 5173) se comunicar com a API (porta 3000).
 * **Endpoint de Health Check (`/api/status`):** Boa prática de arquitetura para diagnosticar a saúde da API sem depender de conexão com banco de dados.
+
+---
+
+## 5. Etapa 1 - Configuração do Prisma ORM e Modelagem do Banco de Dados
+
+* **Data:** 04/11/2026
+* **Etapa:** Etapa 1 - Tarefa 1.2
+
+### 5.1. Problema / Requisito Trabalhado
+Integração do Prisma ORM ao backend Node.js para comunicação tipada com o banco de dados PostgreSQL (no container Docker). Modelagem relacional das entidades financeiras (`Categoria` e `Movimentacao`), aplicação de migrações gerenciadas pelo Prisma e carga inicial (*seed*) de categorias padrão recomendadas no enunciado acadêmico.
+
+### 5.2. Texto Exato dos Prompts Utilizados
+```text
+Analise tudo que foi feito no projeto até agora e liste quais serão os próximos passos de acordo com a documentação disponivel do projeto. Acredito que o próximo passo seja a parte do Prisma
+```
+*(Confirmação e alinhamento do escopo do Prisma pelo estudante)*
+
+```text
+Ok, o docker está aberto.
+```
+*(Confirmação de que o ambiente Docker local foi iniciado para execução das migrações)*
+
+### 5.3. Refinamentos e Ações Executadas
+1. **Fixação da Versão Estável do Prisma:** Durante a instalação inicial via npm, a tag `latest` apontava para o release candidate experimental `prisma@8.0.0-rc.30`. Foi realizada a análise crítica e downgrade direcionado para a versão LTS estável `prisma@6.19.3` e `@prisma/client@6.19.3`, garantindo total compatibilidade com os padrões consolidados do Prisma ORM.
+2. **Criação do `.env`:** Criação de `backend/.env` com a string de conexão oficial: `postgresql://postgres:postgrespassword@localhost:5432/meufinanceiro?schema=public`.
+3. **Modelagem no `schema.prisma`:**
+   - Enum `TipoMovimentacao`: `RECEITA` e `DESPESA`.
+   - Model `Categoria`: `id`, `nome`, `tipo`, `cor` (código hexadecimal para os gráficos) e `criadoEm`.
+   - Model `Movimentacao`: `id`, `descricao`, `valor` com tipo monetário `Decimal(10,2)`, `data`, `tipo` e chave estrangeira `categoriaId`.
+   - Regra de Integridade: `onDelete: Restrict` na relação de categorias para impedir a exclusão acidental de categorias com movimentações vinculadas.
+4. **Execução das Migrações:** Execução de `npx prisma migrate dev --name init_schema`, gerando o arquivo `backend/prisma/migrations/20261104140703_init_schema/migration.sql` e gerando as tabelas fisicamente no banco PostgreSQL.
+5. **Script de Seed (`backend/prisma/seed.js`):** Criação de rotina automatizada e idempotente populando 12 categorias base (8 de despesas como Alimentação, Moradia, Transporte e 4 de receitas como Salário e Rendimentos), com execução testada e validada via `npx prisma db seed`.
+6. **Módulo Singleton:** Criação de `backend/src/lib/prisma.js` exportando a instância única do `PrismaClient` para evitar esgotamento de conexões de pool durante o recarregamento do Nodemon.
+
+### 5.4. Registro de Erros e Correções
+* **Erro de Política de Execução no PowerShell:** O comando `npm` e `npx` foi inicialmente bloqueado pela política de scripts do Windows (`ExecutionPolicy`). Solução adotada: invocação transparente via `npm.cmd` e `npx.cmd`.
+* **Detecção de Schema Drift pré-existente:** O container Docker possuía resquícios de migrações anteriores sem histórico local. Foi executado `prisma migrate reset --force` para limpar o schema público e reaplicar a migração `init_schema` de forma limpa e rastreável.
+
+### 5.5. Decisões de Engenharia
+* **Precisão Decimal para Valores Financeiros:** O uso de `Decimal(10, 2)` evita erros clássicos de ponto flutuante binário do JavaScript (ex: `0.1 + 0.2 = 0.30000000000000004`), assegurando exatidão contábil nas transações.
+* **Integridade Referencial com `onDelete: Restrict`:** Cumpre o requisito acadêmico 3.4 (*"respeitando os vínculos com movimentações existentes"*), impedindo a quebra de histórico financeiro no banco de dados caso uma categoria em uso tente ser excluída.
+* **Atributo `cor` nas Categorias:** O armazenamento de códigos de cores hexadecimais (ex: `#E53E3E`) na entidade de categoria viabiliza diretamente a renderização de gráficos padronizados no frontend (Dashboard).
+
