@@ -1,0 +1,255 @@
+PROJETO: SISTEMA WEB DE CONTROLE FINANCEIRO PESSOAL
+NOME PROVISÓRIO: MeuFinanceiro
+
+==================================================
+1. CONTEXTO E OBJETIVO DO PROJETO
+==================================================
+
+O projeto consiste no desenvolvimento de uma aplicação web de controle financeiro pessoal, com o objetivo de permitir que um usuário registre, organize e acompanhe suas movimentações financeiras.
+
+O sistema deverá oferecer uma interface intuitiva e organizada, permitindo visualizar receitas, despesas, saldo disponível e resumos financeiros por período.
+
+O projeto será desenvolvido como trabalho acadêmico da disciplina Laboratório de Programação, do curso de Ciência da Computação do Centro Universitário Unifacvest.
+
+A Inteligência Artificial deverá ser utilizada como ferramenta ativa de apoio ao desenvolvimento, participando da criação da arquitetura, implementação, resolução de problemas e documentação.
+
+==================================================
+2. REQUISITOS ACADÊMICOS OBRIGATÓRIOS
+==================================================
+
+2.1. Organização
+- O trabalho deve ser realizado por um grupo de exatamente duas pessoas.
+
+2.2. Versionamento
+- Criar um repositório no GitHub para armazenar o código-fonte, configurações e documentação.
+- Manter histórico de commits que demonstre a evolução do projeto.
+- Utilizar boas práticas de versionamento e mensagens de commit claras, preferencialmente seguindo Semantic Commits.
+- Registrar as alterações e enviá-las ao GitHub.
+
+2.3. Utilização de Inteligência Artificial
+- Utilizar agentes de IA durante o desenvolvimento.
+- Registrar os principais prompts utilizados.
+- Documentar os problemas ou requisitos tratados pela IA.
+- Registrar as iterações e refinamentos realizados.
+- Avaliar criticamente o código produzido pela IA.
+- Documentar os critérios de aceitação e as decisões de engenharia adotadas pelo grupo.
+- Não simplesmente aceitar ou copiar o código gerado sem revisão.
+
+2.4. Stack tecnológica obrigatória
+
+BACKEND:
+- Node.js.
+- Framework Express.
+- Nodemon configurado para facilitar o desenvolvimento local.
+
+FRONTEND:
+- Utilizar um framework ou biblioteca moderna.
+- React é a opção inicialmente pretendida para este projeto.
+
+BANCO DE DADOS:
+- PostgreSQL.
+- Versão mínima 15 e máxima 16.
+- O banco deverá ser provisionado obrigatoriamente utilizando Docker e Docker Compose.
+
+ORM:
+- Prisma é recomendado para gerenciamento dos schemas, acesso ao banco e migrações.
+
+VERSÕES:
+- Node.js: mínimo 22.x e máximo 24.x.
+- PostgreSQL: mínimo 15 e máximo 16.
+
+2.5. Ferramentas de apoio
+- Utilizar uma IDE para desenvolvimento.
+- Utilizar uma ferramenta de gestão ágil Kanban para organizar tarefas, requisitos e entregas.
+- Trello é uma alternativa aceita pelo professor.
+- GitHub Projects é a opção recomendada no enunciado.
+
+2.6. Documentação obrigatória
+
+O repositório deverá conter:
+
+- README.md: apresentação do projeto, tecnologias utilizadas e instruções para instalação e execução.
+- DOCUMENTACAO_IA.md: documentação das interações com a IA.
+
+O DOCUMENTACAO_IA.md deverá conter, para cada grande funcionalidade desenvolvida:
+
+- Problema ou requisito trabalhado.
+- Texto exato dos prompts utilizados.
+- Refinamentos e iterações realizados.
+- Registro de eventuais erros e correções.
+- Decisões de engenharia e justificativas para aprovação do código.
+
+Estrutura recomendada pelo professor:
+
+- docs/: documentos e imagens complementares.
+- docs/kanban-prints/: registros visuais da evolução do Kanban.
+- docs/arquitetura.md: documentação da arquitetura, opcional.
+- src/: código-fonte.
+- .gitignore.
+- docker-compose.yml.
+- README.md.
+- DOCUMENTACAO_IA.md.
+
+2.7. Entrega e avaliação
+
+A aplicação deverá:
+- Executar localmente nas máquinas dos integrantes do grupo.
+- Ter o banco de dados funcionando via Docker.
+- Ter o backend Node.js funcionando.
+- Ter o frontend operacional.
+- Ser apresentada presencialmente à turma.
+
+Critérios de avaliação:
+- Criatividade e coerência do escopo.
+- Clareza dos requisitos.
+- Qualidade da arquitetura e organização do código.
+- Uso efetivo do Kanban e do Git.
+- Qualidade da documentação e análise crítica do uso da IA.
+- Funcionamento técnico da aplicação.
+
+Data de entrega indicada no enunciado: 09/11/2026.
+Tempo de apresentação: 10 minutos.
+
+==================================================
+3. REQUISITOS FUNCIONAIS DO SISTEMA
+==================================================
+
+IMPORTANTE:
+Os requisitos desta seção representam a proposta inicial de funcionalidades do grupo. Eles não são exigências expressas do professor. Devem ser discutidos e refinados antes da implementação.
+
+3.1. Dashboard financeiro
+
+O sistema deverá possuir uma página inicial que apresente uma visão geral da situação financeira do usuário.
+
+Deverá apresentar:
+- Total de receitas do período selecionado.
+- Total de despesas do período selecionado.
+- Saldo resultante das receitas menos as despesas.
+- Resumo das movimentações financeiras.
+- Visualização gráfica da distribuição de despesas por categoria.
+- Possibilidade de consultar diferentes períodos.
+
+3.2. Gerenciamento de receitas
+
+O usuário deverá conseguir:
+- Cadastrar uma receita.
+- Informar descrição, valor, data e categoria.
+- Consultar receitas cadastradas.
+- Editar receitas existentes.
+- Excluir receitas.
+- Visualizar o histórico de receitas.
+
+3.3. Gerenciamento de despesas
+
+O usuário deverá conseguir:
+- Cadastrar uma despesa.
+- Informar descrição, valor, data e categoria.
+- Consultar despesas cadastradas.
+- Editar despesas existentes.
+- Excluir despesas.
+- Visualizar o histórico de despesas.
+
+3.4. Gerenciamento de categorias
+
+O sistema deverá permitir organizar as movimentações financeiras por categorias.
+
+O usuário deverá conseguir:
+- Visualizar categorias disponíveis.
+- Criar categorias personalizadas.
+- Editar categorias.
+- Excluir categorias, respeitando os vínculos com movimentações existentes.
+- Diferenciar categorias de receitas e despesas.
+
+Exemplos de categorias de despesas:
+- Alimentação.
+- Moradia.
+- Transporte.
+- Saúde.
+- Lazer.
+- Educação.
+- Compras.
+- Outros.
+
+Exemplos de categorias de receitas:
+- Salário.
+- Rendimentos.
+- Serviços.
+- Outros.
+
+3.5. Histórico e consulta de movimentações
+
+O sistema deverá permitir:
+- Visualizar todas as movimentações cadastradas.
+- Identificar se cada movimentação é uma receita ou despesa.
+- Consultar movimentações por período.
+- Filtrar movimentações por categoria.
+- Ordenar movimentações por data.
+- Consultar os detalhes de uma movimentação.
+
+3.6. Resumo e acompanhamento financeiro
+
+O sistema deverá calcular automaticamente:
+- Total de receitas.
+- Total de despesas.
+- Saldo do período.
+- Evolução das movimentações ao longo do tempo.
+- Distribuição das despesas por categoria.
+
+Os valores apresentados deverão ser calculados a partir dos registros armazenados no banco de dados.
+
+3.7. Persistência dos dados
+
+- As movimentações e categorias deverão ser armazenadas no PostgreSQL.
+- Os dados não poderão desaparecer ao atualizar ou fechar o navegador.
+- As operações de cadastro, consulta, edição e exclusão deverão refletir corretamente no banco de dados.
+
+==================================================
+4. REQUISITOS NÃO FUNCIONAIS E QUALIDADE
+==================================================
+
+- Interface intuitiva, organizada e responsiva.
+- Código organizado e dividido em responsabilidades.
+- Separação adequada entre frontend, backend e banco de dados.
+- Comunicação entre frontend e backend por meio de API.
+- Utilização de boas práticas de desenvolvimento.
+- Validação dos dados enviados pelo usuário.
+- Tratamento adequado de erros.
+- Mensagens claras de sucesso e falha nas operações.
+- Persistência confiável das informações.
+- Proteção de credenciais e variáveis de ambiente.
+- Facilidade de instalação e execução em outra máquina.
+
+==================================================
+5. DIRETRIZES DE DESENVOLVIMENTO PARA O AGENTE DE IA
+==================================================
+
+O agente deverá atuar como desenvolvedor de software experiente e também como mentor de programação.
+
+O usuário está retomando os estudos de programação e deseja compreender o desenvolvimento, não apenas receber código pronto.
+
+Portanto, o agente deverá:
+
+1. Trabalhar em etapas pequenas, organizadas e verificáveis.
+2. Explicar o objetivo de cada etapa antes de implementá-la.
+3. Apresentar um plano de implementação e aguardar aprovação antes de alterações importantes.
+4. Explicar as tecnologias, bibliotecas, estruturas e decisões arquiteturais utilizadas.
+5. Evitar implementar funcionalidades que não tenham sido discutidas e aprovadas.
+6. Priorizar soluções simples, funcionais e compatíveis com os requisitos acadêmicos.
+7. Não adicionar complexidade desnecessária.
+8. Explicar os erros encontrados, suas causas e as correções realizadas.
+9. Verificar o funcionamento das funcionalidades implementadas.
+10. Manter a documentação atualizada.
+11. Registrar os prompts importantes e as decisões tomadas durante o desenvolvimento.
+12. Consultar este documento durante todo o projeto.
+
+==================================================
+6. DIRETRIZES IMPORTANTES
+==================================================
+
+- Os requisitos acadêmicos são obrigatórios e devem ser respeitados.
+- As funcionalidades propostas representam o escopo inicial e poderão ser refinadas com a aprovação do grupo.
+- O agente não deverá presumir que funcionalidades adicionais são obrigatórias.
+- Qualquer alteração relevante no escopo deverá ser discutida antes da implementação.
+- O objetivo é entregar um sistema funcional, coerente, bem documentado e que possa ser compreendido e apresentado pelos integrantes do grupo.
+
+Antes de iniciar a implementação, o agente deverá analisar este documento, identificar eventuais ambiguidades e apresentar um plano de desenvolvimento para aprovação.
