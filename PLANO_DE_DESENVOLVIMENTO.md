@@ -70,31 +70,38 @@
   - Proteção de integridade referencial: bloqueio de exclusão se houver movimentações vinculadas com mensagem descritiva.
   - Criação de `backend/src/routes/categoriaRoutes.js` e conexão sob o prefixo `/api/categorias` em `backend/src/server.js`.
   - Validação automatizada de 5 cenários de teste HTTP cobrindo todas as operações com sucesso.
+* **Tarefa 2.2 (Concluída):**
+  - Criação de `backend/src/controllers/movimentacaoController.js` implementando CRUD completo de receitas e despesas.
+  - Filtros avançados na listagem: por período (`dataInicio` e `dataFim`), por categoria (`categoriaId`) e por tipo (`RECEITA`/`DESPESA`), com dados da categoria incluídos via `include`.
+  - Validações de regras de negócio: valor estritamente positivo, data válida, verificação de existência da categoria e validação de coerência de tipo (impede vincular despesa a uma categoria de receita).
+  - Criação de `backend/src/routes/movimentacaoRoutes.js` e conexão com `/api/movimentacoes` em `backend/src/server.js`.
+  - Testes automatizados executados e aprovados (criação, edição, filtros, integridade e coerência).
 
 ---
 
 ## 5. Estado Atual do Sistema
 
 * **Container PostgreSQL:** Ativo no Docker (`meufinanceiro_postgres`), aceitando conexões na porta `5433`.
-* **Banco de Dados:** Tabelas `categorias` e `movimentacoes` criadas via migração e populadas com 12 categorias base via seed.
+* **Banco de Dados:** Tabelas `categorias` e `movimentacoes` criadas via migração e populadas com 12 categorias base e movimentações de teste.
 * **Prisma ORM:** Prisma Client 6.19.3 gerado e conectado ao PostgreSQL.
-* **API REST:** Endpoints de Categorias (`/api/categorias`) e Health Check (`/api/status`) 100% operacionais.
-* **Documentação de IA:** `DOCUMENTACAO_IA.md` atualizado com todas as iterações e decisões técnicas até a Tarefa 2.1.
+* **API REST:** Endpoints de Categorias (`/api/categorias`), Movimentações (`/api/movimentacoes`) e Health Check (`/api/status`) 100% operacionais.
+* **Documentação de IA:** `DOCUMENTACAO_IA.md` atualizado com todas as iterações e decisões técnicas até a Tarefa 2.2.
 
 ---
 
 ## 6. Próxima Tarefa Planejada
 
-### 🎯 Tarefa 2.2: Implementação da API REST de Movimentações (Receitas e Despesas)
+### 🎯 Tarefa 2.3: Implementação dos Endpoints de Resumo Financeiro (Dashboard)
 **O que será feito:**
-1. Criar o controlador (`backend/src/controllers/movimentacaoController.js`):
-   - `listar`: listagem com filtros dinâmicos por período (data início e data fim) e por categoria (`categoriaId`), ordenados por data decrescente.
-   - `buscarPorId`: busca de movimentação específica com dados da categoria inclusos.
-   - `criar`: cadastro de receita ou despesa validando valor positivo, data válida, tipo compatível e existência da categoria.
-   - `atualizar`: edição de movimentação existente.
-   - `excluir`: remoção de movimentação por ID.
-2. Criar as rotas (`backend/src/routes/movimentacaoRoutes.js`) e plugar no `server.js` sob `/api/movimentacoes`.
-3. Testar todas as operações e validar a gravação e integridade no banco de dados.
+1. Criar o controlador de métricas (`backend/src/controllers/dashboardController.js`):
+   - `resumo`: endpoint `GET /api/dashboard/resumo` que calcula no período selecionado:
+     * Total de receitas.
+     * Total de despesas.
+     * Saldo líquido (`receitas - despesas`).
+     * Distribuição percentual e total de despesas agrupadas por categoria (essencial para renderizar o gráfico de rosca/pizza no frontend).
+     * Lista resumida das últimas movimentações recentes.
+2. Criar a rota (`backend/src/routes/dashboardRoutes.js`) e plugar no `server.js` sob `/api/dashboard`.
+3. Validar os cálculos matemáticos com os dados reais do banco.
 
 ---
 
@@ -102,8 +109,8 @@
 
 * **Etapa 2: API REST de Categorias e Movimentações (Backend)**
   * CRUD completo de Categorias com validações (Concluído).
-  * CRUD completo de Movimentações (Receitas e Despesas).
-  * Endpoint de resumo para o Dashboard (cálculo de total de receitas, total de despesas, saldo e despesas por categoria).
+  * CRUD completo de Movimentações com validações e filtros (Concluído).
+  * Endpoint de resumo para o Dashboard (Próxima tarefa).
 * **Etapa 3: Frontend Base (React + Vite)**
   * Configuração do projeto React com Vite e roteamento.
   * Configuração da camada de integração HTTP com o backend.

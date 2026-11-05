@@ -260,3 +260,36 @@ Certo, você verificou se realmente foi nesse etapa que paramos? Ou essa etapa j
 ### 7.4. Decisões de Engenharia
 * **Regra de Negócio de Integridade Referencial:** A checagem explícita `prisma.movimentacao.count` antes do `delete` oferece uma resposta clara ao usuário final/frontend, evitando que o banco de dados dispare uma exceção genérica de chave estrangeira não tratada.
 * **Validação de Cores Hexadecimais:** A validação com Regex `^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$` garante que as cores cadastradas sejam compatíveis com a estilização e gráficos do frontend React.
+
+
+---
+
+## 8. Etapa 2 - Implementação da API REST de Movimentações (Receitas e Despesas)
+
+* **Data:** 05/11/2026
+* **Etapa:** Etapa 2 - Tarefa 2.2
+
+### 8.1. Problema / Requisito Trabalhado
+Criação dos endpoints HTTP da API REST para registro e gerenciamento de movimentações financeiras (receitas e despesas), incluindo validação de regras de negócio essenciais, filtros por período e categoria, e verificação cruzada de integridade referencial.
+
+### 8.2. Texto Exato dos Prompts Utilizados
+```text
+sim!!
+```
+*(Autorização para desenvolvimento da Tarefa 2.2)*
+
+### 8.3. Refinamentos e Ações Executadas
+1. **Criação do Controlador (`backend/src/controllers/movimentacaoController.js`):**
+   - Método `listar`: suporta filtragem combinada por `tipo`, `categoriaId`, `dataInicio` e `dataFim`, trazendo os dados da categoria associada (`include: { categoria: true }`) e ordenados por data decrescente.
+   - Método `buscarPorId`: busca de uma movimentação por ID com detalhes da categoria.
+   - Método `criar`: validações de campos obrigatórios (descrição não vazia, valor estritamente maior que zero, data válida no calendário).
+   - Validação de Coerência de Tipo: verificação se a categoria selecionada possui o mesmo tipo da movimentação (impedindo que uma despesa seja cadastrada em uma categoria de receita como Salário).
+   - Método `atualizar`: atualização com revalidação de regras de negócio e integridade caso categoria ou tipo sejam modificados.
+   - Método `excluir`: remoção de movimentação por ID.
+2. **Criação do Roteador (`backend/src/routes/movimentacaoRoutes.js`):** Mapeamento dos verbos REST (`GET`, `POST`, `PUT`, `DELETE`).
+3. **Integração no Servidor (`backend/src/server.js`):** Registro das rotas sob o prefixo `/api/movimentacoes`.
+4. **Bateria de Testes:** 8 testes executados validando criação de receitas, criação de despesas, bloqueio de incoerência de tipo (status 400), filtros por tipo e data, e comprovação do bloqueio de integridade na tentativa de exclusão de categoria com movimentação vinculada.
+
+### 8.4. Decisões de Engenharia
+* **Regra de Coerência entre Categoria e Movimentação:** Evita inconsistências lógicas no banco de dados. Uma categoria com `tipo: RECEITA` só pode receber lançamentos de receitas, garantindo que os relatórios e filtros funcionem com exatidão matemática.
+* **Validação de Valor Positivo:** Valores monetários devem ser informados como números positivos no cadastro. A diferenciação matemática entre ganho e gasto é estabelecida pela coluna `tipo`, evitando ambiguidades de sinal (`+` ou `-`) no armazenamento.
