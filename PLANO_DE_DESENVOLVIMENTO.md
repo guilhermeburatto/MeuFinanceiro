@@ -62,65 +62,62 @@
 * **Tarefa 1.2:** Modelagem do schema Prisma (`Categoria` e `Movimentacao`), execução da migração inicial no PostgreSQL, script de seed populando as 12 categorias base e criação do singleton PrismaClient.
 * **Alinhamento e Fix de Porta:** Sincronização do trabalho da dupla, isolamento do Docker na porta `5433` e remoção de artefatos experimentais.
 
-### 🔄 Etapa 2: API REST de Categorias e Movimentações (EM ANDAMENTO)
+### ✅ Etapa 2: API REST de Categorias e Movimentações (CONCLUÍDA)
 * **Tarefa 2.1 (Concluída):**
   - Criação de `backend/src/controllers/categoriaController.js` implementando CRUD completo (`listar`, `buscarPorId`, `criar`, `atualizar`, `excluir`).
   - Suporte a filtro por tipo via query param (`GET /api/categorias?tipo=RECEITA` ou `DESPESA`).
   - Validações de entradas (nome obrigatório, tipo válido, formato de cor hexadecimal `#RRGGBB`).
   - Proteção de integridade referencial: bloqueio de exclusão se houver movimentações vinculadas com mensagem descritiva.
-  - Criação de `backend/src/routes/categoriaRoutes.js` e conexão sob o prefixo `/api/categorias` em `backend/src/server.js`.
-  - Validação automatizada de 5 cenários de teste HTTP cobrindo todas as operações com sucesso.
+  - Criação de `backend/src/routes/categoriaRoutes.js` e conexão sob `/api/categorias`.
+  - Validação automatizada de 5 cenários de teste HTTP.
 * **Tarefa 2.2 (Concluída):**
   - Criação de `backend/src/controllers/movimentacaoController.js` implementando CRUD completo de receitas e despesas.
   - Filtros avançados na listagem: por período (`dataInicio` e `dataFim`), por categoria (`categoriaId`) e por tipo (`RECEITA`/`DESPESA`), com dados da categoria incluídos via `include`.
   - Validações de regras de negócio: valor estritamente positivo, data válida, verificação de existência da categoria e validação de coerência de tipo (impede vincular despesa a uma categoria de receita).
-  - Criação de `backend/src/routes/movimentacaoRoutes.js` e conexão com `/api/movimentacoes` em `backend/src/server.js`.
-  - Testes automatizados executados e aprovados (criação, edição, filtros, integridade e coerência).
+  - Criação de `backend/src/routes/movimentacaoRoutes.js` e conexão com `/api/movimentacoes`.
+  - Testes automatizados executados e aprovados.
+* **Tarefa 2.3 (Concluída):**
+  - Criação de `backend/src/controllers/dashboardController.js` calculando os totais de receitas, despesas, saldo líquido, agrupamento percentual e financeiro de despesas por categoria com paleta de cores para os gráficos, e lista das últimas movimentações recentes.
+  - Criação de `backend/src/routes/dashboardRoutes.js` e conexão com `/api/dashboard/resumo`.
+  - Testes matemáticos automatizados executados e validados.
 
 ---
 
 ## 5. Estado Atual do Sistema
 
 * **Container PostgreSQL:** Ativo no Docker (`meufinanceiro_postgres`), aceitando conexões na porta `5433`.
-* **Banco de Dados:** Tabelas `categorias` e `movimentacoes` criadas via migração e populadas com 12 categorias base e movimentações de teste.
-* **Prisma ORM:** Prisma Client 6.19.3 gerado e conectado ao PostgreSQL.
-* **API REST:** Endpoints de Categorias (`/api/categorias`), Movimentações (`/api/movimentacoes`) e Health Check (`/api/status`) 100% operacionais.
-* **Documentação de IA:** `DOCUMENTACAO_IA.md` atualizado com todas as iterações e decisões técnicas até a Tarefa 2.2.
+* **Banco de Dados:** Tabelas `categorias` e `movimentacoes` criadas via migração e populadas com 12 categorias base e dados de teste.
+* **Prisma ORM:** Prisma Client 6.19.3 conectado e operando consultas relacionais e agregações.
+* **API REST Backend:** 100% pronta e testada (`/api/status`, `/api/categorias`, `/api/movimentacoes`, `/api/dashboard/resumo`).
+* **Documentação de IA:** `DOCUMENTACAO_IA.md` atualizado com todas as iterações e decisões técnicas até a Tarefa 2.3.
 
 ---
 
 ## 6. Próxima Tarefa Planejada
 
-### 🎯 Tarefa 2.3: Implementação dos Endpoints de Resumo Financeiro (Dashboard)
+### 🎯 Tarefa 3.1: Inicialização do Frontend Base com React e Vite
 **O que será feito:**
-1. Criar o controlador de métricas (`backend/src/controllers/dashboardController.js`):
-   - `resumo`: endpoint `GET /api/dashboard/resumo` que calcula no período selecionado:
-     * Total de receitas.
-     * Total de despesas.
-     * Saldo líquido (`receitas - despesas`).
-     * Distribuição percentual e total de despesas agrupadas por categoria (essencial para renderizar o gráfico de rosca/pizza no frontend).
-     * Lista resumida das últimas movimentações recentes.
-2. Criar a rota (`backend/src/routes/dashboardRoutes.js`) e plugar no `server.js` sob `/api/dashboard`.
-3. Validar os cálculos matemáticos com os dados reais do banco.
+1. Criar a aplicação React moderna dentro da pasta `frontend/` utilizando o Vite (`npm create vite@latest frontend -- --template react`).
+2. Instalar dependências essenciais de interface e comunicação:
+   - `lucide-react`: ícones modernos para finanças (carteira, setas de entrada/saída, tags, gráficos).
+   - Configuração de estilização limpa e responsiva.
+3. Configurar proxy reverso no `vite.config.js` para redirecionar `/api` automaticamente para o backend (`http://localhost:3000`), evitando qualquer problema de portas no navegador.
+4. Criar um componente de teste que busca os dados de `/api/status` e `/api/dashboard/resumo`, comprovando a comunicação de ponta a ponta (Frontend ➔ Backend ➔ PostgreSQL).
+5. Documentar, comitar (`chore: inicializar frontend com react e vite`) e enviar para o GitHub.
 
 ---
 
 ## 7. Visão Geral das Próximas Etapas
 
-* **Etapa 2: API REST de Categorias e Movimentações (Backend)**
-  * CRUD completo de Categorias com validações (Concluído).
-  * CRUD completo de Movimentações com validações e filtros (Concluído).
-  * Endpoint de resumo para o Dashboard (Próxima tarefa).
 * **Etapa 3: Frontend Base (React + Vite)**
-  * Configuração do projeto React com Vite e roteamento.
-  * Configuração da camada de integração HTTP com o backend.
-  * Criação do layout principal (menu e cabeçalho responsivo).
+  * Inicialização e configuração do Vite com React (Próxima tarefa).
+  * Criação do layout principal (Sidebar de navegação, cabeçalho e estrutura de rotas).
 * **Etapa 4: Telas de Gerenciamento**
   * Tela de Categorias (cadastro, listagem e exclusão com feedback de integridade).
   * Tela de Movimentações (formulário com validações, filtros por período e tabela de histórico).
 * **Etapa 5: Dashboard Financeiro e Gráficos**
   * Cards de métricas (Receitas, Despesas, Saldo).
-  * Gráfico de rosca/pizza para distribuição de despesas por categoria.
+  * Gráfico de rosca/pizza para distribuição de despesas por categoria (usando biblioteca leve como Recharts).
 * **Etapa 6: Documentação Final e Preparação da Apresentação**
   * Atualização completa de `README.md` e `DOCUMENTACAO_IA.md`.
   * Inserção dos prints finais do Trello em `docs/kanban-prints/`.

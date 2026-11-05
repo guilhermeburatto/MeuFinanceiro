@@ -293,3 +293,39 @@ sim!!
 ### 8.4. Decisões de Engenharia
 * **Regra de Coerência entre Categoria e Movimentação:** Evita inconsistências lógicas no banco de dados. Uma categoria com `tipo: RECEITA` só pode receber lançamentos de receitas, garantindo que os relatórios e filtros funcionem com exatidão matemática.
 * **Validação de Valor Positivo:** Valores monetários devem ser informados como números positivos no cadastro. A diferenciação matemática entre ganho e gasto é estabelecida pela coluna `tipo`, evitando ambiguidades de sinal (`+` ou `-`) no armazenamento.
+
+
+---
+
+## 9. Etapa 2 - Implementação dos Endpoints de Resumo Financeiro (Dashboard)
+
+* **Data:** 05/11/2026
+* **Etapa:** Etapa 2 - Tarefa 2.3
+
+### 9.1. Problema / Requisito Trabalhado
+Criação do endpoint analítico consolidado para alimentar o painel inicial (Dashboard) do sistema, fornecendo cálculo automatizado de total de receitas, total de despesas, saldo líquido, agrupamento percentual e financeiro de despesas e receitas por categoria, e resumo das movimentações recentes, com suporte a filtro flexível por período de datas.
+
+### 9.2. Texto Exato dos Prompts Utilizados
+```text
+sim, por favor.
+```
+
+```text
+podemos iniciar
+```
+*(Confirmação e autorização para execução da Tarefa 2.3)*
+
+### 9.3. Refinamentos e Ações Executadas
+1. **Criação do Controlador (`backend/src/controllers/dashboardController.js`):**
+   - Implementação do método `obterResumo` com suporte a query params `dataInicio` e `dataFim`.
+   - Consulta ao banco via Prisma trazendo as movimentações do período e suas respectivas categorias.
+   - Consolidação de totais com arredondamento preciso em 2 casas decimais.
+   - Agrupamento de despesas por categoria calculando a soma e a proporção percentual de cada categoria em relação ao total gasto, já ordenada da maior despesa para a menor.
+   - Extração das 5 movimentações mais recentes para pré-visualização rápida.
+2. **Criação do Roteador (`backend/src/routes/dashboardRoutes.js`):** Mapeamento de `GET /resumo`.
+3. **Integração no Servidor (`backend/src/server.js`):** Registro sob o prefixo `/api/dashboard`.
+4. **Bateria de Testes:** Testes automatizados executados via PowerShell validando os cálculos de saldo (R$ 5500 - R$ 720 = R$ 4780), a distribuição percentual por categoria com cores preservadas e a filtragem por intervalo de datas.
+
+### 9.4. Decisões de Engenharia
+* **Cálculo Agregado no Backend:** Centralizar a lógica de soma e percentuais na API alivia a carga de processamento do navegador do usuário e garante uma única fonte da verdade contábil para qualquer cliente que venha a consumir a API.
+* **Preservação de Códigos de Cores no Resumo:** O payload do dashboard entrega diretamente a cor hexadecimal de cada categoria agrupada, permitindo que bibliotecas de gráficos (como Recharts) renderizem as fatias do gráfico sem necessidade de mapeamentos adicionais no frontend.
