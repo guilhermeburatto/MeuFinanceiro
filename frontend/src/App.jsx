@@ -10,9 +10,30 @@ import {
   AlertCircle,
   Calendar,
   CheckCircle2,
+  Plus,
+  Pencil,
+  Trash2,
+  X,
+  AlertTriangle,
 } from 'lucide-react';
 import { obterStatus, dashboardService, categoriaService, movimentacaoService } from './services/api';
 import './App.css';
+
+// Paleta pré-definida de cores amigáveis para as categorias e gráficos
+const PALETA_CORES = [
+  '#E53E3E', // Vermelho
+  '#DD6B20', // Laranja
+  '#D69E2E', // Âmbar
+  '#38A169', // Verde Folha
+  '#059669', // Verde Esmeralda
+  '#319795', // Teal
+  '#3182CE', // Azul
+  '#2563EB', // Azul Royal
+  '#805AD5', // Roxo
+  '#D53F8C', // Rosa
+  '#718096', // Cinza Slate
+  '#4A5568', // Cinza Escuro
+];
 
 function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -33,6 +54,18 @@ function App() {
   const [categorias, setCategorias] = useState([]);
   const [movimentacoes, setMovimentacoes] = useState([]);
 
+  // Estados de Gerenciamento de Categorias (Tarefa 4.1)
+  const [filtroTipoCategoria, setFiltroTipoCategoria] = useState('TODOS');
+  const [modalCategoriaAberto, setModalCategoriaAberto] = useState(false);
+  const [categoriaEmEdicao, setCategoriaEmEdicao] = useState(null);
+  const [formCategoria, setFormCategoria] = useState({
+    nome: '',
+    tipo: 'DESPESA',
+    cor: '#E53E3E',
+  });
+  const [salvandoCategoria, setSalvandoCategoria] = useState(false);
+  const [feedbackMensagem, setFeedbackMensagem] = useState(null);
+
   // Formatação de Moeda Brasileira (BRL)
   const formatarMoeda = (valor) => {
     return new Intl.NumberFormat('pt-BR', {
@@ -47,6 +80,16 @@ function App() {
     const dataLimpa = dataIso.split('T')[0];
     const [ano, mes, dia] = dataLimpa.split('-');
     return `${dia}/${mes}/${ano}`;
+  };
+
+  // Exibe mensagem de feedback temporária
+  const exibirFeedback = (tipo, texto) => {
+    setFeedbackMensagem({ tipo, texto });
+    if (tipo === 'success') {
+      setTimeout(() => {
+        setFeedbackMensagem((atual) => (atual?.texto === texto ? null : atual));
+      }, 4000);
+    }
   };
 
   // Carrega e verifica o status da API e os dados do resumo
@@ -71,8 +114,6 @@ function App() {
           receitasPorCategoria: resumoRes.receitasPorCategoria || [],
           movimentacoesRecentes: resumoRes.movimentacoesRecentes ?? resumoRes.ultimasMovimentacoes ?? [],
         });
-      } else {
-        setResumo(resumoRes);
       }
 
       // 3. Carrega categorias
@@ -94,6 +135,99 @@ function App() {
   useEffect(() => {
     carregarDados();
   }, []);
+
+  // --- Funções de Ação de Categorias (Tarefa 4.1) ---
+
+  const abrirModalNovaCategoria = () => {
+    setCategoriaEmEdicao(null);
+    setFormCategoria({
+      nome: '',
+      tipo: 'DESPESA',
+      cor: '#E53E3E',
+    });
+    setModalCategoriaAberto(true);
+  };
+
+  const abrirModalEditarCategoria = (cat) => {
+    setCategoriaEmEdicao(cat);
+    setFormCategoria({
+      nome: cat.nome,
+      tipo: cat.tipo,
+      cor: cat.cor || (cat.tipo === 'RECEITA' ? '#38A169' : '#E53E3E'),
+    });
+    setModalCategoriaAberto(true);
+  };
+
+  const fecharModalCategoria = () => {
+    setModalCategoriaAberto(false);
+    setCategoriaEmEdicao(null);
+  };
+
+  const handleSalvarCategoria = async (e) => {
+    e.preventDefault();
+    if (!formCategoria.nome.trim()) {
+      exibirFeedback('error', 'O nome da categoria é obrigatório.');
+      return;
+    }
+
+    setSalvandoCategoria(true);
+    try {
+      if (categoriaEmEdicao) {
+        // Atualização de categoria existente
+        const atualizada = await categoriaService.atualizar(categoriaEmEdicao.id, {
+          nome: formCategoria.nome.trim(),
+          tipo: formCategoria.tipo,
+          cor: formCategoria.cor,
+        });
+
+        setCategorias((anteriores) =>
+          anteriores.map((c) => (c.id === atualizada.id ? atualizada : c))
+        );
+        exibirFeedback('success', `Categoria "${atualizada.nome}" atualizada com sucesso!`);
+      } else {
+        // Criação de nova categoria
+        const nova = await categoriaService.criar({
+          nome: formCategoria.nome.trim(),
+          tipo: formCategoria.tipo,
+          cor: formCategoria.cor,
+        });
+
+        setCategorias((anteriores) => [...anteriores, nova].sort((a, b) => a.nome.localeCompare(b.nome)));
+        exibirFeedback('success', `Categoria "${nova.nome}" criada com sucesso!`);
+      }
+
+      fecharModalCategoria();
+      // Atualiza também os resumos
+      carregarDados();
+    } catch (err) {
+      exibirFeedback('error', err.message || 'Falha ao salvar a categoria.');
+    } finally {
+      setSalvandoCategoria(false);
+    }
+  };
+
+  const handleExcluirCategoria = async (cat) => {
+    const confirmar = window.confirm(
+      `Deseja realmente excluir a categoria "${cat.nome}"?`
+    );
+    if (!confirmar) return;
+
+    try {
+      await categoriaService.excluir(cat.id);
+      setCategorias((anteriores) => anteriores.filter((c) => c.id !== cat.id));
+      exibirFeedback('success', `Categoria "${cat.nome}" excluída com sucesso!`);
+      carregarDados();
+    } catch (err) {
+      // Aqui tratamos com destaque o erro de integridade referencial vindo da API!
+      exibirFeedback('error', err.message);
+    }
+  };
+
+  // Filtra as categorias conforme a aba selecionada (Todas / Despesas / Receitas)
+  const categoriasFiltradas = categorias.filter((c) => {
+    if (filtroTipoCategoria === 'TODOS') return true;
+    return c.tipo === filtroTipoCategoria;
+  });
 
   return (
     <div className="app-container">
@@ -135,7 +269,7 @@ function App() {
             onClick={() => setActiveTab('movimentacoes')}
           >
             <ArrowLeftRight size={18} />
-            Movimentações
+            Movimentações ({movimentacoes.length})
           </button>
           <button
             type="button"
@@ -143,14 +277,14 @@ function App() {
             onClick={() => setActiveTab('categorias')}
           >
             <Tags size={18} />
-            Categorias
+            Categorias ({categorias.length})
           </button>
         </div>
       </nav>
 
       {/* 3. Área de Conteúdo Dinâmico */}
       <main className="main-content">
-        {/* Aviso amigável caso o backend esteja desligado */}
+        {/* Aviso caso o backend esteja desligado */}
         {backendStatus === 'offline' && (
           <div className="info-card" style={{ borderColor: 'var(--danger)', backgroundColor: '#fff5f5' }}>
             <div className="info-header" style={{ color: 'var(--danger)' }}>
@@ -158,14 +292,14 @@ function App() {
               <h3 style={{ color: 'var(--danger)', fontSize: '1rem' }}>Servidor Backend não detectado</h3>
             </div>
             <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-              Para ver os dados reais do banco PostgreSQL, certifique-se de que o backend esteja em execução no terminal:
+              Para ver e gerenciar os dados reais do banco PostgreSQL, certifique-se de que o backend esteja em execução:
               <br />
               <code style={{ marginTop: '0.5rem', display: 'inline-block' }}>cd backend; npm run dev</code>
             </p>
           </div>
         )}
 
-        {/* ABA: DASHBOARD */}
+        {/* ABA 1: DASHBOARD */}
         {activeTab === 'dashboard' && (
           <div>
             {/* Barra de Período e Atualização */}
@@ -314,7 +448,7 @@ function App() {
                   </div>
                 ) : (
                   <div className="empty-state">
-                    <p>Nenhuma movimentação financeira encontrada.</p>
+                    <p>Nenhuma movimentação registrada até o momento.</p>
                   </div>
                 )}
               </div>
@@ -322,17 +456,17 @@ function App() {
           </div>
         )}
 
-        {/* ABA: MOVIMENTAÇÕES */}
+        {/* ABA 2: MOVIMENTAÇÕES */}
         {activeTab === 'movimentacoes' && (
           <div>
             <div className="info-card">
               <div className="info-header">
                 <ArrowLeftRight size={22} color="var(--primary)" />
                 <h3>Histórico de Movimentações</h3>
-                <span className="badge-tag">Conectado à API</span>
+                <span className="badge-tag">{movimentacoes.length} Lançamentos</span>
               </div>
               <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>
-                Visualização das movimentações sincronizadas em tempo real com o PostgreSQL via Prisma ORM. Os formulários completos de inclusão, edição e filtros interativos serão implementados na <strong>Etapa 4</strong>.
+                Visualização das movimentações sincronizadas em tempo real com o PostgreSQL via Prisma ORM. O modal de novo lançamento, filtros avançados e edição por linha serão implementados na <strong>Tarefa 4.2</strong>.
               </p>
             </div>
 
@@ -381,35 +515,231 @@ function App() {
           </div>
         )}
 
-        {/* ABA: CATEGORIAS */}
+        {/* ABA 3: CATEGORIAS (INTERATIVAS - TAREFA 4.1) */}
         {activeTab === 'categorias' && (
           <div>
-            <div className="info-card">
-              <div className="info-header">
-                <Tags size={22} color="var(--primary)" />
-                <h3>Categorias do Sistema</h3>
-                <span className="badge-tag">{categorias.length} Categorias</span>
+            {/* Banner de Feedback (Sucesso / Erro com Trava de Integridade) */}
+            {feedbackMensagem && (
+              <div className={`feedback-alert ${feedbackMensagem.tipo}`}>
+                <div className="feedback-alert-content">
+                  {feedbackMensagem.tipo === 'error' ? (
+                    <AlertTriangle size={18} />
+                  ) : (
+                    <CheckCircle2 size={18} />
+                  )}
+                  <span>{feedbackMensagem.texto}</span>
+                </div>
+                <button
+                  type="button"
+                  className="feedback-close"
+                  onClick={() => setFeedbackMensagem(null)}
+                  title="Fechar"
+                >
+                  <X size={16} />
+                </button>
               </div>
-              <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>
-                Categorias cadastradas no banco de dados com suporte à diferenciação de tipo (Receitas e Despesas) e paleta de cores para gráficos. O formulário de inclusão/edição e validação de exclusão protegida com feedback amigável faz parte da <strong>Etapa 4</strong>.
-              </p>
+            )}
 
+            {/* Barra de Ações: Filtros por Tipo e Botão Nova Categoria */}
+            <div className="section-toolbar">
+              <div className="filter-group">
+                <button
+                  type="button"
+                  className={`filter-btn ${filtroTipoCategoria === 'TODOS' ? 'active' : ''}`}
+                  onClick={() => setFiltroTipoCategoria('TODOS')}
+                >
+                  Todas ({categorias.length})
+                </button>
+                <button
+                  type="button"
+                  className={`filter-btn ${filtroTipoCategoria === 'DESPESA' ? 'active' : ''}`}
+                  onClick={() => setFiltroTipoCategoria('DESPESA')}
+                >
+                  Despesas ({categorias.filter((c) => c.tipo === 'DESPESA').length})
+                </button>
+                <button
+                  type="button"
+                  className={`filter-btn ${filtroTipoCategoria === 'RECEITA' ? 'active' : ''}`}
+                  onClick={() => setFiltroTipoCategoria('RECEITA')}
+                >
+                  Receitas ({categorias.filter((c) => c.tipo === 'RECEITA').length})
+                </button>
+              </div>
+
+              <button
+                type="button"
+                className="btn-primary"
+                onClick={abrirModalNovaCategoria}
+              >
+                <Plus size={18} />
+                Nova Categoria
+              </button>
+            </div>
+
+            {/* Grade de Cards de Categoria com Ações de Edição e Exclusão */}
+            {categoriasFiltradas.length > 0 ? (
               <div className="categories-preview-grid">
-                {categorias.map((cat) => (
+                {categoriasFiltradas.map((cat) => (
                   <div
                     key={cat.id}
-                    className="cat-card"
+                    className="cat-card-interactive"
                     style={{ borderLeftColor: cat.cor || 'var(--primary)' }}
                   >
-                    <span style={{ fontWeight: 600, fontSize: '0.875rem' }}>{cat.nome}</span>
-                    <span className={`cat-type ${cat.tipo}`}>{cat.tipo}</span>
+                    <div className="cat-card-left">
+                      <span
+                        className="color-dot"
+                        style={{ backgroundColor: cat.cor || 'var(--primary)' }}
+                      ></span>
+                      <div>
+                        <span style={{ fontWeight: 600, fontSize: '0.9rem', display: 'block' }}>
+                          {cat.nome}
+                        </span>
+                        <span className={`cat-type ${cat.tipo}`} style={{ marginTop: '0.2rem', display: 'inline-block' }}>
+                          {cat.tipo}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="cat-card-actions">
+                      <button
+                        type="button"
+                        className="btn-icon edit"
+                        title="Editar Categoria"
+                        onClick={() => abrirModalEditarCategoria(cat)}
+                      >
+                        <Pencil size={15} />
+                      </button>
+                      <button
+                        type="button"
+                        className="btn-icon delete"
+                        title="Excluir Categoria"
+                        onClick={() => handleExcluirCategoria(cat)}
+                      >
+                        <Trash2 size={15} />
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
-            </div>
+            ) : (
+              <div className="panel-card">
+                <div className="empty-state">
+                  <p>Nenhuma categoria encontrada com o filtro selecionado.</p>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </main>
+
+      {/* Modal de Criação / Edição de Categoria (Tarefa 4.1) */}
+      {modalCategoriaAberto && (
+        <div className="modal-overlay" onClick={fecharModalCategoria}>
+          <div className="modal-container" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3>
+                <Tags size={20} color="var(--primary)" />
+                {categoriaEmEdicao ? 'Editar Categoria' : 'Nova Categoria'}
+              </h3>
+              <button
+                type="button"
+                className="modal-close-btn"
+                onClick={fecharModalCategoria}
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <form onSubmit={handleSalvarCategoria}>
+              <div className="modal-body">
+                <div className="form-group">
+                  <label htmlFor="cat-nome">Nome da Categoria *</label>
+                  <input
+                    id="cat-nome"
+                    type="text"
+                    className="form-control"
+                    placeholder="Ex: Alimentação, Investimentos..."
+                    value={formCategoria.nome}
+                    onChange={(e) => setFormCategoria({ ...formCategoria, nome: e.target.value })}
+                    maxLength={100}
+                    required
+                    autoFocus
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="cat-tipo">Tipo de Categoria *</label>
+                  <select
+                    id="cat-tipo"
+                    className="form-control"
+                    value={formCategoria.tipo}
+                    onChange={(e) => {
+                      const novoTipo = e.target.value;
+                      setFormCategoria({
+                        ...formCategoria,
+                        tipo: novoTipo,
+                        cor: novoTipo === 'RECEITA' && formCategoria.cor === '#E53E3E' ? '#38A169' : formCategoria.cor,
+                      });
+                    }}
+                  >
+                    <option value="DESPESA">Despesa (gastos/saídas)</option>
+                    <option value="RECEITA">Receita (ganhos/entradas)</option>
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label>Cor de Identificação</label>
+                  <div className="color-picker-wrapper">
+                    <div className="color-swatches">
+                      {PALETA_CORES.map((corItem) => (
+                        <button
+                          key={corItem}
+                          type="button"
+                          className={`color-swatch-btn ${formCategoria.cor === corItem ? 'selected' : ''}`}
+                          style={{ backgroundColor: corItem }}
+                          onClick={() => setFormCategoria({ ...formCategoria, cor: corItem })}
+                          title={corItem}
+                        />
+                      ))}
+                    </div>
+
+                    <div className="custom-color-row">
+                      <input
+                        type="color"
+                        className="input-color-native"
+                        value={formCategoria.cor}
+                        onChange={(e) => setFormCategoria({ ...formCategoria, cor: e.target.value.toUpperCase() })}
+                        title="Escolha uma cor personalizada"
+                      />
+                      <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontFamily: 'monospace' }}>
+                        {formCategoria.cor}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn-secondary"
+                  onClick={fecharModalCategoria}
+                  disabled={salvandoCategoria}
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  className="btn-primary"
+                  disabled={salvandoCategoria}
+                >
+                  {salvandoCategoria ? 'Salvando...' : categoriaEmEdicao ? 'Salvar Alterações' : 'Criar Categoria'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* 4. Rodapé */}
       <footer className="footer">

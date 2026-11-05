@@ -466,3 +466,41 @@ Certo, defina oq deverá ser feito pelo Guilherme na Tarefa 4 na documentação.
 
 
 
+
+
+---
+
+## 10. Etapa 4 - Gerenciamento Interativo de Categorias no Frontend
+
+* **Data:** 05/11/2026
+* **Etapa:** Etapa 4 - Tarefa 4.1
+
+### 10.1. Problema / Requisito Trabalhado
+Transformação da aba de Categorias do frontend em uma interface interativa completa de gerenciamento (CRUD), permitindo a inclusão, edição, filtragem por tipo e exclusão com tratamento amigável da regra de integridade referencial estabelecida no requisito 3.4.
+
+### 10.2. Texto Exato dos Prompts Utilizados
+```text
+perfeito! vamos para a etapa 4.1
+```
+*(Confirmação e autorização para execução da Tarefa 4.1 pelo estudante)*
+
+### 10.3. Refinamentos e Ações Executadas
+1. **Componente de Modal de Categorias:**
+   - Criação de modal responsivo em `frontend/src/App.jsx` suportando tanto a criação de novas categorias quanto a edição de categorias existentes.
+   - Campos de formulário: `nome` com validação de preenchimento, `tipo` (`DESPESA` ou `RECEITA`) e seletor visual de cores com paleta rápida de 12 opções e input de cor nativo.
+2. **Barra de Ações e Filtros:**
+   - Adição de botões para filtrar a grade de categorias por tipo (`Todas`, `Despesas`, `Receitas`), com contadores automáticos para cada filtro.
+   - Botão de destaque `+ Nova Categoria`.
+3. **Ações por Card de Categoria:**
+   - Inclusão de botões de ação (editar e excluir) em cada cartão de categoria.
+4. **Tratamento de Exclusão com Feedback de Integridade (Requisito 3.4):**
+   - Diálogo nativo de confirmação de exclusão.
+   - Captura de erro HTTP 400 da API quando o usuário tenta excluir uma categoria que possui movimentações vinculadas (ex: categoria Alimentação), renderizando um banner de alerta visual na interface com a mensagem explicativa da regra de negócio.
+5. **Estilização e Animações:**
+   - Adição de estilos em `frontend/src/index.css` para backdrop de modal, containers com animações suaves de entrada (`fadeIn`, `slideUp`), botões de ação e alertas de notificação.
+6. **Validação Técnica de Build:**
+   - Compilação do frontend testada e aprovada com sucesso via `npm run build` (tempo de 501ms).
+
+### 10.4. Decisões de Engenharia
+* **Interface Modal Reutilizável:** O mesmo formulário modal atende aos fluxos de criação e edição, alternando título, texto de submissão e pré-preenchimento com base no estado `categoriaEmEdicao`, reduzindo duplicação de código.
+* **Feedback de Erro Não-Bloqueante:** O tratamento de erros de integridade através de banners amigáveis com ícone de alerta e botão de fechar evita o uso de `alert()` invasivos do navegador, proporcionando uma experiência de usuário profissional e moderna.
