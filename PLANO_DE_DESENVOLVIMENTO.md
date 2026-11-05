@@ -93,32 +93,23 @@
 
 ---
 
-## 6. Próxima Tarefa Planejada
+## 6. Próximos Passos e Divisão de Tarefas da Dupla
 
-### 🎯 Tarefa 3.1: Inicialização do Frontend Base com React e Vite
-**O que será feito:**
-1. Criar a aplicação React moderna dentro da pasta `frontend/` utilizando o Vite (`npm create vite@latest frontend -- --template react`).
-2. Instalar dependências essenciais de interface e comunicação:
-   - `lucide-react`: ícones modernos para finanças (carteira, setas de entrada/saída, tags, gráficos).
-   - Configuração de estilização limpa e responsiva.
-3. Configurar proxy reverso no `vite.config.js` para redirecionar `/api` automaticamente para o backend (`http://localhost:3000`), evitando qualquer problema de portas no navegador.
-4. Criar um componente de teste que busca os dados de `/api/status` e `/api/dashboard/resumo`, comprovando a comunicação de ponta a ponta (Frontend ➔ Backend ➔ PostgreSQL).
-5. Documentar, comitar (`chore: inicializar frontend com react e vite`) e enviar para o GitHub.
+### 🔄 Etapa 3: Frontend Base (React + Vite)
+> **Responsável designado:** Jeferson (Jeff).  
+> **O que o colega irá desenvolver:**
+> 1. Inicializar a aplicação React na pasta `frontend/` com Vite (`npm create vite@latest frontend -- --template react`).
+> 2. Instalar dependências visuais (`lucide-react`, estilização responsiva).
+> 3. Configurar a estrutura de rotas/páginas e a comunicação com o backend (`http://localhost:3000`).
+> 4. Testar o consumo inicial de `/api/status` e `/api/dashboard/resumo`.
+> 5. Realizar commit semântico e enviar para o GitHub (`git push origin main`).
 
 ---
 
-## 7. Visão Geral das Próximas Etapas
-
-* **Etapa 3: Frontend Base (React + Vite)**
-  * Inicialização e configuração do Vite com React (Próxima tarefa).
-  * Criação do layout principal (Sidebar de navegação, cabeçalho e estrutura de rotas).
-* **Etapa 4: Telas de Gerenciamento**
-  * Tela de Categorias (cadastro, listagem e exclusão com feedback de integridade).
-  * Tela de Movimentações (formulário com validações, filtros por período e tabela de histórico).
-* **Etapa 5: Dashboard Financeiro e Gráficos**
-  * Cards de métricas (Receitas, Despesas, Saldo).
-  * Gráfico de rosca/pizza para distribuição de despesas por categoria (usando biblioteca leve como Recharts).
-* **Etapa 6: Documentação Final e Preparação da Apresentação**
-  * Atualização completa de `README.md` e `DOCUMENTACAO_IA.md`.
-  * Inserção dos prints finais do Trello em `docs/kanban-prints/`.
-  * Simulação do roteiro de apresentação presencial (10 minutos).
+### 🎯 Retomada com o Orientador Técnico: Etapa 4 (Telas de Gerenciamento)
+Assim que o Jeff finalizar e enviar a **Etapa 3** para o GitHub, faremos:
+1. Puxar o código do Jeff com `git pull origin main`.
+2. Validar o funcionamento do frontend na máquina local.
+3. Iniciar o desenvolvimento da **Etapa 4: Telas de Gerenciamento**:
+   * **Tela de Categorias:** Formulário modal de cadastro/edição, listagem com filtros e exclusão com feedback amigável de bloqueio.
+   * **Tela de Movimentações:** Formulário completo de receitas e despesas, tabela com paginação/scroll e filtros dinâmicos por período e categoria.
