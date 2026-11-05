@@ -95,14 +95,22 @@
 
 ## 6. Próximos Passos e Divisão de Tarefas da Dupla
 
-### 🔄 Etapa 3: Frontend Base (React + Vite)
+### 🔄 Etapa 3: Frontend Base (React + Vite) - EM ANDAMENTO
 > **Responsável designado:** Jeferson (Jeff).  
-> **O que o colega irá desenvolver:**
-> 1. Inicializar a aplicação React na pasta `frontend/` com Vite (`npm create vite@latest frontend -- --template react`).
-> 2. Instalar dependências visuais (`lucide-react`, estilização responsiva).
-> 3. Configurar a estrutura de rotas/páginas e a comunicação com o backend (`http://localhost:3000`).
-> 4. Testar o consumo inicial de `/api/status` e `/api/dashboard/resumo`.
-> 5. Realizar commit semântico e enviar para o GitHub (`git push origin main`).
+
+* **Tarefa 3.1 (Concluída por Jeff):**
+  - Inicialização do projeto React na pasta `frontend/` utilizando o Vite (`react`).
+  - Instalação e verificação das dependências de runtime (`react`, `react-dom`) e dev (`vite`, `@vitejs/plugin-react`).
+  - Instalação da biblioteca de ícones vetoriais modernos `lucide-react` para os indicadores financeiros.
+  - Teste de compilação em produção (`npm run build`) validado com sucesso sem erros.
+
+* **Tarefa 3.2 (Próxima):**
+  - Criação da camada de integração HTTP (`frontend/src/services/api.js`) conectando em `http://localhost:3000`.
+  - Implementação de funções de consumo para `/api/status`, `/api/categorias`, `/api/movimentacoes` e `/api/dashboard/resumo`.
+
+* **Tarefa 3.3:**
+  - Criação do layout base moderno e responsivo (Header e navegação de abas para Dashboard, Movimentações e Categorias).
+  - Validação do consumo em tempo real de `/api/status` e `/api/dashboard/resumo`.
 
 ---
 

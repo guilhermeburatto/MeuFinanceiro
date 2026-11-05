@@ -329,3 +329,38 @@ podemos iniciar
 ### 9.4. Decisões de Engenharia
 * **Cálculo Agregado no Backend:** Centralizar a lógica de soma e percentuais na API alivia a carga de processamento do navegador do usuário e garante uma única fonte da verdade contábil para qualquer cliente que venha a consumir a API.
 * **Preservação de Códigos de Cores no Resumo:** O payload do dashboard entrega diretamente a cor hexadecimal de cada categoria agrupada, permitindo que bibliotecas de gráficos (como Recharts) renderizem as fatias do gráfico sem necessidade de mapeamentos adicionais no frontend.
+
+---
+
+## 10. Etapa 3 - Inicialização do Frontend Base com React e Vite
+
+* **Data:** 05/11/2026
+* **Etapa:** Etapa 3 - Tarefa 3.1 (Executada por Jeferson / Jeff)
+
+### 10.1. Problema / Requisito Trabalhado
+Criação e estruturação inicial do projeto frontend utilizando React e Vite na pasta `frontend/`, atendendo aos requisitos acadêmicos da stack tecnológica (React como biblioteca moderna para construção de interface SPA). Instalação das dependências essenciais de desenvolvimento e de interface visual (`lucide-react`) para suporte aos ícones das categorias financeiras e navegação.
+
+### 10.2. Texto Exato dos Prompts Utilizados
+```text
+Certo, então primeiro iremos executar a nossa alteração no nosso .env. 
+
+Também apartir de agora iremos realizar nossas tarefas mais em "partes", começaremos a subir nossas partes (concretas) para o git para podermos definir melhor oq fizemos em nossos commit, sem aglutinar tudo em um só commit. 
+
+Quando terminar a alteração do .env me informe para iniciarmos a criação do front.
+```
+
+```text
+Perfeito, iniciamos então. Obs: Não se esqueça de documentar nas devidas documentações do projeto e informar oq fizemos.
+```
+*(Autorização para início da Tarefa 3.1 com diretriz de trabalho particionado e documentação rigorosa)*
+
+### 10.3. Refinamentos e Ações Executadas
+1. **Scaffolding da Aplicação:** Execução do comando `npm.cmd create vite@latest frontend -- --template react`, gerando a estrutura moderna base com suporte a JSX e Fast Refresh.
+2. **Instalação de Dependências:** Instalação das dependências de runtime (`react`, `react-dom`) e dev tools (`vite`, `@vitejs/plugin-react`).
+3. **Adição de Biblioteca de Ícones:** Instalação do pacote `lucide-react` para uso em botões, métricas e identificadores de categorias (receitas/despesas).
+4. **Verificação de Compilação:** Execução de `npm.cmd run build` para validação de integridade dos módulos gerados, confirmando 0 erros e 0 vulnerabilidades.
+
+### 10.4. Decisões de Engenharia
+* **Adoção do Vite:** Escolha do Vite em detrimento do legado Create React App (CRA). O Vite utiliza ES Modules nativos no navegador durante o desenvolvimento, oferecendo inicialização instantânea e compilação otimizada para produção via Rollup.
+* **Granularidade de Commits:** Divisão da Etapa 3 em entregas atômicas e rastreáveis (`feat: inicializar frontend com react e vite`, `feat: configurar integracao http com backend`, etc.), garantindo histórico limpo e auditável para a avaliação acadêmica.
+
