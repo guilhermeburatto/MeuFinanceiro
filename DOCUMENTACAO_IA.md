@@ -364,3 +364,35 @@ Perfeito, iniciamos então. Obs: Não se esqueça de documentar nas devidas docu
 * **Adoção do Vite:** Escolha do Vite em detrimento do legado Create React App (CRA). O Vite utiliza ES Modules nativos no navegador durante o desenvolvimento, oferecendo inicialização instantânea e compilação otimizada para produção via Rollup.
 * **Granularidade de Commits:** Divisão da Etapa 3 em entregas atômicas e rastreáveis (`feat: inicializar frontend com react e vite`, `feat: configurar integracao http com backend`, etc.), garantindo histórico limpo e auditável para a avaliação acadêmica.
 
+---
+
+## 11. Etapa 3 - Configuração da Camada de Integração HTTP com o Backend
+
+* **Data:** 05/11/2026
+* **Etapa:** Etapa 3 - Tarefa 3.2 (Executada por Jeferson / Jeff)
+
+### 11.1. Problema / Requisito Trabalhado
+Criação do cliente HTTP modular no frontend para comunicação assíncrona com os endpoints da API REST Express rodando na porta 3000. Encapsulamento de requisições, tratamento centralizado de mensagens de erro HTTP (ex: código 400 em exclusão de categoria com movimentações vinculadas) e padronização dos métodos de consumo para Dashboard, Categorias e Movimentações.
+
+### 11.2. Texto Exato dos Prompts Utilizados
+```text
+Ok, vamos prosseguir para a Parte 3.2.
+```
+*(Autorização do estudante para implementação da camada de serviços HTTP)*
+
+### 11.3. Refinamentos e Ações Executadas
+1. **Configuração de Variáveis de Ambiente no Vite:** Criação de `frontend/.env.example` e `frontend/.env` definindo `VITE_API_URL=http://localhost:3000/api`.
+2. **Criação do Módulo `frontend/src/services/api.js`:**
+   - Implementação da função `request(endpoint, options)` encapsulando a `fetch` API com suporte a cabeçalhos padrão JSON e extração automática de mensagens de erro da API.
+   - Mapeamento de `obterStatus()` para `GET /status`.
+   - Mapeamento de `dashboardService.obterResumo(params)` para `GET /dashboard/resumo`.
+   - Mapeamento de `categoriaService` com operações completas de listagem, busca por ID, criação, atualização e remoção.
+   - Mapeamento de `movimentacaoService` com suporte a query params para filtros combinados de período (`dataInicio`/`dataFim`), tipo e categoria.
+3. **Verificação de Compilação:** Execução de `npm.cmd run build` confirmando que a compilação do Vite processa o serviço sem pendências ou incompatibilidades sintáticas.
+
+### 11.4. Decisões de Engenharia
+* **Uso da Fetch API Nativa Encapsulada:** Evita a necessidade de instalar bibliotecas pesadas de terceiros (como Axios) para operações HTTP básicas, reduzindo o tamanho final do bundle JavaScript do frontend e aproveitando os recursos nativos dos navegadores modernos.
+* **Fallback Seguro da URL:** A URL base utiliza `import.meta.env.VITE_API_URL || 'http://localhost:3000/api'`, permitindo tanto a execução imediata sem configuração manual quanto a flexibilidade de apontar para outro endereço caso a API seja hospedada externamente.
+* **Tratamento Específico de Erros de Rede:** Caso o backend esteja temporariamente desligado, o serviço lança uma mensagem explicativa orientando o usuário/estudante a iniciar a API na porta 3000 em vez de exibir um erro opaco de *Failed to fetch*.
+
+

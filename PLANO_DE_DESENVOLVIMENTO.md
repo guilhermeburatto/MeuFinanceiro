@@ -104,11 +104,13 @@
   - Instalação da biblioteca de ícones vetoriais modernos `lucide-react` para os indicadores financeiros.
   - Teste de compilação em produção (`npm run build`) validado com sucesso sem erros.
 
-* **Tarefa 3.2 (Próxima):**
-  - Criação da camada de integração HTTP (`frontend/src/services/api.js`) conectando em `http://localhost:3000`.
-  - Implementação de funções de consumo para `/api/status`, `/api/categorias`, `/api/movimentacoes` e `/api/dashboard/resumo`.
+* **Tarefa 3.2 (Concluída por Jeff):**
+  - Criação da camada de integração HTTP modular em `frontend/src/services/api.js` utilizando Fetch API nativa.
+  - Implementação de tratamento unificado de erros de rede e mensagens de validação da API REST.
+  - Mapeamento completo dos serviços da API: `obterStatus`, `dashboardService.obterResumo`, `categoriaService` (CRUD) e `movimentacaoService` (CRUD com filtros de período e tipo).
+  - Criação de `frontend/.env.example` com a variável `VITE_API_URL=http://localhost:3000/api`.
 
-* **Tarefa 3.3:**
+* **Tarefa 3.3 (Próxima):**
   - Criação do layout base moderno e responsivo (Header e navegação de abas para Dashboard, Movimentações e Categorias).
   - Validação do consumo em tempo real de `/api/status` e `/api/dashboard/resumo`.
 
