@@ -504,3 +504,42 @@ perfeito! vamos para a etapa 4.1
 ### 10.4. Decisões de Engenharia
 * **Interface Modal Reutilizável:** O mesmo formulário modal atende aos fluxos de criação e edição, alternando título, texto de submissão e pré-preenchimento com base no estado `categoriaEmEdicao`, reduzindo duplicação de código.
 * **Feedback de Erro Não-Bloqueante:** O tratamento de erros de integridade através de banners amigáveis com ícone de alerta e botão de fechar evita o uso de `alert()` invasivos do navegador, proporcionando uma experiência de usuário profissional e moderna.
+
+
+---
+
+## 11. Etapa 4 - Gerenciamento Interativo de Movimentações no Frontend
+
+* **Data:** 05/11/2026
+* **Etapa:** Etapa 4 - Tarefa 4.2
+
+### 11.1. Problema / Requisito Trabalhado
+Construção da interface de gerenciamento interativo de receitas e despesas na aba de Movimentações, incluindo formulário modal de cadastro e edição com controle de coerência entre tipo de lançamento e categoria, filtros avançados múltiplos (tipo, categoria e intervalo de datas) e ações por linha com recálculo automático de saldos e métricas.
+
+### 11.2. Texto Exato dos Prompts Utilizados
+```text
+Sim
+```
+*(Autorização para execução da Tarefa 4.2)*
+
+### 11.3. Refinamentos e Ações Executadas
+1. **Modal de Novo Lançamento e Edição:**
+   - Botões seletores de tipo (`Despesa` e `Receita`) com destaque visual e cores indicativas.
+   - **Regra de Coerência Dinâmica:** Ao alternar entre Despesa e Receita, o menu suspenso de categorias filtra e exibe estritamente as categorias que pertencem ao tipo selecionado, prevenindo erros de classificação pelo usuário.
+   - Campos de formulário com validações: descrição obrigatória, valor monetário positivo (> 0), data com preenchimento padrão na data atual e categoria obrigatória.
+2. **Barra de Filtros Avançados:**
+   - Filtro rápido por tipo (`Todas`, `Despesas`, `Receitas`).
+   - Dropdown para filtrar por uma categoria específica.
+   - Inputs de data `De` / `Até` para filtragem de período.
+   - Botão dinâmico `Limpar Filtros` exibido apenas quando filtros estão ativos.
+   - Barra de resumo instantâneo exibindo a quantidade de itens filtrados e a soma consolidada de receitas e despesas que atendem aos filtros.
+3. **Ações por Linha e Atualização Reativa:**
+   - Botão de edição em cada lançamento pré-carregando os dados no formulário modal.
+   - Botão de exclusão com diálogo nativo de confirmação.
+   - Ao criar, editar ou excluir, a interface aciona `carregarDados()`, atualizando simultaneamente a lista de lançamentos e os cards do Dashboard.
+4. **Validação Técnica de Build:**
+   - Build do frontend validado com sucesso sem erros (`npm run build` em 474ms).
+
+### 11.4. Decisões de Engenharia
+* **Filtragem no Cliente com Suporte a Filtro de API:** Como a lista completa de movimentações é mantida em memória no estado React, a filtragem instantânea no cliente proporciona uma resposta visual imediata sem latência de rede.
+* **Coerência de Tipos Guiada pela Interface:** A filtragem em tempo real das opções de categoria no `<select>` impede na origem que o usuário cometa o erro de vincular um gasto a uma categoria de receita, complementando a trava de segurança já existente na API REST.

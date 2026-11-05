@@ -79,6 +79,11 @@
   - Modal interativo de edição de categorias existentes com pré-carregamento dos dados.
   - Exclusão com diálogo de confirmação e tratamento da trava de integridade: captura de erro 400 da API com exibição de alerta explicativo na tela para o usuário (atendendo ao requisito acadêmico 3.4).
   - Banners de feedback visual (sucesso e erro) integrados à interface.
+* **Tarefa 4.2 (Concluída por Guilherme):**
+  - Barra de filtros avançados combinando filtro por tipo (`Todas`, `Receitas`, `Despesas`), filtro por categoria específica e filtro por período de datas (`De` / `Até`).
+  - Linha de resumo financeiro instantâneo com contagem de lançamentos e soma dos totais filtrados de receitas e despesas.
+  - Modal dinâmico de lançamento com alternância visual entre Despesa e Receita, campos de descrição, valor positivo, data e **seletor inteligente de categorias** (que lista apenas as categorias compatíveis com o tipo escolhido).
+  - Ações por linha com botões de edição e exclusão com diálogo de confirmação e recálculo automático do saldo.
 
 ---
 
@@ -87,37 +92,27 @@
 * **Container PostgreSQL:** Ativo no Docker (`meufinanceiro_postgres`), aceitando conexões na porta `5433`.
 * **Banco de Dados:** Tabelas `categorias` e `movimentacoes` populadas e conectadas.
 * **Backend:** 100% pronto e testado em `http://localhost:3000`.
-* **Frontend:** Operacional, conectado à API, com Dashboard dinâmico e Gerenciamento Interativo de Categorias 100% funcional.
-* **Documentação de IA:** `DOCUMENTACAO_IA.md` atualizado com todas as iterações e decisões técnicas até a Tarefa 4.1.
+* **Frontend:** Operacional, conectado à API, com Dashboard dinâmico, Gerenciamento de Categorias e Gerenciamento de Movimentações 100% funcionais e interativos.
+* **Documentação de IA:** `DOCUMENTACAO_IA.md` atualizado com todas as iterações e decisões técnicas até a Tarefa 4.2.
 
 ---
 
 ## 6. Próxima Tarefa Planejada
 
-### 🎯 Tarefa 4.2: Gerenciamento Interativo de Movimentações (Frontend)
+### 🎯 Tarefa 4.3: Visualização Gráfica no Dashboard (Frontend)
 **O que será feito:**
-1. **Modal de Cadastro de Movimentações:**
-   - Formulário para registrar receita ou despesa contendo:
-     - `descricao` (texto obrigatório, placeholder contextual).
-     - `valor` (valor monetário positivo, com validação).
-     - `data` (seletor de data pré-preenchido com a data de hoje `YYYY-MM-DD`).
-     - `tipo` (`DESPESA` ou `RECEITA`).
-     - `categoriaId` (**seletor dinâmico:** filtra automaticamente as categorias disponíveis para exibir apenas as que combinam com o tipo escolhido).
-2. **Tabela Completa de Movimentações:**
-   - Visualização em tabela/lista elegante com data formatada, descrição, tag da categoria com sua respectiva cor, tipo e valor colorido (verde para receita, vermelho para despesa).
-   - Filtros dinâmicos no topo:
-     * Filtro por período (`dataInicio` e `dataFim`).
-     * Filtro por tipo (`Todas`, `Receitas`, `Despesas`).
-     * Filtro por categoria específica.
-3. **Ações por Lançamento:**
-   - Botão para editar movimentação (abrindo modal de edição).
-   - Botão para excluir movimentação com confirmação e recálculo instantâneo do saldo.
-4. **Commit Semântico:** `feat: implementar cadastro e filtros de movimentacoes`.
+1. Instalar a biblioteca de visualização de dados `recharts` no frontend (`npm install recharts`).
+2. Criar o componente de gráfico de rosca/pizza (Donut Chart) na aba Dashboard:
+   - Exibir a distribuição percentual e em reais (R$) das despesas por categoria.
+   - Utilizar as cores hexadecimais associadas a cada categoria no banco.
+   - Incluir tooltip interativo passando o mouse sobre as fatias.
+   - Legenda descritiva com os nomes e valores.
+3. Tratamento de estado vazio: se não houver despesas no período, exibir mensagem amigável com orientação.
+4. **Commit Semântico:** `feat: adicionar grafico de distribuicao de despesas no dashboard`.
 
 ---
 
 ## 7. Visão Geral das Etapas Seguintes
 
-* **Tarefa 4.3:** Visualização Gráfica de Despesas por Categoria no Dashboard (Donut Chart com `recharts`).
-* **Etapa 5:** Polimento Visual, Responsividade Mobile e Testes de Usabilidade.
-* **Etapa 6:** Documentação Final, Prints do Trello em `docs/kanban-prints/` e Ensaio para Apresentação Presencial (10 min).
+* **Etapa 5:** Polimento Visual, Responsividade Mobile e Testes de Usabilidade de ponta a ponta.
+* **Etapa 6:** Documentação Final, Prints do Trello em `docs/kanban-prints/` e Roteiro de Ensaio para Apresentação Presencial (10 min).
