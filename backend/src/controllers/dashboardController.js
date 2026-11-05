@@ -116,9 +116,14 @@ export const obterResumo = async (req, res) => {
         saldo,
         quantidadeMovimentacoes: movimentacoes.length
       },
+      // Atalhos diretos para compatibilidade com o frontend
+      totalReceitas: Number(totalReceitas.toFixed(2)),
+      totalDespesas: Number(totalDespesas.toFixed(2)),
+      saldo,
       despesasPorCategoria,
       receitasPorCategoria,
-      ultimasMovimentacoes
+      ultimasMovimentacoes,
+      movimentacoesRecentes: ultimasMovimentacoes
     });
   } catch (error) {
     console.error('Erro ao gerar resumo do dashboard:', error);

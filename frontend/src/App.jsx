@@ -62,7 +62,18 @@ function App() {
 
       // 2. Carrega resumo analítico do Dashboard
       const resumoRes = await dashboardService.obterResumo();
-      setResumo(resumoRes);
+      if (resumoRes) {
+        setResumo({
+          totalReceitas: resumoRes.totalReceitas ?? resumoRes.totais?.receitas ?? 0,
+          totalDespesas: resumoRes.totalDespesas ?? resumoRes.totais?.despesas ?? 0,
+          saldo: resumoRes.saldo ?? resumoRes.totais?.saldo ?? 0,
+          despesasPorCategoria: resumoRes.despesasPorCategoria || [],
+          receitasPorCategoria: resumoRes.receitasPorCategoria || [],
+          movimentacoesRecentes: resumoRes.movimentacoesRecentes ?? resumoRes.ultimasMovimentacoes ?? [],
+        });
+      } else {
+        setResumo(resumoRes);
+      }
 
       // 3. Carrega categorias
       const categoriasRes = await categoriaService.listar();
