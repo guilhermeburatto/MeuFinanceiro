@@ -197,3 +197,34 @@ Ok, o docker está aberto.
 * **Integridade Referencial com `onDelete: Restrict`:** Cumpre o requisito acadêmico 3.4 (*"respeitando os vínculos com movimentações existentes"*), impedindo a quebra de histórico financeiro no banco de dados caso uma categoria em uso tente ser excluída.
 * **Atributo `cor` nas Categorias:** O armazenamento de códigos de cores hexadecimais (ex: `#E53E3E`) na entidade de categoria viabiliza diretamente a renderização de gráficos padronizados no frontend (Dashboard).
 
+
+
+---
+
+## 6. Etapa 1 - Resolução de Conflitos, Port Collision e Alinhamento do Prisma
+
+* **Data:** 05/11/2026
+* **Etapa:** Etapa 1 - Finalização e Alinhamento
+
+### 6.1. Problema / Requisito Trabalhado
+Integração do código submetido pelo colega de trabalho (Jeff), resolução de divergência de histórico no Git (`refusing to merge unrelated histories`), diagnóstico de falha de autenticação no PostgreSQL decorrente de concorrência de porta local e eliminação de artefatos experimentais no Prisma.
+
+### 6.2. Texto Exato dos Prompts Utilizados
+```text
+Oi... Meu colega de trabalho fez alterações nesse projeto e disse que alguma coisa não deu certo... Baixe o que ele fez pelo github e analise, por favor
+```
+
+```text
+vamos lá, docker rodando, pode continuar
+```
+
+### 6.3. Refinamentos e Ações Executadas
+1. **Alinhamento do Histórico do Git:** Sincronização da branch local `main` com `origin/main`, absorvendo os commits e a evolução de modelagem realizada pela dupla.
+2. **Diagnóstico de Concorrência de Porta (Port Collision):** Detectou-se que a máquina local possuía um serviço nativo do Windows (`postgresql-x64-16`) em execução na porta `5432`. Ao tentar conectar, as requisições eram interceptadas pelo serviço do Windows em vez do container Docker, resultando em falha de autenticação (`P1000`).
+3. **Mapeamento de Porta Isolada (5433:5432):** Ajustou-se o `docker-compose.yml` para expor o container na porta `5433` (`5433:5432`) e atualizou-se a `DATABASE_URL` no `.env` e `.env.example`, garantindo isolamento total do container Docker sem interferir em instalações nativas do sistema operacional.
+4. **Remoção de Arquivo Experimental (`prisma.config.ts`):** O arquivo de configuração em TypeScript foi excluído para evitar que o Prisma 6 LTS ignorasse o carregamento padrão de variáveis de ambiente.
+5. **Geração do Prisma Client e Carga do Banco:** Executou-se `npx prisma generate`, aplicou-se a migração `20261104140703_init_schema` no container Docker e executou-se com sucesso o script `npm run seed`, populando as 12 categorias base no PostgreSQL.
+
+### 6.4. Decisões de Engenharia
+* **Exposição na Porta 5433:** Evita conflitos de rede quando desenvolvedores possuem bancos locais instalados em suas máquinas físicas para outras finalidades, mantendo o container Docker autocontido e funcional.
+* **Padronização no Prisma 6 LTS sem `prisma.config.ts`:** Reduz a complexidade e alertas desnecessários de compilação em um ambiente puramente baseado em ES Modules JavaScript.

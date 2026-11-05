@@ -74,7 +74,7 @@
 
 ## 5. Estado Atual do Sistema
 
-* **Container PostgreSQL:** Ativo no Docker (`meufinanceiro_postgres`), aceitando conexões na porta `5432`.
+* **Container PostgreSQL:** Ativo no Docker (`meufinanceiro_postgres`), aceitando conexões na porta `5433` (mapeada para evitar conflito com instâncias nativas do Windows).
 * **Banco de Dados:** Tabelas `categorias` e `movimentacoes` criadas via migração e populadas com 12 categorias base via seed.
 * **Prisma ORM:** Prisma Client 6.19.3 gerado e pronto para consumo pelo Express.
 * **Servidor Backend:** Estruturado e testado localmente na porta `3000`.
