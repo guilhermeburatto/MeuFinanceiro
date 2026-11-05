@@ -395,4 +395,41 @@ Ok, vamos prosseguir para a Parte 3.2.
 * **Fallback Seguro da URL:** A URL base utiliza `import.meta.env.VITE_API_URL || 'http://localhost:3000/api'`, permitindo tanto a execução imediata sem configuração manual quanto a flexibilidade de apontar para outro endereço caso a API seja hospedada externamente.
 * **Tratamento Específico de Erros de Rede:** Caso o backend esteja temporariamente desligado, o serviço lança uma mensagem explicativa orientando o usuário/estudante a iniciar a API na porta 3000 em vez de exibir um erro opaco de *Failed to fetch*.
 
+---
+
+## 12. Etapa 3 - Estruturação do Layout Base e Navegação do Frontend
+
+* **Data:** 05/11/2026
+* **Etapa:** Etapa 3 - Tarefa 3.3 (Executada por Jeferson / Jeff)
+
+### 12.1. Problema / Requisito Trabalhado
+Construção da interface visual principal do sistema MeuFinanceiro, fornecendo cabeçalho com indicador em tempo real da saúde da API (`/api/status`), barra de navegação responsiva em abas (`Dashboard`, `Movimentações`, `Categorias`), painel analítico com métricas monetárias em Real (BRL), barras de progresso proporcionais para despesas por categoria e listagem sincronizada de movimentações recentes.
+
+### 12.2. Texto Exato dos Prompts Utilizados
+```text
+Certo Iniciamos a Parte 3.3
+```
+*(Confirmação e autorização do estudante para desenvolvimento da interface base e navegação)*
+
+### 12.3. Refinamentos e Ações Executadas
+1. **Padronização Visual e Design System em `frontend/src/index.css`:**
+   - Criação de variáveis CSS para paleta financeira (verde esmeralda para receitas/saldo, vermelho carmesim para despesas, slate moderno para textos e cartões brancos com sombras suaves).
+   - Estilização completa para botões, badges de status, cards de métricas, barras de progresso e listas de transações.
+2. **Construção do Layout em `frontend/src/App.jsx`:**
+   - **Header:** Identificação visual da marca e badge reativo indicando o estado do backend (`Online`, `Desconectado`, `Verificando`).
+   - **Navegação:** Sistema de abas com ícones vetoriais da biblioteca `lucide-react` (`LayoutDashboard`, `ArrowLeftRight`, `Tags`).
+   - **Dashboard:**
+     - Botão de atualização sob demanda chamando `carregarDados()`.
+     - Cards de métricas com valores formatados via `Intl.NumberFormat('pt-BR')`.
+     - Painel de despesas por categoria com cálculo percentual e indicação cromática com a cor configurada no banco.
+     - Painel das 5 movimentações mais recentes com identificação clara de entradas (+) e saídas (-).
+   - **Abas de Movimentações e Categorias:** Listagem dinâmica dos registros vindos da API, preparando a interface para os formulários de inserção da Etapa 4.
+3. **Validação e Compilação:** Execução de `npm.cmd run build` sem erros (2056 módulos transformados com sucesso em 429ms).
+
+### 12.4. Decisões de Engenharia
+* **Indicador Visual de Conexão com o Backend:** Previne que o usuário final ou o professor em dia de apresentação presencial fique confuso caso esqueça de iniciar o container Docker ou o servidor Express, fornecendo feedback amigável imediato.
+* **Formatação Monetária Nativa (`Intl.NumberFormat`):** Garante a formatação monetária correta e culturalmente adequada ao padrão brasileiro (`R$ 1.250,00`) sem depender de dependências externas.
+* **Componente SPA Reativo com Abas de Estado:** A navegação por abas gerenciada por estado do React (`useState`) dispensa roteadores complexos na fase inicial, mantendo o carregamento ultrarrápido e sem recarregamento de página.
+
+
 

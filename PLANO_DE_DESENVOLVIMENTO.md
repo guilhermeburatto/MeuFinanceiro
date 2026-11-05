@@ -95,7 +95,7 @@
 
 ## 6. Próximos Passos e Divisão de Tarefas da Dupla
 
-### 🔄 Etapa 3: Frontend Base (React + Vite) - EM ANDAMENTO
+### ✅ Etapa 3: Frontend Base (React + Vite) - CONCLUÍDA
 > **Responsável designado:** Jeferson (Jeff).  
 
 * **Tarefa 3.1 (Concluída por Jeff):**
@@ -110,16 +110,33 @@
   - Mapeamento completo dos serviços da API: `obterStatus`, `dashboardService.obterResumo`, `categoriaService` (CRUD) e `movimentacaoService` (CRUD com filtros de período e tipo).
   - Criação de `frontend/.env.example` com a variável `VITE_API_URL=http://localhost:3000/api`.
 
-* **Tarefa 3.3 (Próxima):**
-  - Criação do layout base moderno e responsivo (Header e navegação de abas para Dashboard, Movimentações e Categorias).
-  - Validação do consumo em tempo real de `/api/status` e `/api/dashboard/resumo`.
+* **Tarefa 3.3 (Concluída por Jeff):**
+  - Criação do layout base profissional e responsivo com navegação fluida por abas (`Dashboard`, `Movimentações`, `Categorias`).
+  - Implementação de monitoramento de saúde do backend com badge dinâmico (Online/Offline/Conectando).
+  - Construção do painel inicial do Dashboard com cards de métricas (Receitas, Despesas, Saldo Líquido com indicação visual positiva/negativa), distribuição de despesas por categoria com barras de progresso percentuais e lista de movimentações recentes.
+  - Pré-visualização integrada de movimentações e categorias sincronizadas em tempo real com a API e banco de dados.
 
 ---
 
-### 🎯 Retomada com o Orientador Técnico: Etapa 4 (Telas de Gerenciamento)
-Assim que o Jeff finalizar e enviar a **Etapa 3** para o GitHub, faremos:
-1. Puxar o código do Jeff com `git pull origin main`.
-2. Validar o funcionamento do frontend na máquina local.
-3. Iniciar o desenvolvimento da **Etapa 4: Telas de Gerenciamento**:
-   * **Tela de Categorias:** Formulário modal de cadastro/edição, listagem com filtros e exclusão com feedback amigável de bloqueio.
-   * **Tela de Movimentações:** Formulário completo de receitas e despesas, tabela com paginação/scroll e filtros dinâmicos por período e categoria.
+## 5. Estado Atual do Sistema
+
+* **Container PostgreSQL:** Ativo no Docker (`meufinanceiro_postgres`), aceitando conexões na porta `5433`.
+* **Banco de Dados:** Tabelas `categorias` e `movimentacoes` criadas via migração e populadas com 12 categorias base e dados de teste.
+* **Prisma ORM:** Prisma Client 6.19.3 conectado e operando consultas relacionais e agregações.
+* **API REST Backend:** 100% pronta e testada (`/api/status`, `/api/categorias`, `/api/movimentacoes`, `/api/dashboard/resumo`).
+* **Frontend Base (React + Vite):** 100% operacional, integrado via HTTP com a API, layout responsivo e exibição dinâmica de dados do Dashboard, Movimentações e Categorias.
+* **Documentação de IA:** `DOCUMENTACAO_IA.md` atualizado com todas as iterações e decisões técnicas até a Tarefa 3.3.
+
+---
+
+## 6. Próxima Etapa Planejada
+
+### 🎯 Etapa 4: Telas de Gerenciamento Interativas
+1. **Tela de Categorias:**
+   - Modal interativo para criação e edição de categorias (com seletor de tipo `RECEITA`/`DESPESA` e seletor de cor hexadecimal).
+   - Botão de exclusão com diálogo de confirmação e captura do bloqueio amigável da API caso a categoria possua movimentações vinculadas.
+2. **Tela de Movimentações:**
+   - Formulário modal completo de cadastro de receitas e despesas (descrição, valor positivo, data e seleção dinâmica de categoria compatível com o tipo).
+   - Tabela de histórico completa com paginação e filtros dinâmicos por período (data início/fim) e tipo.
+3. **Dashboard com Gráficos Visuais:**
+   - Integração de biblioteca de gráficos para renderizar a distribuição de despesas por categoria de forma gráfica (rosca/pizza).
