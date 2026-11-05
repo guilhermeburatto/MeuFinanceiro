@@ -431,5 +431,38 @@ Certo Iniciamos a Parte 3.3
 * **Formatação Monetária Nativa (`Intl.NumberFormat`):** Garante a formatação monetária correta e culturalmente adequada ao padrão brasileiro (`R$ 1.250,00`) sem depender de dependências externas.
 * **Componente SPA Reativo com Abas de Estado:** A navegação por abas gerenciada por estado do React (`useState`) dispensa roteadores complexos na fase inicial, mantendo o carregamento ultrarrápido e sem recarregamento de página.
 
+---
+
+## 13. Planejamento da Etapa 4 e Transição de Responsabilidade Técnica
+
+* **Data:** 05/11/2026
+* **Etapa:** Planejamento da Etapa 4 (Designada para Guilherme Buratto)
+
+### 13.1. Problema / Requisito Trabalhado
+Definição formal das responsabilidades técnicas e requisitos funcionais a serem desenvolvidos pelo integrante da equipe Guilherme Buratto para a **Etapa 4: Telas de Gerenciamento Interativas, Formulários e Gráficos**, assegurando continuidade pedagógica, padrão de versionamento (Semantic Commits) e cumprimento das exigências acadêmicas do trabalho (requisitos 3.1 a 3.5).
+
+### 13.2. Texto Exato dos Prompts Utilizados
+```text
+Certo, defina oq deverá ser feito pelo Guilherme na Tarefa 4 na documentação.
+```
+*(Solicitação do estudante para detalhamento formal das tarefas do colega na documentação)*
+
+### 13.3. Refinamentos e Ações Executadas
+1. **Especificação da Tarefa 4.1 (Gerenciamento de Categorias no Frontend):**
+   - Criação de modais de inserção e edição com validação de campos obrigatórios (`nome`, `tipo`, `cor`).
+   - Implementação de captura do erro HTTP 400 da API na exclusão, exibindo alerta visual para o usuário quando a categoria não puder ser apagada por possuir lançamentos vinculados (`onDelete: Restrict`).
+2. **Especificação da Tarefa 4.2 (Gerenciamento de Movimentações no Frontend):**
+   - Criação de modal de cadastro de receitas e despesas com sincronização de tipo e filtro dinâmico de categorias pertinentes.
+   - Construção de tabela completa de histórico com filtros combinados de período (`dataInicio`, `dataFim`), tipo e categoria, além de ações de edição e exclusão.
+3. **Especificação da Tarefa 4.3 (Gráficos no Dashboard):**
+   - Instalação da biblioteca `recharts` para exibição de gráfico de rosca/pizza (Donut Chart) na aba Dashboard com tooltips em Real e percentuais.
+4. **Instruções de Inicialização para o Guilherme:**
+   - Comandos explícitos de sincronização (`git pull origin main`) e execução simultânea dos dois ambientes (`backend` na porta 3000 e `frontend` na porta 5173).
+
+### 13.4. Decisões de Engenharia
+* **Padronização da Integração através de `api.js`:** Toda a comunicação do frontend na Etapa 4 deverá consumir exclusivamente as funções pré-configuradas em `frontend/src/services/api.js` (`categoriaService`, `movimentacaoService`, `dashboardService`), garantindo desacoplamento entre componentes visuais e chamadas de rede.
+* **Transparência no Controle de Versão da Dupla:** Documentar a divisão de trabalho permite ao professor validar a colaboração efetiva de ambos os membros do grupo na disciplina de Laboratório de Programação.
+
+
 
 

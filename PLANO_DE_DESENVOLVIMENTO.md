@@ -95,21 +95,17 @@
 
 ## 6. Próximos Passos e Divisão de Tarefas da Dupla
 
-### ✅ Etapa 3: Frontend Base (React + Vite) - CONCLUÍDA
-> **Responsável designado:** Jeferson (Jeff).  
-
+### ✅ Etapa 3: Frontend Base e Integracao (CONCLUÍDA POR JEFERSON)
 * **Tarefa 3.1 (Concluída por Jeff):**
-  - Inicialização do projeto React na pasta `frontend/` utilizando o Vite (`react`).
+  - Inicialização do projeto React na pasta `frontend/` utilizando o Vite (`react` template).
   - Instalação e verificação das dependências de runtime (`react`, `react-dom`) e dev (`vite`, `@vitejs/plugin-react`).
   - Instalação da biblioteca de ícones vetoriais modernos `lucide-react` para os indicadores financeiros.
   - Teste de compilação em produção (`npm run build`) validado com sucesso sem erros.
-
 * **Tarefa 3.2 (Concluída por Jeff):**
   - Criação da camada de integração HTTP modular em `frontend/src/services/api.js` utilizando Fetch API nativa.
   - Implementação de tratamento unificado de erros de rede e mensagens de validação da API REST.
   - Mapeamento completo dos serviços da API: `obterStatus`, `dashboardService.obterResumo`, `categoriaService` (CRUD) e `movimentacaoService` (CRUD com filtros de período e tipo).
   - Criação de `frontend/.env.example` com a variável `VITE_API_URL=http://localhost:3000/api`.
-
 * **Tarefa 3.3 (Concluída por Jeff):**
   - Criação do layout base profissional e responsivo com navegação fluida por abas (`Dashboard`, `Movimentações`, `Categorias`).
   - Implementação de monitoramento de saúde do backend com badge dinâmico (Online/Offline/Conectando).
@@ -125,18 +121,68 @@
 * **Prisma ORM:** Prisma Client 6.19.3 conectado e operando consultas relacionais e agregações.
 * **API REST Backend:** 100% pronta e testada (`/api/status`, `/api/categorias`, `/api/movimentacoes`, `/api/dashboard/resumo`).
 * **Frontend Base (React + Vite):** 100% operacional, integrado via HTTP com a API, layout responsivo e exibição dinâmica de dados do Dashboard, Movimentações e Categorias.
-* **Documentação de IA:** `DOCUMENTACAO_IA.md` atualizado com todas as iterações e decisões técnicas até a Tarefa 3.3.
+* **Documentação de IA:** `DOCUMENTACAO_IA.md` rigorosamente atualizado com todas as iterações e decisões técnicas até a Tarefa 3.3.
 
 ---
 
-## 6. Próxima Etapa Planejada
+## 6. Próxima Etapa Planejada e Divisão de Tarefas da Dupla
 
-### 🎯 Etapa 4: Telas de Gerenciamento Interativas
-1. **Tela de Categorias:**
-   - Modal interativo para criação e edição de categorias (com seletor de tipo `RECEITA`/`DESPESA` e seletor de cor hexadecimal).
-   - Botão de exclusão com diálogo de confirmação e captura do bloqueio amigável da API caso a categoria possua movimentações vinculadas.
-2. **Tela de Movimentações:**
-   - Formulário modal completo de cadastro de receitas e despesas (descrição, valor positivo, data e seleção dinâmica de categoria compatível com o tipo).
-   - Tabela de histórico completa com paginação e filtros dinâmicos por período (data início/fim) e tipo.
-3. **Dashboard com Gráficos Visuais:**
-   - Integração de biblioteca de gráficos para renderizar a distribuição de despesas por categoria de forma gráfica (rosca/pizza).
+### 🎯 Etapa 4: Telas de Gerenciamento Interativas, Formulários e Gráficos
+> **Responsável designado:** Guilherme Buratto.  
+> **Orientações para início dos trabalhos:**
+> 1. Puxar o código atualizado do repositório remoto:
+>    ```powershell
+>    git pull origin main
+>    ```
+> 2. Entrar na pasta `frontend/` e instalar as dependências:
+>    ```powershell
+>    cd frontend
+>    npm install
+>    ```
+> 3. Subir o backend e o frontend para desenvolvimento local:
+>    - Terminal 1 (Backend): `cd backend; npm run dev`
+>    - Terminal 2 (Frontend): `cd frontend; npm run dev`
+
+#### 📋 Tarefas a serem desenvolvidas pelo Guilherme:
+
+1. **Tarefa 4.1: Gerenciamento Interativo de Categorias (Frontend)**
+   - **Modal de Cadastro:** Criação de modal para nova categoria contendo:
+     - Campo `nome` (obrigatório, máximo 100 caracteres).
+     - Seletor de `tipo` (`RECEITA` ou `DESPESA`).
+     - Seletor de `cor` (seletor de cor hexadecimal com paleta prévia).
+   - **Modal de Edição:** Permitir alterar nome, tipo ou cor de categoria existente chamando `categoriaService.atualizar(id, dados)`.
+   - **Exclusão com Feedback de Integridade:**
+     - Botão de exclusão com diálogo de confirmação.
+     - Tratamento da resposta da API: caso a categoria possua movimentações vinculadas (retorno de erro HTTP 400), exibir um alerta/toast explicativo na tela para o usuário informando que a categoria não pode ser excluída pois possui movimentações associadas (atendendo ao requisito acadêmico 3.4).
+   - **Commit Semântico:** `feat: implementar gerenciamento interativo de categorias`
+
+2. **Tarefa 4.2: Gerenciamento Interativo de Movimentações (Frontend)**
+   - **Modal de Cadastro de Movimentações:**
+     - Formulário para inclusão de receitas ou despesas com os campos: `descricao` (texto), `valor` (monetário positivo), `data` (seletor de data, com padrão na data de hoje), `tipo` (`RECEITA` ou `DESPESA`) e `categoriaId`.
+     - **Regra de Coerência no Form:** Ao selecionar o tipo (ex: `DESPESA`), o seletor de categorias deve listar apenas as categorias compatíveis (despesas).
+   - **Tabela Completa de Movimentações:**
+     - Listagem de todas as movimentações com data formatada, descrição, badge da categoria com sua respectiva cor, tipo e valor em verde/vermelho.
+     - Filtros dinâmicos no topo da tabela:
+       - Filtro por período (`dataInicio` e `dataFim`).
+       - Filtro por tipo (`Todas`, `Receitas`, `Despesas`).
+       - Filtro por categoria específica.
+     - Ações de exclusão e edição por linha da tabela chamando `movimentacaoService`.
+   - **Commit Semântico:** `feat: implementar cadastro e filtros de movimentacoes`
+
+3. **Tarefa 4.3: Visualização Gráfica no Dashboard**
+   - Instalação de biblioteca moderna e leve de gráficos para React (recomendado: `recharts`).
+   - Renderização de gráfico de rosca/pizza (Donut Chart) na aba Dashboard para ilustrar visualmente a fatia percentual de despesas por categoria, utilizando os dados agregados já fornecidos pelo endpoint `/api/dashboard/resumo`.
+   - Inclusão de tooltip interativo com o valor em R$ e o percentual de cada categoria.
+   - **Commit Semântico:** `feat: adicionar grafico de distribuicao de despesas no dashboard`
+
+---
+
+## 7. Visão Geral das Etapas Seguintes
+
+* **Etapa 5: Validação Integrada, Responsividade e Polimento Final**
+  - Testes de ponta a ponta (E2E manual) em todos os fluxos: cadastrar categoria -> cadastrar receita/despesa -> verificar atualização imediata no saldo e no gráfico do dashboard -> tentar excluir categoria em uso e validar mensagem amigável.
+  - Verificação de responsividade em diferentes larguras de tela (mobile e desktop).
+* **Etapa 6: Documentação Final e Preparação da Apresentação**
+  - Atualização final de `README.md` com instruções completas de execução a partir do zero (`docker compose up -d`, `npm run dev`).
+  - Inserção dos prints finais de acompanhamento do quadro Kanban no Trello em `docs/kanban-prints/`.
+  - Elaboração do roteiro detalhado para a apresentação presencial de 10 minutos (prevista para 09/11/2026).
