@@ -582,3 +582,31 @@ sim!!!
 * **Adoção do Recharts (SVG Declarativo):** Proporciona integração idiomática com o modelo declarativo do React, renderizando elementos SVG puros com suporte a responsividade contínua e acessibilidade, evitando custos de renderização imperativa em canvas.
 * **Layout Donut em Substituição à Pizza Tradicional:** O gráfico de rosca (Donut Chart) oferece uma estética mais limpa e moderna para dashboards corporativos e financeiros, além de manter proporções fáceis de assimilar sem sobrecarregar visualmente a tela.
 * **Aproveitamento Integral do Resumo da API:** Tanto `despesasPorCategoria` quanto `receitasPorCategoria` já eram entregues consolidados pelo endpoint `/api/dashboard/resumo`. A adição do alternador visual no frontend aproveitou essa estrutura sem exigir qualquer chamada de rede adicional.
+
+
+---
+
+## 15. Planejamento da Etapa 5 e Transição de Responsabilidade Técnica
+
+* **Data:** 05/11/2026
+* **Etapa:** Planejamento da Etapa 5 (Designada para Jeferson / Jeff)
+
+### 15.1. Problema / Requisito Trabalhado
+Formalização da divisão de responsabilidades técnicas do projeto, designando a **Etapa 5: Polimento Visual, Responsividade Mobile e Testes de Usabilidade** para o integrante Jeferson (Jeff). O objetivo é garantir que o sistema apresente layout fluido e sem quebras em dispositivos móveis e tablets, com transições refinadas e testes funcionais de ponta a ponta, preparando o terreno para o fechamento do projeto por Guilherme na Etapa 6.
+
+### 15.2. Texto Exato dos Prompts Utilizados
+```text
+A etapa 5 vai ser o jeff, assim que ele finalizar, eu continuo
+```
+*(Direcionamento do estudante definindo a alternância da dupla e o fluxo de continuidade)*
+
+### 15.3. Refinamentos e Ações Executadas
+1. **Atualização do `PLANO_DE_DESENVOLVIMENTO.md`:**
+   - Registro de conclusão formal da Etapa 4 por Guilherme Buratto.
+   - Detalhamento do roteiro de execução da Etapa 5 por Jeferson (Jeff): comandos de atualização via `git pull origin main`, escopo de responsividade CSS, testes exploratórios e convenção de commit semântico (`feat: aprimorar responsividade e navegabilidade da interface`).
+   - Mapeamento da Etapa 6 (Documentação Final, Prints do Trello e Roteiro de Ensaio de 10 minutos) que será conduzida por Guilherme após a entrega do Jeff.
+2. **Registro de Governança Acadêmica:**
+   - Documentação da alternância de papéis no desenvolvimento contínuo em par (Pair Programming assíncrono).
+
+### 15.4. Decisões de Engenharia
+* **Colaboração Equilibrada e Histórico do Git:** A alternância das etapas entre Guilherme e Jeff mantém o histórico de commits do GitHub balanceado, atendendo integralmente ao critério de avaliação acadêmica de trabalho em dupla com contribuições ativas e rastreáveis de ambos os alunos.

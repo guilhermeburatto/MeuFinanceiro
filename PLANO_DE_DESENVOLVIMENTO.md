@@ -106,15 +106,31 @@
 
 ## 6. Próxima Etapa Planejada
 
-### 🎯 Etapa 5: Polimento Visual, Responsividade Mobile e Testes de Usabilidade de Ponta a Ponta
-**O que será feito:**
-1. Verificação e ajuste fino de layout responsivo (testar quebras em telas menores / dispositivos móveis).
-2. Validação de transições e micro-interações dos botões, modais e campos de formulário.
-3. Teste funcional de ponta a ponta (E2E exploratório) com criação, edição, filtragem e exclusão de receitas, despesas e categorias, confirmando a sincronização em tempo real de saldo e gráficos.
-4. **Commit Semântico:** `feat: aprimorar responsividade e navegabilidade da interface`.
+### 🎯 Etapa 5: Polimento Visual, Responsividade Mobile e Testes de Usabilidade (DESIGNADA PARA JEFERSON / JEFF)
+**Responsável:** Jeferson (Jeff)
+
+**Instruções para o Jeff:**
+1. Atualizar o repositório local antes de iniciar:
+   ```bash
+   git pull origin main
+   ```
+2. Iniciar o backend (`cd backend && npm run dev`) e frontend (`cd frontend && npm run dev`).
+3. **Escopo de Trabalho:**
+   - **Responsividade Mobile:** Ajustar regras CSS em `frontend/src/index.css` para telas menores (smartphones e tablets), verificando quebras de layout nas abas Dashboard (cards e gráficos), Movimentações (tabela/cards e barra de filtros) e Categorias (grid de cards).
+   - **Polimento Visual & Micro-interações:** Suavizar transições de hover, estados de foco em inputs e acessibilidade visual geral.
+   - **Testes Exploratórios:** Realizar ciclo completo de teste (criar categoria, lançar receita/despesa, aplicar filtros, editar e excluir), confirmando que a interface e o banco mantêm total integridade.
+4. **Commit Semântico:**
+   ```bash
+   git add .
+   git commit -m "feat: aprimorar responsividade e navegabilidade da interface"
+   git push origin main
+   ```
 
 ---
 
-## 7. Visão Geral das Etapas Seguintes
+## 7. Próxima Etapa do Guilherme (Após Conclusão da Etapa 5 pelo Jeff)
 
-* **Etapa 6:** Documentação Final, Prints do Trello em `docs/kanban-prints/` e Roteiro de Ensaio para Apresentação Presencial (10 min).
+### 🎯 Etapa 6: Documentação Final, Prints do Trello e Roteiro de Apresentação (GUILHERME)
+* Atualização do kanban com novos prints em `docs/kanban-prints/`.
+* Revisão final do `README.md` e do `DOCUMENTACAO_IA.md`.
+* Elaboração do roteiro detalhado para ensaio da apresentação presencial de 10 minutos (atendendo ao item 5 dos requisitos acadêmicos).
