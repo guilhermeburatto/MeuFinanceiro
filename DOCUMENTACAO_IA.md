@@ -228,3 +228,35 @@ vamos lá, docker rodando, pode continuar
 ### 6.4. Decisões de Engenharia
 * **Exposição na Porta 5433:** Evita conflitos de rede quando desenvolvedores possuem bancos locais instalados em suas máquinas físicas para outras finalidades, mantendo o container Docker autocontido e funcional.
 * **Padronização no Prisma 6 LTS sem `prisma.config.ts`:** Reduz a complexidade e alertas desnecessários de compilação em um ambiente puramente baseado em ES Modules JavaScript.
+
+
+---
+
+## 7. Etapa 2 - Implementação da API REST de Categorias
+
+* **Data:** 05/11/2026
+* **Etapa:** Etapa 2 - Tarefa 2.1
+
+### 7.1. Problema / Requisito Trabalhado
+Criação dos endpoints HTTP da API REST para gerenciamento de categorias financeiras (`GET`, `POST`, `PUT`, `DELETE`), permitindo a listagem, filtragem por tipo (receita/despesa), cadastro com validações de dados e proteção de integridade referencial na exclusão.
+
+### 7.2. Texto Exato dos Prompts Utilizados
+```text
+Certo, você verificou se realmente foi nesse etapa que paramos? Ou essa etapa já é a que podemos fazer pois o Jeff já fez as outras? Caso positivo, podemos avançar com a etapa sugerida
+```
+
+### 7.3. Refinamentos e Ações Executadas
+1. **Verificação do Estado:** Inspeção minuciosa do diretório `backend/src/` confirmando que não existiam rotas ou controladores prévios implementados, ratificando a Tarefa 2.1 como a próxima tarefa do roadmap.
+2. **Criação do Controlador (`backend/src/controllers/categoriaController.js`):**
+   - Método `listar`: recupera todas as categorias ordenadas alfabeticamente, com filtro opcional por query param (`?tipo=RECEITA` ou `?tipo=DESPESA`).
+   - Método `buscarPorId`: busca detalhada por identificador numérico, com tratamento para IDs inválidos (400) e não encontrados (404).
+   - Método `criar`: validação obrigatória de nome e tipo, validação de formato de cor hexadecimal `#RRGGBB` e retorno de status 201 Created.
+   - Método `atualizar`: atualização parcial ou total de categoria com validação de dados.
+   - Método `excluir`: consulta prévia ao banco via Prisma para verificar se existem movimentações vinculadas à categoria antes de permitir a exclusão, retornando status 400 com mensagem informativa caso existam dependências.
+3. **Criação do Roteador (`backend/src/routes/categoriaRoutes.js`):** Mapeamento padronizado dos verbos HTTP para os métodos do controlador.
+4. **Integração no Servidor (`backend/src/server.js`):** Registro do roteador sob o prefixo `/api/categorias`.
+5. **Bateria de Testes:** Execução automatizada de 5 testes HTTP cobrindo listagem, filtragem, criação, edição e exclusão, validando o funcionamento de ponta a ponta.
+
+### 7.4. Decisões de Engenharia
+* **Regra de Negócio de Integridade Referencial:** A checagem explícita `prisma.movimentacao.count` antes do `delete` oferece uma resposta clara ao usuário final/frontend, evitando que o banco de dados dispare uma exceção genérica de chave estrangeira não tratada.
+* **Validação de Cores Hexadecimais:** A validação com Regex `^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$` garante que as cores cadastradas sejam compatíveis com a estilização e gráficos do frontend React.

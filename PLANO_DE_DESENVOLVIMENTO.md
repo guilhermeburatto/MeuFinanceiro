@@ -9,7 +9,9 @@
 * **Disciplina:** Laboratório de Programação (Ciência da Computação - Centro Universitário Unifacvest).
 * **Finalidade:** Sistema web de controle financeiro pessoal para registro de receitas, despesas, categorias, saldos e gráficos de acompanhamento.
 * **Repositório Oficial:** [https://github.com/guilhermeburatto/MeuFinanceiro](https://github.com/guilhermeburatto/MeuFinanceiro) (Branch principal: `main`).
-* **Equipe:** Grupo de exatamente duas pessoas.
+* **Equipe:** 
+  * Guilherme Buratto Fernandes Walter
+  * Jeferson Gomes Martins
 * **Gestão Ágil:** Quadro Kanban mantido via **Trello** (registros visuais arquivados em `docs/kanban-prints/`).
 * **Data Prevista de Entrega/Apresentação:** 09/11/2026 (Apresentação presencial de 10 minutos).
 
@@ -39,12 +41,12 @@
 | **Padrão de Módulos** | JavaScript Moderno (ES Modules nativo) | Permite sintaxe unificada `import/export` no backend e frontend. |
 | **Framework Backend** | Express | Framework minimalista e padrão para APIs REST. |
 | **Ferramenta de Dev** | Nodemon | Reinicialização automática da API ao salvar arquivos. |
-| **Banco de Dados** | PostgreSQL 16 (`postgres:16-alpine`) | Provisionado via Docker Compose com volume persistente nomeado (`meufinanceiro_postgres_data`). |
-| **ORM** | Prisma ORM | Modelagem tipada, migrações seguras e prevenção de SQL Injection. |
+| **Banco de Dados** | PostgreSQL 16 (`postgres:16-alpine`) | Provisionado via Docker Compose na porta `5433` com volume persistente (`meufinanceiro_postgres_data`). |
+| **ORM** | Prisma ORM (v6.19.3) | Modelagem tipada, migrações seguras e prevenção de SQL Injection. |
 | **Precisão Monetária** | `Decimal(10, 2)` no banco/Prisma | Evita dízimas e imprecisões do ponto flutuante do JavaScript em valores financeiros. |
 | **Frontend** | React (SPA via Vite) | Biblioteca moderna pretendida pelo grupo para construção da interface. |
 | **Autenticação** | Sem autenticação inicial (usuário único local) | Mantém o escopo focado nas regras de negócio financeiras, sem complexidade de JWT/sessão desnecessária. |
-| **Integridade de Dados** | Restrição de exclusão de categoria | Impede a exclusão de categorias que já possuam movimentações vinculadas. |
+| **Integridade de Dados** | Restrição de exclusão de categoria | Impede a exclusão de categorias que já possuam movimentações vinculadas (`onDelete: Restrict`). |
 
 ---
 
@@ -52,55 +54,54 @@
 
 ### ✅ Etapa 0: Ambiente, Infraestrutura e Governança (CONCLUÍDA)
 * **Tarefa 0.1:** Inicialização do repositório Git local, criação do `.gitignore` protegendo `.env` e `node_modules`, criação da estrutura de pastas (`docs/`, `backend/`, `frontend/`), criação do `README.md`, do `DOCUMENTACAO_IA.md` e de `docs/arquitetura.md`.
-* **Tarefa 0.2:** Criação do `docker-compose.yml` para o PostgreSQL 16 Alpine com volume persistente, criação do `.env.example`, subida do container na porta 5432, teste de prontidão com `pg_isready` e adição do print do Trello (`03-11.png`).
+* **Tarefa 0.2:** Criação do `docker-compose.yml` para o PostgreSQL 16 Alpine com volume persistente, criação do `.env.example`, subida do container, teste de prontidão com `pg_isready` e adição do print do Trello (`03-11.png`).
 * **Repositório Remoto:** Conexão com o GitHub em `https://github.com/guilhermeburatto/MeuFinanceiro` e envio do histórico para a branch `main`.
 
-### 🔄 Etapa 1: Backend Base e Modelagem de Dados (EM ANDAMENTO)
-* **Tarefa 1.1 (Concluída):**
-  - Inicialização de `backend/package.json` com `"type": "module"`.
-  - Instalação de `express`, `cors`, `dotenv` e `nodemon` (dev).
-  - Criação de `backend/src/server.js` com middlewares e endpoint `GET /api/status`.
-  - Configuração do script `npm run dev`.
-  - Teste validado pelo estudante no navegador (`http://localhost:3000/api/status`).
-* **Tarefa 1.2 (Concluída):**
-  - Instalação e fixação da versão estável do Prisma ORM (`6.19.3`) e `@prisma/client`.
-  - Configuração do arquivo `backend/.env` com a connection string do PostgreSQL.
-  - Modelagem do schema (`schema.prisma`) com enum `TipoMovimentacao`, tabelas `categorias` e `movimentacoes`, precisão monetária `Decimal(10,2)` e integridade referencial `onDelete: Restrict`.
-  - Execução bem-sucedida da migração inicial (`20261104140703_init_schema`), sincronizando e gerando fisicamente as tabelas no PostgreSQL via Docker.
-  - Criação do script de *seed* (`backend/prisma/seed.js`) populando 12 categorias essenciais (8 despesas e 4 receitas) com paleta de cores hexadecimais para interface e gráficos.
-  - Criação do utilitário singleton do PrismaClient em `backend/src/lib/prisma.js`.
+### ✅ Etapa 1: Backend Base e Modelagem de Dados (CONCLUÍDA)
+* **Tarefa 1.1:** Inicialização de `backend/package.json` com ES Modules, instalação de `express`, `cors`, `dotenv`, `nodemon`, criação de `server.js` com rota `/api/status`, teste validado no navegador.
+* **Tarefa 1.2:** Modelagem do schema Prisma (`Categoria` e `Movimentacao`), execução da migração inicial no PostgreSQL, script de seed populando as 12 categorias base e criação do singleton PrismaClient.
+* **Alinhamento e Fix de Porta:** Sincronização do trabalho da dupla, isolamento do Docker na porta `5433` e remoção de artefatos experimentais.
+
+### 🔄 Etapa 2: API REST de Categorias e Movimentações (EM ANDAMENTO)
+* **Tarefa 2.1 (Concluída):**
+  - Criação de `backend/src/controllers/categoriaController.js` implementando CRUD completo (`listar`, `buscarPorId`, `criar`, `atualizar`, `excluir`).
+  - Suporte a filtro por tipo via query param (`GET /api/categorias?tipo=RECEITA` ou `DESPESA`).
+  - Validações de entradas (nome obrigatório, tipo válido, formato de cor hexadecimal `#RRGGBB`).
+  - Proteção de integridade referencial: bloqueio de exclusão se houver movimentações vinculadas com mensagem descritiva.
+  - Criação de `backend/src/routes/categoriaRoutes.js` e conexão sob o prefixo `/api/categorias` em `backend/src/server.js`.
+  - Validação automatizada de 5 cenários de teste HTTP cobrindo todas as operações com sucesso.
 
 ---
 
 ## 5. Estado Atual do Sistema
 
-* **Container PostgreSQL:** Ativo no Docker (`meufinanceiro_postgres`), aceitando conexões na porta `5433` (mapeada para evitar conflito com instâncias nativas do Windows).
+* **Container PostgreSQL:** Ativo no Docker (`meufinanceiro_postgres`), aceitando conexões na porta `5433`.
 * **Banco de Dados:** Tabelas `categorias` e `movimentacoes` criadas via migração e populadas com 12 categorias base via seed.
-* **Prisma ORM:** Prisma Client 6.19.3 gerado e pronto para consumo pelo Express.
-* **Servidor Backend:** Estruturado e testado localmente na porta `3000`.
-* **Documentação de IA:** `DOCUMENTACAO_IA.md` atualizado com todas as iterações e decisões técnicas até a Tarefa 1.2.
+* **Prisma ORM:** Prisma Client 6.19.3 gerado e conectado ao PostgreSQL.
+* **API REST:** Endpoints de Categorias (`/api/categorias`) e Health Check (`/api/status`) 100% operacionais.
+* **Documentação de IA:** `DOCUMENTACAO_IA.md` atualizado com todas as iterações e decisões técnicas até a Tarefa 2.1.
 
 ---
 
 ## 6. Próxima Tarefa Planejada
 
-### 🎯 Tarefa 2.1: Implementação da API REST de Categorias
+### 🎯 Tarefa 2.2: Implementação da API REST de Movimentações (Receitas e Despesas)
 **O que será feito:**
-1. Criar as rotas de Categorias (`backend/src/routes/categoriaRoutes.js`):
-   - `GET /api/categorias`: listar todas as categorias (com suporte a filtro opcional por `tipo` no query param).
-   - `POST /api/categorias`: criar nova categoria personalizada com validações de campos obrigatórios (`nome`, `tipo`).
-   - `PUT /api/categorias/:id`: editar dados de uma categoria existente.
-   - `DELETE /api/categorias/:id`: excluir categoria (com tratamento de erro para bloqueio caso possua movimentações vinculadas).
-2. Criar o controlador (`backend/src/controllers/categoriaController.js`) com tratamento de exceções HTTP padronizado.
-3. Conectar o roteador ao `backend/src/server.js` sob o prefixo `/api/categorias`.
-4. Testar os endpoints e registrar os resultados no `DOCUMENTACAO_IA.md`.
+1. Criar o controlador (`backend/src/controllers/movimentacaoController.js`):
+   - `listar`: listagem com filtros dinâmicos por período (data início e data fim) e por categoria (`categoriaId`), ordenados por data decrescente.
+   - `buscarPorId`: busca de movimentação específica com dados da categoria inclusos.
+   - `criar`: cadastro de receita ou despesa validando valor positivo, data válida, tipo compatível e existência da categoria.
+   - `atualizar`: edição de movimentação existente.
+   - `excluir`: remoção de movimentação por ID.
+2. Criar as rotas (`backend/src/routes/movimentacaoRoutes.js`) e plugar no `server.js` sob `/api/movimentacoes`.
+3. Testar todas as operações e validar a gravação e integridade no banco de dados.
 
 ---
 
 ## 7. Visão Geral das Próximas Etapas
 
 * **Etapa 2: API REST de Categorias e Movimentações (Backend)**
-  * CRUD completo de Categorias com validações.
+  * CRUD completo de Categorias com validações (Concluído).
   * CRUD completo de Movimentações (Receitas e Despesas).
   * Endpoint de resumo para o Dashboard (cálculo de total de receitas, total de despesas, saldo e despesas por categoria).
 * **Etapa 3: Frontend Base (React + Vite)**
