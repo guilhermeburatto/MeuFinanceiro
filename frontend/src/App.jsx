@@ -17,7 +17,9 @@ import {
   AlertTriangle,
   Filter,
   RotateCcw,
+  PieChart as ChartPieIcon,
 } from 'lucide-react';
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 import { obterStatus, dashboardService, categoriaService, movimentacaoService } from './services/api';
 import './App.css';
 
@@ -87,6 +89,9 @@ function App() {
   const [filtroCategoriaMovimentacao, setFiltroCategoriaMovimentacao] = useState('');
   const [filtroDataInicio, setFiltroDataInicio] = useState('');
   const [filtroDataFim, setFiltroDataFim] = useState('');
+
+  // Estado da visualização gráfica do Dashboard (Tarefa 4.3)
+  const [tipoGraficoDashboard, setTipoGraficoDashboard] = useState('DESPESA'); // 'DESPESA' | 'RECEITA'
 
   // Formatação de Moeda Brasileira (BRL)
   const formatarMoeda = (valor) => {
@@ -416,6 +421,12 @@ function App() {
     (c) => c.tipo === formMovimentacao.tipo
   );
 
+  // Dados dinâmicos do gráfico de distribuição no Dashboard (Tarefa 4.3)
+  const dadosGraficoDashboard =
+    tipoGraficoDashboard === 'DESPESA'
+      ? resumo.despesasPorCategoria || []
+      : resumo.receitasPorCategoria || [];
+
   return (
     <div className="app-container">
       {/* 1. Cabeçalho Principal */}
@@ -546,47 +557,121 @@ function App() {
 
             {/* Painéis Inferiores */}
             <div className="dashboard-grid">
-              {/* Despesas por Categoria */}
+              {/* Distribuição por Categoria com Gráfico Donut (Tarefa 4.3) */}
               <div className="panel-card">
                 <div className="panel-header">
                   <h3>
-                    <Tags size={18} color="var(--primary)" />
-                    Despesas por Categoria
+                    <ChartPieIcon size={18} color="var(--primary)" />
+                    Distribuição por Categoria
                   </h3>
+                  <div className="chart-toggle-group">
+                    <button
+                      type="button"
+                      className={`btn-chart-toggle ${tipoGraficoDashboard === 'DESPESA' ? 'active danger' : ''}`}
+                      onClick={() => setTipoGraficoDashboard('DESPESA')}
+                    >
+                      Despesas
+                    </button>
+                    <button
+                      type="button"
+                      className={`btn-chart-toggle ${tipoGraficoDashboard === 'RECEITA' ? 'active success' : ''}`}
+                      onClick={() => setTipoGraficoDashboard('RECEITA')}
+                    >
+                      Receitas
+                    </button>
+                  </div>
                 </div>
 
-                {resumo.despesasPorCategoria && resumo.despesasPorCategoria.length > 0 ? (
-                  <div className="categories-list">
-                    {resumo.despesasPorCategoria.map((cat) => (
-                      <div key={cat.categoriaId} className="category-item">
-                        <div className="category-row">
-                          <span className="category-label">
-                            <span
-                              className="color-dot"
-                              style={{ backgroundColor: cat.cor || 'var(--primary)' }}
-                            ></span>
-                            {cat.nome}
-                          </span>
-                          <div className="category-amounts">
-                            <span>{formatarMoeda(cat.total)}</span>
-                            <span className="category-percentage">{cat.percentual}%</span>
+                {dadosGraficoDashboard && dadosGraficoDashboard.length > 0 ? (
+                  <>
+                    <div className="chart-container">
+                      <ResponsiveContainer width="100%" height={240}>
+                        <PieChart>
+                          <Pie
+                            data={dadosGraficoDashboard}
+                            dataKey="total"
+                            nameKey="nome"
+                            cx="50%"
+                            cy="50%"
+                            innerRadius={55}
+                            outerRadius={85}
+                            paddingAngle={4}
+                          >
+                            {dadosGraficoDashboard.map((entry, index) => (
+                              <Cell
+                                key={`cell-${entry.categoriaId || index}`}
+                                fill={
+                                  entry.cor ||
+                                  (tipoGraficoDashboard === 'DESPESA' ? '#E53E3E' : '#38A169')
+                                }
+                              />
+                            ))}
+                          </Pie>
+                          <Tooltip
+                            formatter={(value, name, props) => {
+                              const perc = props?.payload?.percentual;
+                              const texto =
+                                perc !== undefined
+                                  ? `${formatarMoeda(value)} (${perc}%)`
+                                  : formatarMoeda(value);
+                              return [texto, name];
+                            }}
+                            contentStyle={{
+                              backgroundColor: '#ffffff',
+                              borderRadius: '8px',
+                              border: '1px solid #e2e8f0',
+                              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                              fontSize: '0.85rem',
+                            }}
+                          />
+                        </PieChart>
+                      </ResponsiveContainer>
+                    </div>
+
+                    <div className="categories-list">
+                      {dadosGraficoDashboard.map((cat) => (
+                        <div key={cat.categoriaId} className="category-item">
+                          <div className="category-row">
+                            <span className="category-label">
+                              <span
+                                className="color-dot"
+                                style={{
+                                  backgroundColor:
+                                    cat.cor ||
+                                    (tipoGraficoDashboard === 'DESPESA'
+                                      ? '#E53E3E'
+                                      : '#38A169'),
+                                }}
+                              ></span>
+                              {cat.nome}
+                            </span>
+                            <div className="category-amounts">
+                              <span>{formatarMoeda(cat.total)}</span>
+                              <span className="category-percentage">{cat.percentual}%</span>
+                            </div>
+                          </div>
+                          <div className="progress-track">
+                            <div
+                              className="progress-fill"
+                              style={{
+                                width: `${cat.percentual}%`,
+                                backgroundColor:
+                                  cat.cor ||
+                                  (tipoGraficoDashboard === 'DESPESA'
+                                    ? '#E53E3E'
+                                    : '#38A169'),
+                              }}
+                            ></div>
                           </div>
                         </div>
-                        <div className="progress-track">
-                          <div
-                            className="progress-fill"
-                            style={{
-                              width: `${cat.percentual}%`,
-                              backgroundColor: cat.cor || 'var(--primary)',
-                            }}
-                          ></div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+                      ))}
+                    </div>
+                  </>
                 ) : (
                   <div className="empty-state">
-                    <p>Nenhuma despesa registrada para o período selecionado.</p>
+                    <p>
+                      Nenhuma {tipoGraficoDashboard === 'DESPESA' ? 'despesa' : 'receita'} registrada para o período selecionado.
+                    </p>
                   </div>
                 )}
               </div>

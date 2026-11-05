@@ -1147,3 +1147,51 @@ body {
 .transaction-item:hover .transaction-actions {
   opacity: 1;
 }
+
+
+/* Controles e Visualização Gráfica do Dashboard (Tarefa 4.3) */
+.chart-toggle-group {
+  display: flex;
+  gap: 0.25rem;
+  background-color: var(--bg-subtle);
+  padding: 0.2rem;
+  border-radius: var(--radius-sm);
+}
+
+.btn-chart-toggle {
+  padding: 0.25rem 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-chart-toggle:hover {
+  color: var(--text-main);
+}
+
+.btn-chart-toggle.active {
+  background-color: var(--bg-card);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-chart-toggle.active.danger {
+  color: var(--danger);
+}
+
+.btn-chart-toggle.active.success {
+  color: var(--success);
+}
+
+.chart-container {
+  width: 100%;
+  height: 240px;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

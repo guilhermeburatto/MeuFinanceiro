@@ -72,7 +72,7 @@
 * **Tarefa 3.2:** Criação da camada de integração HTTP modular em `frontend/src/services/api.js`.
 * **Tarefa 3.3:** Estrutura de layout responsivo por abas (Dashboard, Movimentações, Categorias), monitor de saúde da API e cards de métricas iniciais.
 
-### 🔄 Etapa 4: Telas de Gerenciamento Interativas, Formulários e Gráficos (EM ANDAMENTO - GUILHERME)
+### ✅ Etapa 4: Telas de Gerenciamento Interativas, Formulários e Gráficos (CONCLUÍDA - GUILHERME)
 * **Tarefa 4.1 (Concluída por Guilherme):**
   - Barra de ações com filtros rápidos por tipo (`Todas`, `Despesas`, `Receitas`).
   - Modal interativo de cadastro de novas categorias com validação de nome, tipo e seletor com paleta de 12 cores pré-definidas e customização livre.
@@ -84,35 +84,37 @@
   - Linha de resumo financeiro instantâneo com contagem de lançamentos e soma dos totais filtrados de receitas e despesas.
   - Modal dinâmico de lançamento com alternância visual entre Despesa e Receita, campos de descrição, valor positivo, data e **seletor inteligente de categorias** (que lista apenas as categorias compatíveis com o tipo escolhido).
   - Ações por linha com botões de edição e exclusão com diálogo de confirmação e recálculo automático do saldo.
+* **Tarefa 4.3 (Concluída por Guilherme):**
+  - Instalação e integração da biblioteca de visualização de dados `recharts`.
+  - Gráfico de rosca dinâmico (Donut Chart) na aba Dashboard com `PieChart`, `Pie`, `Cell`, `Tooltip` e `ResponsiveContainer`.
+  - Mapeamento direto das cores hexadecimais cadastradas no PostgreSQL para cada fatia do gráfico.
+  - Tooltip interativo customizado exibindo o nome da categoria, valor em Reais (BRL) e a porcentagem exata da despesa.
+  - Seletor toggle entre "Despesas" e "Receitas" no card de distribuição do Dashboard.
+  - Lista de apoio com barras de preenchimento proporcional e tratamento limpo de estado vazio.
 
 ---
 
 ## 5. Estado Atual do Sistema
 
 * **Container PostgreSQL:** Ativo no Docker (`meufinanceiro_postgres`), aceitando conexões na porta `5433`.
-* **Banco de Dados:** Tabelas `categorias` e `movimentacoes` populadas e conectadas.
+* **Banco de Dados:** Tabelas `categorias` e `movimentacoes` populadas, íntegras e conectadas.
 * **Backend:** 100% pronto e testado em `http://localhost:3000`.
-* **Frontend:** Operacional, conectado à API, com Dashboard dinâmico, Gerenciamento de Categorias e Gerenciamento de Movimentações 100% funcionais e interativos.
-* **Documentação de IA:** `DOCUMENTACAO_IA.md` atualizado com todas as iterações e decisões técnicas até a Tarefa 4.2.
+* **Frontend:** 100% pronto nas 3 abas essenciais (Dashboard com gráficos interativos, Gerenciamento de Movimentações com filtros avançados e Gerenciamento de Categorias com trava referencial).
+* **Documentação de IA:** `DOCUMENTACAO_IA.md` atualizado com todas as iterações e decisões técnicas até a Tarefa 4.3.
 
 ---
 
-## 6. Próxima Tarefa Planejada
+## 6. Próxima Etapa Planejada
 
-### 🎯 Tarefa 4.3: Visualização Gráfica no Dashboard (Frontend)
+### 🎯 Etapa 5: Polimento Visual, Responsividade Mobile e Testes de Usabilidade de Ponta a Ponta
 **O que será feito:**
-1. Instalar a biblioteca de visualização de dados `recharts` no frontend (`npm install recharts`).
-2. Criar o componente de gráfico de rosca/pizza (Donut Chart) na aba Dashboard:
-   - Exibir a distribuição percentual e em reais (R$) das despesas por categoria.
-   - Utilizar as cores hexadecimais associadas a cada categoria no banco.
-   - Incluir tooltip interativo passando o mouse sobre as fatias.
-   - Legenda descritiva com os nomes e valores.
-3. Tratamento de estado vazio: se não houver despesas no período, exibir mensagem amigável com orientação.
-4. **Commit Semântico:** `feat: adicionar grafico de distribuicao de despesas no dashboard`.
+1. Verificação e ajuste fino de layout responsivo (testar quebras em telas menores / dispositivos móveis).
+2. Validação de transições e micro-interações dos botões, modais e campos de formulário.
+3. Teste funcional de ponta a ponta (E2E exploratório) com criação, edição, filtragem e exclusão de receitas, despesas e categorias, confirmando a sincronização em tempo real de saldo e gráficos.
+4. **Commit Semântico:** `feat: aprimorar responsividade e navegabilidade da interface`.
 
 ---
 
 ## 7. Visão Geral das Etapas Seguintes
 
-* **Etapa 5:** Polimento Visual, Responsividade Mobile e Testes de Usabilidade de ponta a ponta.
 * **Etapa 6:** Documentação Final, Prints do Trello em `docs/kanban-prints/` e Roteiro de Ensaio para Apresentação Presencial (10 min).

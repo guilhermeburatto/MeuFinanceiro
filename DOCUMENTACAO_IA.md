@@ -543,3 +543,42 @@ Sim
 ### 11.4. Decisões de Engenharia
 * **Filtragem no Cliente com Suporte a Filtro de API:** Como a lista completa de movimentações é mantida em memória no estado React, a filtragem instantânea no cliente proporciona uma resposta visual imediata sem latência de rede.
 * **Coerência de Tipos Guiada pela Interface:** A filtragem em tempo real das opções de categoria no `<select>` impede na origem que o usuário cometa o erro de vincular um gasto a uma categoria de receita, complementando a trava de segurança já existente na API REST.
+
+
+---
+
+## 14. Etapa 4 - Visualização Gráfica no Dashboard com Recharts (Frontend)
+
+* **Data:** 05/11/2026
+* **Etapa:** Etapa 4 - Tarefa 4.3 (Executada por Guilherme)
+
+### 14.1. Problema / Requisito Trabalhado
+Enriquecimento visual e analítico do painel principal (Dashboard) através da implementação de gráfico de rosca interativo (Donut Chart) para representação da distribuição de despesas por categoria, permitindo ao usuário compreender rapidamente a composição de seus gastos com porcentagens, valores em moeda local e cores personalizadas.
+
+### 14.2. Texto Exato dos Prompts Utilizados
+```text
+sim!!!
+```
+*(Autorização do estudante para implementação da visualização gráfica na Tarefa 4.3)*
+
+### 14.3. Refinamentos e Ações Executadas
+1. **Integração da Biblioteca Recharts:** Instalação do pacote `recharts` no ambiente do frontend (`frontend/package.json`).
+2. **Construção do Gráfico de Rosca Interativo:**
+   - Utilização dos componentes `ResponsiveContainer`, `PieChart`, `Pie`, `Cell` e `Tooltip`.
+   - Aplicação de raio interno (`innerRadius={55}`) e raio externo (`outerRadius={85}`) com espaçamento suave entre as fatias (`paddingAngle={4}`).
+   - Mapeamento dinâmico da paleta de cores configurada no banco de dados para cada categoria (`entry.cor`), garantindo coerência visual imediata entre a aba de categorias e o gráfico.
+3. **Tooltip Interativo Enriquecido:**
+   - Tooltip customizado com efeito hover sobre cada fatia, apresentando o nome da categoria, o montante financeiro formatado em Reais (`R$ 0,00`) e a participação percentual exata no total.
+4. **Alternador Dinâmico entre Despesas e Receitas:**
+   - Inclusão de botões seletores tipo toggle no cabeçalho do painel (`Despesas` e `Receitas`), permitindo alternar a perspectiva gráfica instantaneamente utilizando os agrupamentos analíticos calculados pelo backend (`despesasPorCategoria` e `receitasPorCategoria`).
+5. **Combinação Gráfico + Lista Analítica:**
+   - Preservação da lista detalhada com barras de progresso abaixo do gráfico, garantindo excelente legibilidade tanto para leitura rápida visual quanto para conferência analítica item a item.
+6. **Tratamento de Estado Vazio:**
+   - Exibição de mensagem informativa e amigável quando nenhum lançamento do tipo selecionado existir no período consultado.
+7. **Validação Técnica de Build:**
+   - Execução bem-sucedida do comando `npm run build` do Vite, transformando 2429 módulos em 647ms sem qualquer erro ou inconsistência.
+
+### 14.4. Decisões de Engenharia
+* **Adoção do Recharts (SVG Declarativo):** Proporciona integração idiomática com o modelo declarativo do React, renderizando elementos SVG puros com suporte a responsividade contínua e acessibilidade, evitando custos de renderização imperativa em canvas.
+* **Layout Donut em Substituição à Pizza Tradicional:** O gráfico de rosca (Donut Chart) oferece uma estética mais limpa e moderna para dashboards corporativos e financeiros, além de manter proporções fáceis de assimilar sem sobrecarregar visualmente a tela.
+* **Aproveitamento Integral do Resumo da API:** Tanto `despesasPorCategoria` quanto `receitasPorCategoria` já eram entregues consolidados pelo endpoint `/api/dashboard/resumo`. A adição do alternador visual no frontend aproveitou essa estrutura sem exigir qualquer chamada de rede adicional.
