@@ -716,5 +716,31 @@ Perfeito, inicie a Parte 5.3.
 * **Acessibilidade Aprimorada (`:focus-visible` vs `:focus`):** O seletor `:focus-visible` aplica o contorno de foco exclusivamente quando a navegação é feita via teclado ou tecnologia assistiva, sem poluir visualmente a interface quando o usuário clica com o mouse.
 * **Feedback Tátil `:active`:** Micro-interações fornecem confirmação visual imediata de que a ação foi registrada pelo sistema, reduzindo cliques duplos acidentais em dispositivos móveis.
 
+---
+
+## 19. Planejamento da Etapa 6 e Transição de Responsabilidade Técnica para Guilherme Buratto
+
+* **Data:** 06/11/2026
+* **Etapa:** Planejamento da Etapa 6 (Designada para Guilherme Buratto)
+
+### 19.1. Problema / Requisito Trabalhado
+Estruturação das tarefas finais de entrega acadêmica da disciplina de Laboratório de Programação (Unifacvest). Com todo o desenvolvimento de software (backend, modelagem relacional no PostgreSQL, frontend interativo com Vite/React, gráficos analíticos e responsividade mobile) 100% concluído e operacional, a Etapa 6 concentra-se no fechamento da governança visual (Kanban no Trello), enriquecimento das instruções de execução do `README.md` e preparação do roteiro de apresentação presencial de 10 minutos (atendendo ao item 2.7 dos requisitos acadêmicos).
+
+### 19.2. Texto Exato dos Prompts Utilizados
+```text
+Certo, documente quais serão as próximas tarefas designadas para o guilherme.
+```
+*(Solicitação do estudante Jeff para detalhamento das tarefas da Etapa 6 para o integrante Guilherme)*
+
+### 19.3. Refinamentos e Ações Executadas
+1. **Definição da Tarefa 6.1 (Kanban / Trello):** Mapeamento para captura e inclusão de prints comprobatórios do Trello em `docs/kanban-prints/` demonstrando a passagem dos cartões das Etapas 4 e 5 para *Done*.
+2. **Definição da Tarefa 6.2 (README.md Final):** Estruturação do guia definitivo com badges, stack tecnológica detalhada, comandos de inicialização rápida via Docker/npm e tabela de rotas da API REST.
+3. **Definição da Tarefa 6.3 (Roteiro da Apresentação Presencial):** Planejamento da criação de `docs/roteiro_apresentacao.md` dividindo os 10 minutos de fala cronometrados entre Guilherme e Jeff, englobando arquitetura, demonstração prática ao vivo e justificativa das decisões técnicas com IA.
+4. **Atualização do `PLANO_DE_DESENVOLVIMENTO.md`:** Seção 6 atualizada com instruções claras de sincronização Git e comandos para Guilherme.
+
+### 19.4. Decisões de Engenharia
+* **Alinhamento Rigoroso com os Critérios de Avaliação:** A formalização do roteiro de 10 minutos e a atualização dos prints do Trello asseguram pontuação máxima nos itens de *Uso efetivo do Kanban*, *Qualidade da documentação* e *Apresentação à turma*, conforme estipulado no enunciado acadêmico.
+
+
 
 

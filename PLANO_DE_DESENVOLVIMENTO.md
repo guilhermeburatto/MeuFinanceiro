@@ -123,11 +123,41 @@
 
 ---
 
-## 6. Próxima Etapa do Guilherme (Após Conclusão da Etapa 5 pelo Jeff)
+## 6. Próxima Etapa Planejada (Designada para Guilherme Buratto)
 
 ### 🎯 Etapa 6: Documentação Final, Prints do Trello e Roteiro de Apresentação (GUILHERME)
-* **Responsável:** Guilherme Buratto
-* **Entregas Planejadas:**
-  - Atualização do kanban com novos prints em `docs/kanban-prints/`.
-  - Revisão final do `README.md` e do `DOCUMENTACAO_IA.md`.
-  - Elaboração do roteiro detalhado para ensaio da apresentação presencial de 10 minutos (atendendo ao item 5 dos requisitos acadêmicos).
+**Responsável:** Guilherme Buratto
+
+**Instruções de Inicialização para o Guilherme:**
+1. Atualizar o repositório local antes de iniciar qualquer trabalho:
+   ```bash
+   git pull origin main
+   ```
+2. Confirmar que o container Docker (`meufinanceiro_postgres` na porta 5433), o backend (`cd backend && npm run dev`) e o frontend (`cd frontend && npm run dev`) sobem sem erros.
+
+**Escopo Detalhado de Tarefas para o Guilherme:**
+
+* **📋 Tarefa 6.1: Atualização dos Registros Visuais do Kanban (Trello)**
+  - Acessar o quadro oficial da dupla no Trello.
+  - Atualizar os cartões correspondentes às Etapas 4 e 5 para a coluna **Concluído / Done** (ex: *CRUD de Categorias*, *CRUD e Filtros de Movimentações*, *Gráfico Donut com Recharts*, *Responsividade Mobile e Acessibilidade*).
+  - Capturar novos prints atualizados do quadro e salvá-los no diretório `docs/kanban-prints/` (ex: `06-11.png` ou `final-kanban.png`), mantendo o histórico visual da evolução ágil para a avaliação do professor.
+  - *Commit semântico:* `docs: adicionar prints atualizados do kanban trello`
+
+* **📖 Tarefa 6.2: Revisão e Finalização do README.md e Governança do Repositório**
+  - Enriquecer o `README.md` principal da raiz com:
+    - Apresentação completa e visual do sistema **MeuFinanceiro** (visão geral, objetivo acadêmico e créditos da dupla).
+    - Tabela de tecnologias utilizadas (Node.js 24, Express, PostgreSQL 16 via Docker Compose na porta isolada 5433, Prisma ORM 6 LTS, React 19 com Vite, Recharts, Lucide Icons).
+    - Guia passo a passo definitivo de instalação e execução rápida para o professor:
+      1. `docker compose up -d`
+      2. `cd backend && npm install && npm run seed && npm run dev`
+      3. `cd frontend && npm install && npm run dev`
+    - Tabela resumida de endpoints da API REST (`/api/status`, `/api/categorias`, `/api/movimentacoes`, `/api/dashboard/resumo`).
+  - *Commit semântico:* `docs: finalizar documentacao do readme e instrucoes de execucao`
+
+* **🎤 Tarefa 6.3: Elaboração do Roteiro de Apresentação Presencial de 10 Minutos**
+  - Criar o arquivo `docs/roteiro_apresentacao.md` estruturando o ensaio para a apresentação presencial do dia 09/11/2026 (atendendo ao item 2.7 do enunciado acadêmico):
+    - **Minutos 0 a 2 (Abertura e Arquitetura - Guilherme):** Apresentação da dupla, contexto da disciplina, decisão de desacoplamento (SPA + API REST + Postgres via Docker na porta 5433) e governança Git/Kanban.
+    - **Minutos 2 a 6 (Demonstração Prática ao Vivo - Guilherme e Jeff):** Navegação fluida pelas 3 abas, demonstração do Dashboard com gráfico de rosca Donut, filtros combinados de movimentações, responsividade mobile em tempo real no DevTools e demonstração da trava de integridade referencial (tentativa de exclusão com erro 400 amigável na UI, requisito 3.4).
+    - **Minutos 6 a 8 (Metodologia e Uso Crítico de IA - Jeff):** Explicação de como a IA foi utilizada criticamente (conforme registrado no `DOCUMENTACAO_IA.md`), decisões de engenharia (como o port collision 5433, migração Prisma e precisão monetária Decimal) e lições aprendidas.
+    - **Minutos 8 a 10 (Conclusão e Perguntas do Professor):** Considerações finais da dupla e espaço para arguição.
+  - *Commit semântico:* `docs: criar roteiro e divisao de fala da apresentacao presencial`
