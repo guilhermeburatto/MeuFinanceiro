@@ -741,6 +741,33 @@ Certo, documente quais serão as próximas tarefas designadas para o guilherme.
 ### 19.4. Decisões de Engenharia
 * **Alinhamento Rigoroso com os Critérios de Avaliação:** A formalização do roteiro de 10 minutos e a atualização dos prints do Trello asseguram pontuação máxima nos itens de *Uso efetivo do Kanban*, *Qualidade da documentação* e *Apresentação à turma*, conforme estipulado no enunciado acadêmico.
 
+---
+
+## 20. Ajuste Visual Fino no Seletor de Categorias e Alinhamento com Inputs de Data
+
+* **Data:** 06/11/2026
+* **Etapa:** Polimento e Correção Visual (Executada por Jeferson / Jeff)
+
+### 20.1. Problema / Requisito Trabalhado
+Na barra de filtros avançados da tela de Movimentações, o elemento nativo `<select>` apresentava a seta padrão do sistema operacional com posicionamento descolado e margem colada à direita, desalinhada em relação ao espaçamento interno e à orientação visual dos ícones de calendário presentes nos inputs de data (`De:` e `Até:`).
+
+### 20.2. Texto Exato dos Prompts Utilizados
+```text
+Na tela de movimentações, iremos corrigir essa setinha que está um pouco descolada, iremos corrigir e subir como um fix, ela deve ficar na mesma orientação dos icones de calendário das datas. (Suba para o git com um "fix".
+```
+
+### 20.3. Refinamentos e Ações Executadas
+1. **Padronização Visual da Seta via SVG Customizado:**
+   - Remoção do seletor padrão rústico do sistema operacional com `appearance: none` e `-webkit-appearance: none`.
+   - Inserção de ícone SVG chevron vetorial limpo via `background-image`, alinhado centralmente na vertical e com espaçamento lateral à direita (`background-position: right 0.65rem center`).
+   - Equalização de altura (`height: 36px`) e preenchimento entre `.filter-select` e `.filter-date-input`, garantindo que ambos compartilhem exatamente a mesma linha base e alinhamento cromático dos ícones.
+   - Aplicação da mesma padronização para o `select.form-control` nos modais.
+2. **Validação de Build:** `npm.cmd run build` testado e aprovado com 0 erros.
+
+### 20.4. Decisões de Engenharia
+* **Substituição de Setas Nativas por Vetores SVG:** Controles de formulário nativos de navegadores (especialmente Windows Chromium) possuem variações estéticas imprevisíveis. O uso de `appearance: none` com vetor SVG em base64 garante consistência visual milimétrica idêntica em qualquer sistema operacional.
+
+
 
 
 
