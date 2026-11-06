@@ -119,40 +119,26 @@
 * **Banco de Dados:** Tabelas `categorias` e `movimentacoes` populadas, íntegras e conectadas.
 * **Backend:** 100% pronto e testado em `http://localhost:3000`.
 * **Frontend:** 100% pronto, visualmente polido e responsivo para mobile, tablets e desktops (Dashboard com gráficos interativos, Movimentações com filtros e Categorias com validação referencial).
-* **Documentação de IA:** `DOCUMENTACAO_IA.md` rigorosamente atualizado com todas as iterações e decisões técnicas até a Tarefa 5.3.
+* **Documentação:** `README.md` totalmente estruturado com guia completo de instalação para a banca avaliadora; `DOCUMENTACAO_IA.md` atualizado com todas as iterações e decisões técnicas.
 
 ---
 
-## 6. Próxima Etapa Planejada (Designada para Guilherme Buratto)
-
-### 🎯 Etapa 6: Documentação Final, Prints do Trello e Roteiro de Apresentação (GUILHERME)
+## 6. Etapa 6: Documentação Final, Prints do Trello e Roteiro de Apresentação (EM ANDAMENTO - GUILHERME)
 **Responsável:** Guilherme Buratto
 
-**Instruções de Inicialização para o Guilherme:**
-1. Atualizar o repositório local antes de iniciar qualquer trabalho:
-   ```bash
-   git pull origin main
-   ```
-2. Confirmar que o container Docker (`meufinanceiro_postgres` na porta 5433), o backend (`cd backend && npm run dev`) e o frontend (`cd frontend && npm run dev`) sobem sem erros.
-
-**Escopo Detalhado de Tarefas para o Guilherme:**
-
-* **📋 Tarefa 6.1: Atualização dos Registros Visuais do Kanban (Trello)**
-  - Acessar o quadro oficial da dupla no Trello.
-  - Atualizar os cartões correspondentes às Etapas 4 e 5 para a coluna **Concluído / Done** (ex: *CRUD de Categorias*, *CRUD e Filtros de Movimentações*, *Gráfico Donut com Recharts*, *Responsividade Mobile e Acessibilidade*).
-  - Capturar novos prints atualizados do quadro e salvá-los no diretório `docs/kanban-prints/` (ex: `06-11.png` ou `final-kanban.png`), mantendo o histórico visual da evolução ágil para a avaliação do professor.
-  - *Commit semântico:* `docs: adicionar prints atualizados do kanban trello`
-
-* **📖 Tarefa 6.2: Revisão e Finalização do README.md e Governança do Repositório**
-  - Enriquecer o `README.md` principal da raiz com:
-    - Apresentação completa e visual do sistema **MeuFinanceiro** (visão geral, objetivo acadêmico e créditos da dupla).
-    - Tabela de tecnologias utilizadas (Node.js 24, Express, PostgreSQL 16 via Docker Compose na porta isolada 5433, Prisma ORM 6 LTS, React 19 com Vite, Recharts, Lucide Icons).
-    - Guia passo a passo definitivo de instalação e execução rápida para o professor:
-      1. `docker compose up -d`
-      2. `cd backend && npm install && npm run seed && npm run dev`
-      3. `cd frontend && npm install && npm run dev`
-    - Tabela resumida de endpoints da API REST (`/api/status`, `/api/categorias`, `/api/movimentacoes`, `/api/dashboard/resumo`).
+* **📖 Tarefa 6.2 (Concluída por Guilherme): Revisão e Finalização do README.md e Governança do Repositório**
+  - Enriquecimento completo do `README.md` principal da raiz:
+    - Badges oficiais de status de todas as tecnologias (React 19, Vite 8, Node 24, Express 5, PostgreSQL 16 Alpine, Docker Compose, Prisma 6 e Recharts 3).
+    - Apresentação completa e visual do sistema **MeuFinanceiro** (visão geral, objetivo acadêmico e créditos formais da dupla).
+    - Tabela de tecnologias detalhada especificando versões e finalidades.
+    - Guia passo a passo definitivo de instalação e execução rápida para o professor (`docker compose up -d`, `seed`, `dev`).
+    - Tabela completa de endpoints da API REST com métodos HTTP, parâmetros/corpos, descrição de regra de negócio e status codes semânticos.
+    - Documentação de modelagem relacional com Prisma Schema.
+    - Seção de engenharia e governança detalhando resolução de conflito de portas (5433), precisão monetária Decimal(10,2) e integridade referencial.
   - *Commit semântico:* `docs: finalizar documentacao do readme e instrucoes de execucao`
+
+* **📋 Tarefa 6.1 (Pendente de upload das imagens pelo Guilherme): Atualização dos Registros Visuais do Kanban (Trello)**
+  - O estudante fará a captura do print atualizado do quadro Trello com os cards em Concluído e salvará em `docs/kanban-prints/`.
 
 * **🎤 Tarefa 6.3: Elaboração do Roteiro de Apresentação Presencial de 10 Minutos**
   - Criar o arquivo `docs/roteiro_apresentacao.md` estruturando o ensaio para a apresentação presencial do dia 09/11/2026 (atendendo ao item 2.7 do enunciado acadêmico):

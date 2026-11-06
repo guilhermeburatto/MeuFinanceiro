@@ -771,3 +771,36 @@ Na tela de movimentações, iremos corrigir essa setinha que está um pouco desc
 
 
 
+
+
+---
+
+## 21. Etapa 6 - Finalização do README.md e Governança do Repositório
+
+* **Data:** 06/11/2026
+* **Etapa:** Etapa 6 - Tarefa 6.2 (Executada por Guilherme Buratto)
+
+### 21.1. Problema / Requisito Trabalhado
+Revisão e reestruturação completa do `README.md` principal do repositório para entrega formal da disciplina de Laboratório de Programação. Era necessário fornecer uma apresentação técnica, elegante e autoexplicativa, munida de badges de status, tabela completa da stack tecnológica com versões exatas, guia definitivo de execução passo a passo para a banca avaliadora (Docker Compose, migrações, seed e frontend), tabela semântica de todos os endpoints REST, modelo relacional Prisma e síntese das decisões críticas de engenharia adotadas.
+
+### 21.2. Texto Exato dos Prompts Utilizados
+```text
+pode ir para a 6.2, os prints eu adiciono depois
+```
+*(Instrução do estudante para focar na finalização técnica do README e governança)*
+
+### 21.3. Refinamentos e Ações Executadas
+1. **Cabeçalho Profissional com Badges Oficiais:** Inserção de escudos informativos de status para todas as ferramentas e bibliotecas fundamentais do projeto (React 19, Vite, Node 24, Express, PostgreSQL 16 Alpine, Docker Compose, Prisma 6 e Recharts).
+2. **Apresentação e Créditos Acadêmicos:** Contextualização formal do projeto para a banca da Unifacvest, listando a equipe de desenvolvimento e links diretos para os perfis do GitHub de ambos os integrantes.
+3. **Mapeamento Funcional Completo:** Detalhamento das 4 grandes dimensões do software:
+   - Dashboard analítico em tempo real com gráfico Donut interativo, tooltips monetários e alternador Despesas/Receitas;
+   - Gerenciamento de movimentações com controle de coerência dinâmica de tipo e filtros avançados múltiplos;
+   - Gerenciamento de categorias com paleta cromática e trava de integridade referencial (Requisito 3.4);
+   - Responsividade mobile-first, padrão cartão financeiro móvel e acessibilidade `:focus-visible`.
+4. **Guia de Instalação e Execução à Prova de Falhas:** Estruturação passo a passo clara dos comandos de clonagem, subida do banco PostgreSQL via Docker Compose, execução de migrações e seed de dados, e inicialização simultânea de backend (`localhost:3000`) e frontend (`localhost:5173`).
+5. **Especificação Técnica dos Endpoints REST:** Tabela completa documentando métodos HTTP, rotas, query params, corpos em JSON e status codes de sucesso e erro.
+6. **Registro das Decisões Críticas de Engenharia:** Documentação detalhada sobre o isolamento do container PostgreSQL na porta 5433 (prevenindo colisão com serviços locais do Windows), adoção de `Decimal(10,2)` para cálculo contábil e uso do cliente nativo Fetch sem inchaço de dependências.
+
+### 21.4. Decisões de Engenharia
+* **Documentação Orientada à Reprodutibilidade:** O `README.md` atua como o cartão de visitas e o guia operacional do projeto. Instruções claras com comandos prontos para cópia garantem que o avaliador acadêmico consiga rodar a solução de ponta a ponta sem atritos ou ambiguidades.
+* **Transparência Técnica de Arquitetura:** Documentar explicitamente a solução da colisão de portas (`5433:5432`) e o uso de precisão Decimal comprova o rigor técnico e o pensamento crítico de engenharia adotado pelo grupo durante o desenvolvimento.
