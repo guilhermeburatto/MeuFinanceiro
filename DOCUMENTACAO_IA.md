@@ -610,3 +610,40 @@ A etapa 5 vai ser o jeff, assim que ele finalizar, eu continuo
 
 ### 15.4. Decisões de Engenharia
 * **Colaboração Equilibrada e Histórico do Git:** A alternância das etapas entre Guilherme e Jeff mantém o histórico de commits do GitHub balanceado, atendendo integralmente ao critério de avaliação acadêmica de trabalho em dupla com contribuições ativas e rastreáveis de ambos os alunos.
+
+---
+
+## 16. Etapa 5 - Responsividade Base do Layout, Header, Navegação e Modais
+
+* **Data:** 06/11/2026
+* **Etapa:** Etapa 5 - Tarefa 5.1 (Executada por Jeferson / Jeff)
+
+### 16.1. Problema / Requisito Trabalhado
+Estruturação da fundação responsiva da interface web em `frontend/src/index.css`. O layout anterior não possuía regras para telas móveis (< 768px e < 640px), o que gerava compressão inadequada no cabeçalho (logo e status da API), quebra nas abas de navegação, e risco crítico de corte nos formulários modais de cadastro quando abertos em smartphones ou com teclados virtuais ativos.
+
+### 16.2. Texto Exato dos Prompts Utilizados
+```text
+Certo, antes de iniciaremos a Etapa 5, não se esqueça de separar essa etapa em partes concretas para realizarmos os commit's especificiados corretamente. Também descreva oq iremos realizar nessa fase e possiveis sugestôes.
+```
+
+```text
+Ok, prosseguimos.
+```
+*(Planejamento da divisão em 3 partes e autorização de início da Tarefa 5.1)*
+
+### 16.3. Refinamentos e Ações Executadas
+1. **Estrutura Protetora dos Modais:**
+   - Adição de `max-height: 90vh` no `.modal-container` com layout em flexbox vertical (`display: flex; flex-direction: column`).
+   - Configuração de `overflow-y: auto` e rolagem nativa suave (`-webkit-overflow-scrolling: touch`) no `.modal-body`.
+   - Fixação dos cabeçalhos e rodapés dos modais com `flex-shrink: 0`, garantindo que os botões "Salvar" e "Cancelar" estejam sempre visíveis e utilizáveis.
+2. **Breakpoints Mobile (768px e 640px):**
+   - **Header:** Redução proporcional de padding e tipografia, reorganizando logo, subtítulo e status badge para não gerarem quebra desordenada.
+   - **Navegação por Abas:** Distribuição proporcional das 3 abas principais (`flex: 1`) com ícones e textos ajustados para toque.
+   - **Rodapé dos Modais:** No mobile, os botões passam a se organizar verticalmente (`flex-direction: column-reverse`) com 100% de largura para facilitar o toque com o polegar.
+   - **Alertas de Notificação:** Ajuste no `.feedback-alert` e ampliação da área de clique no botão de fechar (`.feedback-close`).
+3. **Validação de Build:** Compilação do frontend executada via `npm.cmd run build` com sucesso absoluto (2429 módulos transformados em 4.81s).
+
+### 16.4. Decisões de Engenharia
+* **Prevenção de Modais Inacessíveis em Telas Pequenas:** O isolamento do scroll exclusivamente no corpo do formulário (`.modal-body`) impede que o modal estoure a altura da tela do smartphone, problema comum ao interagir com campos de data e selects.
+* **Touch Targets Acessíveis:** Botões e áreas de interação no rodapé móvel ganharam largura total e paddings maiores, respeitando as diretrizes de usabilidade para toque em interfaces móveis.
+

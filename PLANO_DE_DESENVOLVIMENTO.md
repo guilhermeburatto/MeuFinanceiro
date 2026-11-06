@@ -104,27 +104,23 @@
 
 ---
 
-## 6. Próxima Etapa Planejada
+## 6. Etapa em Andamento
 
-### 🎯 Etapa 5: Polimento Visual, Responsividade Mobile e Testes de Usabilidade (DESIGNADA PARA JEFERSON / JEFF)
+### 🎯 Etapa 5: Polimento Visual, Responsividade Mobile e Testes de Usabilidade (EM ANDAMENTO - JEFERSON / JEFF)
 **Responsável:** Jeferson (Jeff)
 
-**Instruções para o Jeff:**
-1. Atualizar o repositório local antes de iniciar:
-   ```bash
-   git pull origin main
-   ```
-2. Iniciar o backend (`cd backend && npm run dev`) e frontend (`cd frontend && npm run dev`).
-3. **Escopo de Trabalho:**
-   - **Responsividade Mobile:** Ajustar regras CSS em `frontend/src/index.css` para telas menores (smartphones e tablets), verificando quebras de layout nas abas Dashboard (cards e gráficos), Movimentações (tabela/cards e barra de filtros) e Categorias (grid de cards).
-   - **Polimento Visual & Micro-interações:** Suavizar transições de hover, estados de foco em inputs e acessibilidade visual geral.
-   - **Testes Exploratórios:** Realizar ciclo completo de teste (criar categoria, lançar receita/despesa, aplicar filtros, editar e excluir), confirmando que a interface e o banco mantêm total integridade.
-4. **Commit Semântico:**
-   ```bash
-   git add .
-   git commit -m "feat: aprimorar responsividade e navegabilidade da interface"
-   git push origin main
-   ```
+* **✅ Tarefa 5.1 (Concluída por Jeferson):**
+  - Implementação de regras de responsividade base em `frontend/src/index.css` cobrindo breakpoints de 768px (tablets) e 640px (smartphones).
+  - Ajuste de proporções e espaçamentos no cabeçalho (`.header` e `.header-content`), garantindo alinhamento harmonioso do logo e do badge de conectividade da API.
+  - Otimização da barra de navegação (`.nav-tabs-content`), distribuindo as abas proporcionalmente no mobile com áreas de toque acessíveis.
+  - Reformulação estrutural dos modais (`.modal-container`, `.modal-body` e `.modal-footer`): altura máxima controlada (`90vh`/`94vh`), rolagem vertical com `-webkit-overflow-scrolling: touch` para impedir cortes em telas pequenas ou teclados virtuais, e botões empilhados com largura total no rodapé móvel.
+  - Ajustes de usabilidade e clique confortável para os botões de fechar e alertas de feedback (`.feedback-alert`).
+
+* **⏳ Tarefa 5.2 (Próxima):**
+  - Adaptação das 3 abas principais para telas móveis (Dashboard com cards de métricas em 1 coluna e gráfico ajustado; Movimentações com barra de filtros empilhada/grid e tabela com rolagem suave ou visualização em cartões; Categorias com grid adaptável).
+
+* **⏳ Tarefa 5.3 (Pendente):**
+  - Micro-interações, acessibilidade com foco (`:focus-visible`), testes exploratórios de ponta a ponta e encerramento da etapa.
 
 ---
 
