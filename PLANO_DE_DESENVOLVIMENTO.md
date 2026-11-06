@@ -119,31 +119,20 @@
 * **Banco de Dados:** Tabelas `categorias` e `movimentacoes` populadas, íntegras e conectadas.
 * **Backend:** 100% pronto e testado em `http://localhost:3000`.
 * **Frontend:** 100% pronto, visualmente polido e responsivo para mobile, tablets e desktops (Dashboard com gráficos interativos, Movimentações com filtros e Categorias com validação referencial).
-* **Documentação:** `README.md` totalmente estruturado com guia completo de instalação para a banca avaliadora; `DOCUMENTACAO_IA.md` atualizado com todas as iterações e decisões técnicas.
+* **Documentação & Roteiro:** `README.md` totalmente estruturado com guia completo de instalação; `docs/roteiro_apresentacao.md` finalizado com ensaio cronometrado de 10 minutos para a banca; `DOCUMENTACAO_IA.md` atualizado com todas as iterações e decisões técnicas.
 
 ---
 
-## 6. Etapa 6: Documentação Final, Prints do Trello e Roteiro de Apresentação (EM ANDAMENTO - GUILHERME)
+## 6. Etapa 6: Documentação Final, Prints do Trello e Roteiro de Apresentação (CONCLUÍDA - GUILHERME)
 **Responsável:** Guilherme Buratto
 
 * **📖 Tarefa 6.2 (Concluída por Guilherme): Revisão e Finalização do README.md e Governança do Repositório**
-  - Enriquecimento completo do `README.md` principal da raiz:
-    - Badges oficiais de status de todas as tecnologias (React 19, Vite 8, Node 24, Express 5, PostgreSQL 16 Alpine, Docker Compose, Prisma 6 e Recharts 3).
-    - Apresentação completa e visual do sistema **MeuFinanceiro** (visão geral, objetivo acadêmico e créditos formais da dupla).
-    - Tabela de tecnologias detalhada especificando versões e finalidades.
-    - Guia passo a passo definitivo de instalação e execução rápida para o professor (`docker compose up -d`, `seed`, `dev`).
-    - Tabela completa de endpoints da API REST com métodos HTTP, parâmetros/corpos, descrição de regra de negócio e status codes semânticos.
-    - Documentação de modelagem relacional com Prisma Schema.
-    - Seção de engenharia e governança detalhando resolução de conflito de portas (5433), precisão monetária Decimal(10,2) e integridade referencial.
+  - Enriquecimento completo do `README.md` principal da raiz com badges oficiais, stack detalhada com versões exatas, guia de execução passo a passo à prova de falhas para o professor (`docker compose up -d`, `seed`, `dev`), tabela semântica de todos os endpoints REST, schema Prisma e justificativa das decisões críticas de arquitetura.
   - *Commit semântico:* `docs: finalizar documentacao do readme e instrucoes de execucao`
+
+* **🎤 Tarefa 6.3 (Concluída por Guilherme): Elaboração do Roteiro de Apresentação Presencial de 10 Minutos**
+  - Criação de `docs/roteiro_apresentacao.md` contendo checklist pré-apresentação, roteiro minuto a minuto cronometrado (Abertura, Demonstração ao Vivo, Metodologia de IA e Arguição), divisão equitativa de falas entre Guilherme e Jeff, roteiro de contingência e guia de respostas técnicas para perguntas da banca avaliadora.
+  - *Commit semântico:* `docs: criar roteiro e divisao de fala da apresentacao presencial`
 
 * **📋 Tarefa 6.1 (Pendente de upload das imagens pelo Guilherme): Atualização dos Registros Visuais do Kanban (Trello)**
   - O estudante fará a captura do print atualizado do quadro Trello com os cards em Concluído e salvará em `docs/kanban-prints/`.
-
-* **🎤 Tarefa 6.3: Elaboração do Roteiro de Apresentação Presencial de 10 Minutos**
-  - Criar o arquivo `docs/roteiro_apresentacao.md` estruturando o ensaio para a apresentação presencial do dia 09/11/2026 (atendendo ao item 2.7 do enunciado acadêmico):
-    - **Minutos 0 a 2 (Abertura e Arquitetura - Guilherme):** Apresentação da dupla, contexto da disciplina, decisão de desacoplamento (SPA + API REST + Postgres via Docker na porta 5433) e governança Git/Kanban.
-    - **Minutos 2 a 6 (Demonstração Prática ao Vivo - Guilherme e Jeff):** Navegação fluida pelas 3 abas, demonstração do Dashboard com gráfico de rosca Donut, filtros combinados de movimentações, responsividade mobile em tempo real no DevTools e demonstração da trava de integridade referencial (tentativa de exclusão com erro 400 amigável na UI, requisito 3.4).
-    - **Minutos 6 a 8 (Metodologia e Uso Crítico de IA - Jeff):** Explicação de como a IA foi utilizada criticamente (conforme registrado no `DOCUMENTACAO_IA.md`), decisões de engenharia (como o port collision 5433, migração Prisma e precisão monetária Decimal) e lições aprendidas.
-    - **Minutos 8 a 10 (Conclusão e Perguntas do Professor):** Considerações finais da dupla e espaço para arguição.
-  - *Commit semântico:* `docs: criar roteiro e divisao de fala da apresentacao presencial`

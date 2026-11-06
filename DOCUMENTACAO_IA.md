@@ -804,3 +804,37 @@ pode ir para a 6.2, os prints eu adiciono depois
 ### 21.4. Decisões de Engenharia
 * **Documentação Orientada à Reprodutibilidade:** O `README.md` atua como o cartão de visitas e o guia operacional do projeto. Instruções claras com comandos prontos para cópia garantem que o avaliador acadêmico consiga rodar a solução de ponta a ponta sem atritos ou ambiguidades.
 * **Transparência Técnica de Arquitetura:** Documentar explicitamente a solução da colisão de portas (`5433:5432`) e o uso de precisão Decimal comprova o rigor técnico e o pensamento crítico de engenharia adotado pelo grupo durante o desenvolvimento.
+
+
+---
+
+## 22. Etapa 6 - Elaboração do Roteiro de Apresentação Presencial de 10 Minutos
+
+* **Data:** 06/11/2026
+* **Etapa:** Etapa 6 - Tarefa 6.3 (Executada por Guilherme Buratto)
+
+### 22.1. Problema / Requisito Trabalhado
+Estruturação e formalização do roteiro de ensaio para a apresentação presencial de 10 minutos da disciplina de Laboratório de Programação (prevista para 09/11/2026), em conformidade com o item 2.7 do enunciado acadêmico. O desafio era organizar uma distribuição fluida e equitativa do tempo entre os dois integrantes (Guilherme e Jeff), cobrindo a arquitetura do sistema, demonstração ao vivo dos requisitos de negócio (especialmente a trava de integridade do item 3.4), metodologia crítica de IA e preparação para perguntas da banca avaliadora.
+
+### 22.2. Texto Exato dos Prompts Utilizados
+```text
+sim
+```
+*(Autorização do estudante para criação do roteiro de apresentação presencial)*
+
+### 22.3. Refinamentos e Ações Executadas
+1. **Criação do Documento `docs/roteiro_apresentacao.md`:**
+   - Elaboração de documento técnico completo e estruturado para ensaio presencial da dupla.
+2. **Checklist Pré-Apresentação (10 minutos antes):**
+   - Relação de verificações essenciais: container Docker `meufinanceiro_postgres` em execução na porta 5433, terminais de backend (`localhost:3000`) e frontend (`localhost:5173`) ativos, abas de contingência no navegador e base populada via `npm run seed`.
+3. **Cronograma Minuto a Minuto com Falas Padronizadas:**
+   - **Bloco 1 [00:00 - 02:00] (Abertura e Arquitetura - Guilherme):** Apresentação da equipe, contexto do curso, divisão em 3 camadas (React 19 SPA, API Express e Postgres Docker) e governança ágil.
+   - **Bloco 2 [02:00 - 06:00] (Demonstração Prática ao Vivo - Guilherme e Jeff):** Navegação dinâmica pelo Dashboard com gráfico Donut Recharts e alternador Despesas/Receitas; demonstração da regra de coerência no formulário de lançamentos e filtros combinados; **teste ao vivo da trava de integridade referencial** com bloqueio de exclusão da categoria em uso (Requisito 3.4); e demonstração da responsividade mobile no DevTools.
+   - **Bloco 3 [06:00 - 08:00] (Uso Crítico de IA e Decisões de Engenharia - Jeff):** Explicação da metodologia adotada no `DOCUMENTACAO_IA.md`, citando as soluções de colisão de portas (5433), precisão contábil com `Decimal(10,2)` e cliente HTTP nativo enxuto.
+   - **Bloco 4 [08:00 - 10:00] (Conclusão e Arguição - Guilherme e Jeff):** Fechamento e disponibilidade para questionamentos da banca.
+4. **Guia de Respostas para Perguntas Técnicas da Banca:**
+   - Mapeamento das 4 perguntas mais prováveis do professor (isolamento de portas, funcionamento do `onDelete: Restrict`, escolha do Recharts e justificativa da ausência temporária de login) com argumentos técnicos prontos e consistentes.
+
+### 22.4. Decisões de Engenharia
+* **Ensaio Cronometrado e Divisão Equitativa de Falas:** Ter um roteiro com falas sugeridas e tempos bem definidos reduz a ansiedade de apresentação, impede estouro do tempo limite estipulado no edital acadêmico e evidencia para o professor a cooperação real de ambos os estudantes.
+* **Foco na Demonstração Funcional:** O roteiro prioriza a experiência prática do software rodando ao vivo (Dashboard, filtros e regras de integridade) em vez de leitura estática de código-fonte, transmitindo profissionalismo e domínio do produto entregue.
