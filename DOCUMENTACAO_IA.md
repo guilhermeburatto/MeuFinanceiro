@@ -647,3 +647,38 @@ Ok, prosseguimos.
 * **Prevenção de Modais Inacessíveis em Telas Pequenas:** O isolamento do scroll exclusivamente no corpo do formulário (`.modal-body`) impede que o modal estoure a altura da tela do smartphone, problema comum ao interagir com campos de data e selects.
 * **Touch Targets Acessíveis:** Botões e áreas de interação no rodapé móvel ganharam largura total e paddings maiores, respeitando as diretrizes de usabilidade para toque em interfaces móveis.
 
+---
+
+## 17. Etapa 5 - Adaptação Responsiva das Abas (Dashboard, Movimentações e Categorias)
+
+* **Data:** 06/11/2026
+* **Etapa:** Etapa 5 - Tarefa 5.2 (Executada por Jeferson / Jeff)
+
+### 17.1. Problema / Requisito Trabalhado
+Garantir legibilidade, ergonomia e navegabilidade em dispositivos móveis e tablets para as três telas essenciais da aplicação: o painel analítico do Dashboard (cards de saldos e gráfico Recharts), o extrato de lançamentos com filtros avançados e o catálogo de categorias cadastradas.
+
+### 17.2. Texto Exato dos Prompts Utilizados
+```text
+Ok, começaremos a parte 5.2
+```
+*(Autorização do estudante para desenvolvimento da Tarefa 5.2)*
+
+### 17.3. Refinamentos e Ações Executadas
+1. **Otimização da Aba Dashboard:**
+   - Adaptação da grade de métricas monetárias (`.metrics-grid`) para coluna única no mobile, garantindo destaque legível aos valores de Saldo, Receitas e Despesas.
+   - Ajuste de dimensões no container do gráfico SVG de rosca (`.chart-container` com altura de 210px), permitindo renderização perfeita em telas estreitas sem corte de fatias ou sobreposição com tooltips.
+   - Reorganização do cabeçalho do painel analítico (`.panel-header`) e dos botões alternadores de gráfico (`.chart-toggle-group`) com largura fluida.
+2. **Adaptação da Aba Movimentações:**
+   - Reestruturação da barra de filtros avançados (`.filter-bar-advanced` e `.filter-row`): empilhamento inteligente com botões de tipo em largura total, campos de seleção de categoria e inputs de data `De:` / `Até:` expandidos para fácil preenchimento.
+   - Transformação dos lançamentos da lista (`.transaction-item`): organização em duas zonas (topo: descrição com quebra de linha protegida, categoria e data; base: valor monetário destacado à esquerda e botões de ação à direita com área de clique de 36px).
+   - Botão `Novo Lançamento` com largura total no mobile para facilitar o acesso com o polegar.
+3. **Adaptação da Aba Categorias:**
+   - Transição da grade de categorias (`.categories-preview-grid`) de múltiplas colunas rígidas para 1 coluna no celular e colunas adaptativas em tablets (`minmax(200px, 1fr)`).
+   - Botão `Nova Categoria` expandido para largura total no mobile.
+4. **Validação de Build:** Compilação do frontend validada via `npm.cmd run build` (2429 módulos transformados em 591ms, 0 erros).
+
+### 17.4. Decisões de Engenharia
+* **Padrão Cartão Financeiro no Extrato Mobile:** A divisão do lançamento em duas linhas conectadas por uma sutil linha tracejada evita que valores monetários e botões de ação disputem espaço horizontal com descrições extensas de movimentações, replicando o padrão consagrado em aplicativos de internet banking.
+* **Ergonomia e Área de Polegar:** Em smartphones, a mão do usuário alcança predominantemente a base e a largura inferior da tela. Transformar os botões de ação e filtros em elementos de largura total reduz expressivamente o esforço motor do usuário final.
+
+

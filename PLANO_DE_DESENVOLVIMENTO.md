@@ -116,11 +116,15 @@
   - Reformulação estrutural dos modais (`.modal-container`, `.modal-body` e `.modal-footer`): altura máxima controlada (`90vh`/`94vh`), rolagem vertical com `-webkit-overflow-scrolling: touch` para impedir cortes em telas pequenas ou teclados virtuais, e botões empilhados com largura total no rodapé móvel.
   - Ajustes de usabilidade e clique confortável para os botões de fechar e alertas de feedback (`.feedback-alert`).
 
-* **⏳ Tarefa 5.2 (Próxima):**
-  - Adaptação das 3 abas principais para telas móveis (Dashboard com cards de métricas em 1 coluna e gráfico ajustado; Movimentações com barra de filtros empilhada/grid e tabela com rolagem suave ou visualização em cartões; Categorias com grid adaptável).
+* **✅ Tarefa 5.2 (Concluída por Jeferson):**
+  - Adaptação completa das 3 abas essenciais para dispositivos móveis e tablets:
+    - **Dashboard:** Grid de métricas financeiras adaptado para 1 coluna no celular; otimização do gráfico Donut com Recharts (`height: 210px`) e toggle de Despesas/Receitas com largura total e toque confortável.
+    - **Movimentações:** Reorganização vertical dos filtros avançados (filtros por tipo, categoria e período De/Até); barra de resumo de lançamentos responsiva; formatação da lista de lançamentos em estilo cartão financeiro com divisão sutil e botões de editar e excluir de toque amplo (36px).
+    - **Categorias:** Grid adaptável de cards de categorias (1 coluna no smartphone e colunas fluidas em tablets), facilitando a leitura e ações de edição/exclusão.
+  - Botões de chamada para ação principal (`+ Nova Categoria`, `+ Novo Lançamento` e `Atualizar Dados`) ocupando 100% de largura no mobile para máximo conforto ergonômico.
 
-* **⏳ Tarefa 5.3 (Pendente):**
-  - Micro-interações, acessibilidade com foco (`:focus-visible`), testes exploratórios de ponta a ponta e encerramento da etapa.
+* **⏳ Tarefa 5.3 (Próxima):**
+  - Polimento de micro-interações, acessibilidade com anéis de foco (`:focus-visible`), testes exploratórios de ponta a ponta e encerramento da etapa.
 
 ---
 

@@ -1344,3 +1344,215 @@ body {
   }
 }
 
+/* ==========================================================================
+   ETAPA 5.2: ADAPTAÇÃO DAS ABAS (DASHBOARD, MOVIMENTAÇÕES E CATEGORIAS)
+   ========================================================================== */
+
+/* Tablet & Telas Médias (<= 768px) */
+@media (max-width: 768px) {
+  .metrics-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .categories-preview-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .filter-row {
+    gap: 0.5rem;
+  }
+}
+
+/* Smartphone & Telas Pequenas (<= 640px) */
+@media (max-width: 640px) {
+  /* 1. Dashboard */
+  .period-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .period-title h2 {
+    font-size: 1.15rem;
+  }
+
+  .btn-refresh {
+    width: 100%;
+    justify-content: center;
+    padding: 0.6rem 1rem;
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .metric-card {
+    padding: 1rem;
+  }
+
+  .metric-value {
+    font-size: 1.4rem;
+  }
+
+  .panel-card {
+    padding: 1rem;
+  }
+
+  .panel-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.65rem;
+  }
+
+  .chart-toggle-group {
+    width: 100%;
+    display: flex;
+  }
+
+  .btn-chart-toggle {
+    flex: 1;
+    text-align: center;
+    padding: 0.35rem 0.5rem;
+  }
+
+  .chart-container {
+    height: 210px;
+    margin-bottom: 1rem;
+  }
+
+  /* 2. Barra Superior de Seção (Movimentações e Categorias) */
+  .section-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .section-toolbar > div {
+    width: 100%;
+  }
+
+  .section-toolbar .btn-primary {
+    width: 100%;
+    justify-content: center;
+    padding: 0.7rem 1rem;
+  }
+
+  /* 3. Filtros Avançados de Movimentações */
+  .filter-bar-advanced {
+    padding: 0.85rem;
+    gap: 0.75rem;
+  }
+
+  .filter-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.65rem;
+  }
+
+  .filter-group {
+    width: 100%;
+    display: flex;
+  }
+
+  .filter-btn {
+    flex: 1;
+    text-align: center;
+    padding: 0.45rem 0.25rem;
+    font-size: 0.75rem;
+  }
+
+  .filter-item {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.25rem;
+  }
+
+  .filter-item label {
+    font-size: 0.75rem;
+  }
+
+  .filter-select,
+  .filter-date-input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .btn-clear-filters {
+    width: 100%;
+    justify-content: center;
+    padding: 0.55rem;
+  }
+
+  .filter-summary-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.45rem;
+    font-size: 0.78rem;
+  }
+
+  /* 4. Lista de Movimentações (Formato Cartão Mobile) */
+  .transaction-item {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.65rem;
+    padding: 0.85rem;
+  }
+
+  .transaction-left {
+    width: 100%;
+    gap: 0.65rem;
+  }
+
+  .transaction-details {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .transaction-desc {
+    word-break: break-word;
+  }
+
+  .transaction-right {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.5rem;
+    border-top: 1px dashed var(--border-color);
+  }
+
+  .transaction-amount {
+    font-size: 0.95rem;
+  }
+
+  .transaction-actions {
+    opacity: 1;
+    gap: 0.4rem;
+  }
+
+  .btn-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  /* 5. Grade de Categorias */
+  .categories-preview-grid {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+  }
+
+  .cat-card-interactive {
+    padding: 0.75rem 1rem;
+  }
+}
+
+
