@@ -1555,4 +1555,81 @@ body {
   }
 }
 
+/* ==========================================================================
+   ETAPA 5.3: MICRO-INTERAÇÕES, ACESSIBILIDADE E POLIMENTO VISUAL
+   ========================================================================== */
+
+/* 1. Indicador Acessível de Foco por Teclado */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Campos de formulário com foco refinado */
+.form-control:focus-visible,
+.filter-select:focus-visible,
+.filter-date-input:focus-visible {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.2);
+}
+
+/* 2. Feedback Tátil e Micro-interações de Clique (:active) */
+.btn-primary:active,
+.btn-secondary:active,
+.btn-danger:active,
+.btn-refresh:active,
+.filter-btn:active,
+.type-toggle-btn:active,
+.btn-chart-toggle:active {
+  transform: scale(0.97);
+}
+
+.btn-icon:active {
+  transform: scale(0.90);
+}
+
+.nav-tab-btn:active {
+  background-color: var(--bg-subtle);
+}
+
+.cat-card-interactive:active {
+  transform: scale(0.99);
+}
+
+/* 3. Barra de Rolagem Sutil e Elegante */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #94a3b8;
+}
+
+/* 4. Suavização Geral de Transições */
+button,
+input,
+select,
+.cat-card-interactive,
+.metric-card,
+.transaction-item {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
 

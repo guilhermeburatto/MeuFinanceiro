@@ -681,4 +681,40 @@ Ok, começaremos a parte 5.2
 * **Padrão Cartão Financeiro no Extrato Mobile:** A divisão do lançamento em duas linhas conectadas por uma sutil linha tracejada evita que valores monetários e botões de ação disputem espaço horizontal com descrições extensas de movimentações, replicando o padrão consagrado em aplicativos de internet banking.
 * **Ergonomia e Área de Polegar:** Em smartphones, a mão do usuário alcança predominantemente a base e a largura inferior da tela. Transformar os botões de ação e filtros em elementos de largura total reduz expressivamente o esforço motor do usuário final.
 
+---
+
+## 18. Etapa 5 - Micro-interações, Acessibilidade e Testes de Usabilidade
+
+* **Data:** 06/11/2026
+* **Etapa:** Etapa 5 - Tarefa 5.3 (Executada por Jeferson / Jeff)
+
+### 18.1. Problema / Requisito Trabalhado
+Finalização do polimento visual da interface através da implementação de micro-interações táteis nos cliques, indicadores de acessibilidade de foco via teclado (`:focus-visible`), barras de rolagem customizadas sutis e execução de testes de ponta a ponta validando os requisitos acadêmicos (em especial a trava de integridade referencial do item 3.4).
+
+### 18.2. Texto Exato dos Prompts Utilizados
+```text
+Perfeito, inicie a Parte 5.3.
+```
+*(Autorização do estudante para execução e fechamento da Etapa 5)*
+
+### 18.3. Refinamentos e Ações Executadas
+1. **Acessibilidade com `:focus-visible`:**
+   - Criação de anel de foco padronizado (`outline: 2px solid var(--primary); outline-offset: 2px`) para todos os elementos interativos acionados via teclado (`Tab`).
+   - Foco suave em campos de formulário (`box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.2)`).
+2. **Micro-interações de Clique e Feedback Tátil:**
+   - Adição do efeito `:active` com ligeira contração (`scale(0.97)` em botões principais e `scale(0.90)` em botões de ícone), fornecendo sensação tátil imediata ao clique ou toque móvel.
+   - Suavização de transições globais com curva `cubic-bezier(0.4, 0, 0.2, 1)`.
+3. **Barra de Rolagem Elegante:**
+   - Estilização de scrollbars finas (`scrollbar-width: thin` e `::-webkit-scrollbar` com 6px) com trilho transparente e cantos arredondados, evitando barras cinzas rústicas nativas do sistema operacional nos modais.
+4. **Bateria de Testes de Usabilidade e Regras de Negócio:**
+   - *Status do Backend:* Verificado via `GET /api/status` (servidor operacional).
+   - *Cálculos do Dashboard:* Verificado via `GET /api/dashboard/resumo` confirmando exatidão contábil (Saldo R$ 5.930,00, Receitas R$ 6.000,00 e Despesas R$ 70,00 agrupadas por categoria com cores hexadecimais preservadas).
+   - *Trava de Integridade Referencial (Requisito 3.4):* Testada requisição `DELETE /api/categorias/1` para uma categoria com movimentações vinculadas. O backend bloqueou a exclusão retornando status HTTP 400 com mensagem informativa (`"Não é possível excluir esta categoria porque existem 1 movimentação(ões) vinculada(s) a ela."`), sem corromper a base de dados.
+   - *Compilação do Frontend:* `npm.cmd run build` executado com sucesso em 527ms.
+
+### 18.4. Decisões de Engenharia
+* **Acessibilidade Aprimorada (`:focus-visible` vs `:focus`):** O seletor `:focus-visible` aplica o contorno de foco exclusivamente quando a navegação é feita via teclado ou tecnologia assistiva, sem poluir visualmente a interface quando o usuário clica com o mouse.
+* **Feedback Tátil `:active`:** Micro-interações fornecem confirmação visual imediata de que a ação foi registrada pelo sistema, reduzindo cliques duplos acidentais em dispositivos móveis.
+
+
 

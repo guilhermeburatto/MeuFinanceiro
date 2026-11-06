@@ -92,6 +92,25 @@
   - Seletor toggle entre "Despesas" e "Receitas" no card de distribuição do Dashboard.
   - Lista de apoio com barras de preenchimento proporcional e tratamento limpo de estado vazio.
 
+### ✅ Etapa 5: Polimento Visual, Responsividade Mobile e Testes de Usabilidade (CONCLUÍDA POR JEFERSON / JEFF)
+* **Tarefa 5.1 (Concluída por Jeferson):**
+  - Implementação de regras de responsividade base em `frontend/src/index.css` cobrindo breakpoints de 768px (tablets) e 640px (smartphones).
+  - Ajuste de proporções e espaçamentos no cabeçalho (`.header` e `.header-content`), garantindo alinhamento harmonioso do logo e do badge de conectividade da API.
+  - Otimização da barra de navegação (`.nav-tabs-content`), distribuindo as abas proporcionalmente no mobile com áreas de toque acessíveis.
+  - Reformulação estrutural dos modais (`.modal-container`, `.modal-body` e `.modal-footer`): altura máxima controlada (`90vh`/`94vh`), rolagem vertical com `-webkit-overflow-scrolling: touch` para impedir cortes em telas pequenas ou teclados virtuais, e botões empilhados com largura total no rodapé móvel.
+  - Ajustes de usabilidade e clique confortável para os botões de fechar e alertas de feedback (`.feedback-alert`).
+* **Tarefa 5.2 (Concluída por Jeferson):**
+  - Adaptação completa das 3 abas essenciais para dispositivos móveis e tablets:
+    - **Dashboard:** Grid de métricas financeiras adaptado para 1 coluna no celular; otimização do gráfico Donut com Recharts (`height: 210px`) e toggle de Despesas/Receitas com largura total e toque confortável.
+    - **Movimentações:** Reorganização vertical dos filtros avançados (filtros por tipo, categoria e período De/Até); barra de resumo de lançamentos responsiva; formatação da lista de lançamentos em estilo cartão financeiro com divisão sutil e botões de editar e excluir de toque amplo (36px).
+    - **Categorias:** Grid adaptável de cards de categorias (1 coluna no smartphone e colunas fluidas em tablets), facilitando a leitura e ações de edição/exclusão.
+  - Botões de chamada para ação principal (`+ Nova Categoria`, `+ Novo Lançamento` e `Atualizar Dados`) ocupando 100% de largura no mobile para máximo conforto ergonômico.
+* **Tarefa 5.3 (Concluída por Jeferson):**
+  - Implementação de acessibilidade de navegação por teclado com indicador visual padronizado `:focus-visible` em todos os botões, links, abas e controles de formulário.
+  - Adição de micro-interações táteis de clique (:active com leve redução de escala `scale(0.97)`) em botões, abas e cartões.
+  - Barra de rolagem personalizada sutil (`scrollbar-width: thin` e `::-webkit-scrollbar`) integrada aos modais e à aplicação.
+  - Bateria de testes exploratórios de ponta a ponta: validação de criação de categorias/movimentações, filtros combinados, recálculo de saldo líquido no Dashboard e comprovação da trava de integridade referencial do Requisito 3.4 (bloqueio 400 ao tentar excluir categoria em uso).
+
 ---
 
 ## 5. Estado Atual do Sistema
@@ -99,38 +118,16 @@
 * **Container PostgreSQL:** Ativo no Docker (`meufinanceiro_postgres`), aceitando conexões na porta `5433`.
 * **Banco de Dados:** Tabelas `categorias` e `movimentacoes` populadas, íntegras e conectadas.
 * **Backend:** 100% pronto e testado em `http://localhost:3000`.
-* **Frontend:** 100% pronto nas 3 abas essenciais (Dashboard com gráficos interativos, Gerenciamento de Movimentações com filtros avançados e Gerenciamento de Categorias com trava referencial).
-* **Documentação de IA:** `DOCUMENTACAO_IA.md` atualizado com todas as iterações e decisões técnicas até a Tarefa 4.3.
+* **Frontend:** 100% pronto, visualmente polido e responsivo para mobile, tablets e desktops (Dashboard com gráficos interativos, Movimentações com filtros e Categorias com validação referencial).
+* **Documentação de IA:** `DOCUMENTACAO_IA.md` rigorosamente atualizado com todas as iterações e decisões técnicas até a Tarefa 5.3.
 
 ---
 
-## 6. Etapa em Andamento
-
-### 🎯 Etapa 5: Polimento Visual, Responsividade Mobile e Testes de Usabilidade (EM ANDAMENTO - JEFERSON / JEFF)
-**Responsável:** Jeferson (Jeff)
-
-* **✅ Tarefa 5.1 (Concluída por Jeferson):**
-  - Implementação de regras de responsividade base em `frontend/src/index.css` cobrindo breakpoints de 768px (tablets) e 640px (smartphones).
-  - Ajuste de proporções e espaçamentos no cabeçalho (`.header` e `.header-content`), garantindo alinhamento harmonioso do logo e do badge de conectividade da API.
-  - Otimização da barra de navegação (`.nav-tabs-content`), distribuindo as abas proporcionalmente no mobile com áreas de toque acessíveis.
-  - Reformulação estrutural dos modais (`.modal-container`, `.modal-body` e `.modal-footer`): altura máxima controlada (`90vh`/`94vh`), rolagem vertical com `-webkit-overflow-scrolling: touch` para impedir cortes em telas pequenas ou teclados virtuais, e botões empilhados com largura total no rodapé móvel.
-  - Ajustes de usabilidade e clique confortável para os botões de fechar e alertas de feedback (`.feedback-alert`).
-
-* **✅ Tarefa 5.2 (Concluída por Jeferson):**
-  - Adaptação completa das 3 abas essenciais para dispositivos móveis e tablets:
-    - **Dashboard:** Grid de métricas financeiras adaptado para 1 coluna no celular; otimização do gráfico Donut com Recharts (`height: 210px`) e toggle de Despesas/Receitas com largura total e toque confortável.
-    - **Movimentações:** Reorganização vertical dos filtros avançados (filtros por tipo, categoria e período De/Até); barra de resumo de lançamentos responsiva; formatação da lista de lançamentos em estilo cartão financeiro com divisão sutil e botões de editar e excluir de toque amplo (36px).
-    - **Categorias:** Grid adaptável de cards de categorias (1 coluna no smartphone e colunas fluidas em tablets), facilitando a leitura e ações de edição/exclusão.
-  - Botões de chamada para ação principal (`+ Nova Categoria`, `+ Novo Lançamento` e `Atualizar Dados`) ocupando 100% de largura no mobile para máximo conforto ergonômico.
-
-* **⏳ Tarefa 5.3 (Próxima):**
-  - Polimento de micro-interações, acessibilidade com anéis de foco (`:focus-visible`), testes exploratórios de ponta a ponta e encerramento da etapa.
-
----
-
-## 7. Próxima Etapa do Guilherme (Após Conclusão da Etapa 5 pelo Jeff)
+## 6. Próxima Etapa do Guilherme (Após Conclusão da Etapa 5 pelo Jeff)
 
 ### 🎯 Etapa 6: Documentação Final, Prints do Trello e Roteiro de Apresentação (GUILHERME)
-* Atualização do kanban com novos prints em `docs/kanban-prints/`.
-* Revisão final do `README.md` e do `DOCUMENTACAO_IA.md`.
-* Elaboração do roteiro detalhado para ensaio da apresentação presencial de 10 minutos (atendendo ao item 5 dos requisitos acadêmicos).
+* **Responsável:** Guilherme Buratto
+* **Entregas Planejadas:**
+  - Atualização do kanban com novos prints em `docs/kanban-prints/`.
+  - Revisão final do `README.md` e do `DOCUMENTACAO_IA.md`.
+  - Elaboração do roteiro detalhado para ensaio da apresentação presencial de 10 minutos (atendendo ao item 5 dos requisitos acadêmicos).
