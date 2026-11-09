@@ -1073,8 +1073,8 @@ function App() {
 
       {/* Modal de Criação / Edição de Categoria (Tarefa 4.1) */}
       {modalCategoriaAberto && (
-        <div className="modal-overlay" onClick={fecharModalCategoria}>
-          <div className="modal-container" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-overlay">
+          <div className="modal-container">
             <div className="modal-header">
               <h3>
                 <Tags size={20} color="var(--primary)" />
@@ -1182,8 +1182,8 @@ function App() {
 
       {/* Modal de Criação / Edição de Movimentação (Tarefa 4.2) */}
       {modalMovimentacaoAberto && (
-        <div className="modal-overlay" onClick={fecharModalMovimentacao}>
-          <div className="modal-container" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-overlay">
+          <div className="modal-container">
             <div className="modal-header">
               <h3>
                 <ArrowLeftRight size={20} color="var(--primary)" />

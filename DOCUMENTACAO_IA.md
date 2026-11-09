@@ -870,3 +870,33 @@ oie, está praticamente pronto, faltam alguns ajustes: primeiro, na tela de "mov
 
 ### 23.4. Decisões de Engenharia
 * **Correção na Fonte sem Workarounds:** Em vez de criar funções de "sanitização" no frontend para mascarar dados corrompidos, corrigimos o registro na camada de persistência (PostgreSQL), garantindo que a base de dados permaneça íntegra e 100% aderente ao padrão UTF-8.
+
+
+---
+
+## 24. Ajuste de Usabilidade - Prevenção de Perda Acidental de Dados em Modais
+
+* **Data:** 09/11/2026
+* **Etapa:** Polimento de Usabilidade e UX (Executada por Guilherme Buratto)
+
+### 24.1. Problema / Requisito Trabalhado
+Nos formulários modais de "Novo Lançamento" e "Nova Categoria", o clique acidental no fundo esfumaçado da tela (backdrop / blur overlay) provocava o fechamento imediato do modal, acarretando a perda irreversível de informações parciais que o usuário já havia digitado nos campos de texto e valor.
+
+### 24.2. Texto Exato dos Prompts Utilizados
+```text
+eu vi tb um ponto que acho que pode ser melhorado: quando abre a tela de "movimentações" e clica em "+ Novo Lançamento" abre tudo certinho e está tudo correto, o que percebi é que se clicar na parte fora da tela, na parte em "blur" a tela de lançamento fecha... acho isso problemático pois as vezes pode clicar sem querer e perde o que ja tinha sido digitado... tem como melhorar isso? fazer com que saia da tela apenas se clicar em "Cancelar" ou "Registrar Lançamento"
+```
+
+### 24.3. Refinamentos e Ações Executadas
+1. **Desativação do Fechamento por Click-Outside:**
+   - Remoção do evento `onClick` atrelado à `div.modal-overlay` nos modais de movimentações e categorias em `frontend/src/App.jsx`.
+2. **Definição de Ações de Saída Deliberadas:**
+   - O fechamento dos formulários passa a ocorrer exclusivamente através de ações voluntárias do usuário:
+     - Botão **Cancelar** no rodapé móvel;
+     - Botão de fechar (**X**) no cabeçalho;
+     - Botão de submissão (**Registrar Lançamento** ou **Salvar Alterações**), disparado após a gravação dos dados no backend.
+3. **Validação de Build:**
+   - Execução de `npm run build` validando a integridade do código sem falhas ou regressões.
+
+### 24.4. Decisões de Engenharia
+* **Proteção contra Ações Acidentais (Diretrizes de Usabilidade de Nielsen):** Em formulários de entrada de dados financeiros, o fechamento acidental ao clicar fora do container viola o princípio de prevenção de erros e controle do usuário. Exigir confirmação ou clique explícito em botões de ação garante uma experiência segura e sem frustrações de retrabalho.
