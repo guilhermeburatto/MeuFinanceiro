@@ -838,3 +838,35 @@ sim
 ### 22.4. Decisões de Engenharia
 * **Ensaio Cronometrado e Divisão Equitativa de Falas:** Ter um roteiro com falas sugeridas e tempos bem definidos reduz a ansiedade de apresentação, impede estouro do tempo limite estipulado no edital acadêmico e evidencia para o professor a cooperação real de ambos os estudantes.
 * **Foco na Demonstração Funcional:** O roteiro prioriza a experiência prática do software rodando ao vivo (Dashboard, filtros e regras de integridade) em vez de leitura estática de código-fonte, transmitindo profissionalismo e domínio do produto entregue.
+
+
+---
+
+## 23. Ajuste Fino e Resolução de Codificação UTF-8 em Movimentações
+
+* **Data:** 09/11/2026
+* **Etapa:** Ajuste Fino e Estabilização Final (Executada por Guilherme Buratto)
+
+### 23.1. Problema / Requisito Trabalhado
+Identificado que na tela inicial, no painel de "Movimentações Recentes", a palavra "Salário" no lançamento de teste inicial (ID 1) era renderizada com o caractere de substituição (losango/interrogação ``), levantando a hipótese de problema de codificação UTF-8.
+
+### 23.2. Texto Exato dos Prompts Utilizados
+```text
+oie, está praticamente pronto, faltam alguns ajustes: primeiro, na tela de "movimentações recentes" o acento em "salário" está sendo apresentado com um símbolo de interrogação... não é problema de UTF8?
+```
+
+### 23.3. Refinamentos e Ações Executadas
+1. **Diagnóstico dos Bytes no Banco de Dados:**
+   - Inspecionamos os dados brutos armazenados no PostgreSQL através do comando `encode(descricao::bytea, 'hex')`.
+   - Constatamos que a tabela de `categorias` estava perfeitamente codificada em UTF-8 padrão (o nome "Salário" continha `c3 a1` para o caractere `á`).
+   - Porém, o registro de ID 1 na tabela `movimentacoes` continha a sequência hexadecimal `ef bf bd` (`\uFFFD` - *Unicode Replacement Character*), fruto de uma requisição de teste enviada anteriormente via terminal Windows em codificação ANSI/Windows-1252.
+2. **Correção Direta no Banco PostgreSQL:**
+   - Executamos `UPDATE movimentacoes SET descricao = 'Salário Novembro' WHERE id = 1;` com codificação UTF-8 estrita, restaurando o caractere acentuado original (`c3 a1`).
+3. **Aprimoramento do `frontend/index.html`:**
+   - Atualização da tag de localização para `<html lang="pt-BR">` e definição do título oficial da aba do navegador para `MeuFinanceiro - Controle Financeiro Pessoal`.
+4. **Validação:**
+   - Teste de consulta direta via Prisma Client confirmando retorno com `Salário Novembro` perfeitamente acentuado.
+   - Build do frontend validado com sucesso sem avisos.
+
+### 23.4. Decisões de Engenharia
+* **Correção na Fonte sem Workarounds:** Em vez de criar funções de "sanitização" no frontend para mascarar dados corrompidos, corrigimos o registro na camada de persistência (PostgreSQL), garantindo que a base de dados permaneça íntegra e 100% aderente ao padrão UTF-8.
